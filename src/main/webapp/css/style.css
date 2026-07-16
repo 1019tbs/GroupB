@@ -1,0 +1,129 @@
+@charset "UTF-8";body{
+    background:#fffcf3ff;
+    font-family:sans-serif;
+    
+    background-image: url("../images/bgImage.jpg");
+    background-position:20% left;
+    background-size:40%;
+    background-repeat: no-repeat;
+}
+
+
+.login-box{
+
+    width:420px;
+
+    margin:60px auto;
+
+    border:1px solid #d8b98b;
+
+}
+
+h1{
+
+    font-family:Georgia;
+
+    color:#783f04;
+
+    margin-bottom:5px;
+
+}
+h1,p {
+    text-align: center;
+}
+
+.icon{
+    width: 40px;
+    height: auto;
+}
+
+.sub-title{
+
+    text-align:center;
+
+    color:#783f04;
+
+    margin-bottom:35px;
+
+}
+
+label{
+
+    display:block;
+    
+    text-align: left;
+    
+    width: 50%;
+
+    color:#595959;
+
+    margin:15px auto 8px auto;
+
+}
+
+input[type=text],
+input[type=password],
+input[type=submit],
+button{
+    width:50%;
+    
+    display: block;
+    
+    margin:auto
+}
+
+
+input[type=text],
+input[type=password]{
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    box-sizing:border-box;
+
+}
+
+input[type=submit]{
+
+    margin-top:25px;
+
+    padding:14px;
+
+    background:#783f04;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+div{
+
+    text-align:center;
+
+    margin:25px 0;
+
+    color:#783f04;
+
+}
+
+button{
+
+    padding:14px;
+
+    background:white;
+
+    border:1px solid #783f04;
+
+    color:#783f04;
+
+    border-radius:8px;
+
+}
