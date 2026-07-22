@@ -106,6 +106,20 @@ public class LoginController {
         // メイン画面へ
         return "main";
     }
+    
+    /**
+     * メイン画面表示
+     */
+    @GetMapping("/main")
+    public String showMain(HttpSession session) {
+
+        // 未ログインならログイン画面へ戻す
+        if (session.getAttribute("loginMember") == null) {
+            return "redirect:/";
+        }
+
+        return "main";
+    }
 
     /**
      * ログアウト
