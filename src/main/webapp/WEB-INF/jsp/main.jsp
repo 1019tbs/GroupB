@@ -1,5 +1,4 @@
 <!-- 最初の画面 -->
-<!-- メニュー、お問い合わせ、管理者 -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,28 +12,55 @@
 </head>
 
 <body class= "mainPage">
-<div class= "mainContainer">
-<!-- 右側に画像を配置 -->
-<div class= "rightArea">
-	<img alt="メイン画像" src="${pageContext.request.contextPath}/images/main.png" class= "mainImg">
+
+<img alt="メイン画像" src="${pageContext.request.contextPath}/images/main.png" class= "mainImg">
+
+<!-- 上部 -->
+<div class= "topArea">
+	<h1>Honey Bloom
+	<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
+	</h1>
+	<p>はちみつ香る、しあわせなお菓子時間。</p>
+	<h2>${loginUser.userName}さん、ようこそ</h2>
 </div>
 
+<!-- 商品ラインナップ、会員情報変更、お問い合わせ -->
+<div class= "contentsArea">
+	<div class= "leftArea">
+		<h2 class= "menuTitle">MENU</h2>
+		
+		<div class= "menuGroup">
+			<div class= "menuImg">
+				<img alt="ケーキ" src="${pageContext.request.contextPath}/images/cake.png">
+				<img alt="クッキー" src="${pageContext.request.contextPath}/images/cookies.png">
+				<img alt="その他" src="${pageContext.request.contextPath}/images/otherSweets.png">
+			</div>
+				<form action="menu" method= "get">
+				<button type= "submit" class="menuButton">商品ラインナップ</button>
+				</form>		
+		</div>
+	
+
+		<div class="subButtonArea">
+		    <form action="memberEditComplete" method= "get">
+		    	<button type= "submit" class="subButton">会員情報変更</button>
+			</form>
+		    <form action="form" method= "get">
+		    	<button type= "submit" class="subButton">お問い合わせ</button>
+		    </form>
+		</div>
+	</div>	
 </div>
-<h1 style="color:#783f04" >Honey Bloom
-<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
-</h1>
-<p style="color:#783f04">はちみつ香る、しあわせなお菓子時間</p>
-
-<form action="${pageContext.request.contextPath}/menu"method= "get">
-<button type= "submit">商品ラインナップ</button>
-</form>
-<form action="${pageContext.request.contextPath}/form"  method= "get">
-<button type= "submit">お問い合わせ</button>
-</form>
-<form action=admin method= "get">
-<button type= "submit">管理者画面</button>
-</form>
-
+	
+<div class="footer">
+	
+	<div class= "adminArea">
+		<form action= "admin" method= "get">
+		<button class= "adminButton">管理者画面</button>
+    	</form>
+	</div>
+    <small class= "copyright">©Honey Bloom / since1880</small>
+</div>
 
 
 </body>
