@@ -47,6 +47,7 @@ public class FormController {
     /**
      * お問い合わせ・予約送信
      */
+    
     @PostMapping("/form/submit")
     public String submitForm(
 
@@ -117,6 +118,7 @@ public class FormController {
         return "form";
     }
 
+    
     /**
      * お問い合わせ保存
      */
@@ -148,7 +150,7 @@ public class FormController {
         model.addAttribute("genre", "お問い合わせ");
         model.addAttribute("customerName", customerName);
 
-        return "Thankyou";
+        return "ThankyouContact";
     }
 
     /**
@@ -193,7 +195,7 @@ public class FormController {
             model.addAttribute("genre", "予約");
             model.addAttribute("customerName", customerName);
 
-            return "Thankyou";
+            return "ThankyouShop";
 
         } catch (Exception e) {
 
