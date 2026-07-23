@@ -42,9 +42,11 @@
 	
 
 		<div class="subButtonArea">
-		    <form action="memberEditComplete" method= "get">
-		    	<button type= "submit" class="subButton">会員情報変更</button>
-			</form>
+
+			<form action="${pageContext.request.contextPath}/member/edit_oonaka" method="get">
+                <button type="submit" class="subButton">会員情報変更</button>
+            </form>
+			
 		    <form action="form" method= "get">
 		    	<button type= "submit" class="subButton">お問い合わせ</button>
 		    </form>
