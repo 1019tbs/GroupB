@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 
 <footer>
-    <p>&copy: 2026 GroupB_Project</p>
+    <small class= "copyright">©Honey Bloom / since1880</small>
 </footer>

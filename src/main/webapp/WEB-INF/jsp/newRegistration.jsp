@@ -7,6 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>新規会員登録 | Honey Bloom</title>
+<!-- css -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/style.css">
 
 <style>
 body {
@@ -154,7 +157,19 @@ button,
 </style>
 </head>
 
-<body>
+<body class= "newRegistration">
+<!-- 背景画像 -->
+<img src="${pageContext.request.contextPath}/images/registerTop.png"
+     class="registerTop"
+     alt="登録画面トップ">
+
+<img src="${pageContext.request.contextPath}/images/registerLeft.png"
+     class="registerLeft"
+     alt="登録画面左">
+
+<img src="${pageContext.request.contextPath}/images/registerRight.png"
+     class="registerRight"
+     alt="登録画面右">
 
 <div class="container">
 
