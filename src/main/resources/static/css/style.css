@@ -317,6 +317,13 @@ body.newRegistration label{
 /*=======
 お問い合わせフォーム
 =========*/
+
+
+
+/*=======
+メニュー選択画面（確認用）
+=========*/
+
 .contactContainer{
     display: flex;
     align-items: center;
@@ -406,3 +413,4 @@ textarea{
     justify-content: flex-end;
     margin-top: 20px;
 }
+
