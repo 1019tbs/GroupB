@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ public class Member {
     private String postalCode;      // 郵便番号
     private String address;         // 住所
     private String phoneNumber;     // 電話番号
-    private String birthDate;       // 生年月日
+    private LocalDate birthDate;    // 生年月日
     private String email;           // メールアドレス
     private String paymentMethod;   // 支払方法
     private String role;            // 権限
