@@ -25,11 +25,16 @@ p,
 ログイン画面
 =====*/
 body.loginPage{
-	background-image: url("../images/bgImage.jpg");
+	background-image: url("../images/bgImage.png");
 	background-position:20% left;
-	background-size:40%;
+	background-size:35%;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
-
+.loginContents{
+    flex: 1;
+}
 .login-box{
     width:420px;
 	margin:60px auto;
@@ -230,17 +235,18 @@ button{
     width: 160px;
     height: 45px;
 }
-
+footer{
+	margin-top: auto;
+}
 .footer{
     margin-top: 30px;
-	background: #582f05ff;
-	padding: 10px 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 6px;
+    background: #582f05;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
 }
-
 .adminArea{
 	display: flex;
 	justify-content: flex-end;
@@ -317,32 +323,25 @@ body.newRegistration label{
 /*=======
 お問い合わせフォーム
 =========*/
-
-
-
-/*=======
-メニュー選択画面（確認用）
-=========*/
-
 .contactContainer{
+	flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    max-width: 950px;
+	width: 95%;
+    max-width: 1000px;
     margin: 40px auto 20px ;
-    padding: 10px;
-
+    padding: 20px;
     background-color: #fef9e9;
     border-radius: 5px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 .contactLeft{
-    width:40%;
+    flex: 4;
     text-align:center;
 }
 .contactRight{
-    width:60%;
+    flex: 6;
 }
 .contactRight input[type="text"],
 .contactRight input[type="email"],
@@ -363,8 +362,10 @@ body.contact{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 200vh;
+    min-height: 100vh;
 	margin: 0;
+	display: flex;
+	flex-direction: column;
 }
 .formImg{
     width:90%;
@@ -414,3 +415,37 @@ textarea{
     margin-top: 20px;
 }
 
+/*=======
+MENU
+=========*/
+body.menu{
+    background:#fdf8ef;
+    margin:0;
+}
+.menuHeader{
+    position: relative;
+}
+.menuTopImg{
+	width:100%;
+	display: block;
+	max-height: 650px;
+	object-fit: cover;
+}
+.menuNav{
+	position: absolute;
+    text-align: center;
+	left: 18%;
+	bottom: 20%;
+    font-family: Georgia;
+    font-size: 30px;
+}
+
+.menuNav a{
+    color: #7a4a00;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.menuNav a:hover{
+    text-decoration: underline;
+}
