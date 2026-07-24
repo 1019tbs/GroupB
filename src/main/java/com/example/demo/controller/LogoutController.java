@@ -13,6 +13,9 @@ public class LogoutController{
 	@PostMapping("/Logout")
 	public String logout(HttpSession session) {
 	    session.invalidate();
-	    return "redirect:/";
+//	    一度logoutResult.jspをはさむ為、コメントアウトしてます。
+//	    return "redirect:/";
+	    
+	    return "logoutResult";
 	}
 }

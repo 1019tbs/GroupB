@@ -54,16 +54,18 @@
 	</div>	
 </div>
 	
-<div class="footer">
+<!--<div class="footer">-->
 	
-	<div class= "adminArea">
-		<form action= "admin" method= "get">
-		<button class= "adminButton">管理者画面</button>
-    	</form>
-	</div>
-    <small class= "copyright">©Honey Bloom / since1880</small>
-</div>
-
+<!--	<div class= "adminArea">-->
+<!--		<form action= "admin" method= "get">-->
+<!--		<button class= "adminButton">管理者画面</button>-->
+<!--    	</form>-->
+<!--	</div>-->
+<!--    <small class= "copyright">©Honey Bloom / since1880</small>-->
+<!--</div>-->
+<jsp:include page="common/buttonAdmin.jsp" />
+<jsp:include page="common/buttonLogout.jsp" />
+<jsp:include page="common/footer.jsp" />
 
 </body>
 </html>
