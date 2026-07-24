@@ -112,6 +112,15 @@
     <button type="submit">
         変更する
     </button>
+    
+</form>
+
+<form action="${pageContext.request.contextPath}/member/password_oonaka"
+      method="get">
+
+    <button type="submit">
+        パスワード変更はこちら
+    </button>
 
 </form>
 
