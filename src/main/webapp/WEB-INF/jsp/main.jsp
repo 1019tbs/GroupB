@@ -54,8 +54,8 @@
 	</div>	
 </div>
 	
-<div class="footer">
-	
+<!--<div class="footer">-->
+
 	<div class= "adminArea">
 		<form action= "${pageContext.request.contextPath}/admin" method= "get">
 		<button class= "adminButton" type= "submit">管理者画面</button>
