@@ -58,6 +58,7 @@
             <optional>true</optional>
         </dependency>
         
+
 <!--         JDBC・トランザクション管理を使用するために追加 -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
