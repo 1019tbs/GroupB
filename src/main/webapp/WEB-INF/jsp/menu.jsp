@@ -10,7 +10,31 @@
 	href="${pageContext.request.contextPath}/css/style.css">
 </head>
 
-<body class="mainPage">
+<body class="menu">
+<img class="menuTopImg" alt="メニュー上部画像" src="${pageContext.request.contextPath}/images/menu_top.png">
+<div class= "menuHeader">
+	<nav class= "menuNav">
+		<a href="#cakes">CAKES</a>
+		/
+		<a href="#bakes">BAKES</a>
+		/
+		<a href="#pastries">PASTRIES</a>
+	</nav>
+</div>
+
+	<section id= "cake">
+	
+	</section>
+	<section id= "bakes">
+	
+	</section>
+	<section id= "pastries">
+	
+	</section>
+
+
+
+
 	<form action="${pageContext.request.contextPath}/form/submit"
 		method="post">
 
@@ -37,5 +61,6 @@
 
 	</form>
 	
+	<jsp:include page="common/footer.jsp"/>
 	</body>
 </html>
