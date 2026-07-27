@@ -444,16 +444,20 @@ body.menu{
     text-decoration: underline;
 }
 .menuNextImg,
-.categoryCakeImg{
+.categoryImg{
 	display: block;
 	width: 100%;
 	max-width: 800px;
 	height: auto;
 	margin: 100px auto;
 }
-.categoryCakeImg{
-	margin: 200px auto;
+.categoryCakesImg{
+	margin: 200px auto 100px;
 }
+.categoryBakesImg{
+	margin: 100px auto;
+}
+
 .menuGrid{
     width: 90%;
     max-width: 1000px;
@@ -477,18 +481,92 @@ body.menu{
     margin-top:10px;
 }
 .cardBottom input{
-    width:55px;
+    width:50px;
+    height:36px;
+    box-sizing:border-box;
+    text-align:right;
 }
 .cartButton{
-    width:90px;
-    height:30px;
+    width:110px;
+    height:35px;
+	padding: 0;
     background:#783f04;
     color:white;
     border:none;
-    border-radius:8px;
-    font-size:12px;
-
+    border-radius:5px;
+    font-size:14px;
+	text-align: center;
+	cursor: pointer;
 }
+.itemImg{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:20px;
+}
+.itemName{
+    font-size:18px;
+    color:#595959;
+    margin-bottom:5px;
+}
+.price{
+    color:#666;
+    font-size:15px;
+    margin-bottom:15px;
+}
+
+
+
+.bakesList{
+    width:90%;
+    max-width:1000px;
+    margin:0 auto;
+}
+.bakesCard{
+    display:flex;
+    align-items:center;
+    margin-bottom:50px;
+	padding:30px;
+	background: #ffffff;
+	border: 1px solid #582f05;
+	border-radius: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+}
+.bakesImg{
+    width:320px;
+    height:auto;
+    border-radius:15px;
+}
+.bakesCard{
+    display:flex;
+    align-items:center;
+}
+.bakesInfo{
+    flex:1;
+    padding-left:30px;
+}
+.englishRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+.englishName{
+    font-style:italic;
+    font-size:22px;
+    color:#666;
+    margin:0px;
+}
+.description{
+    line-height:1.8;
+    color:#555;
+    margin-bottom:15px;
+}
+.bakesCard .cardBottom{
+    justify-content:flex-end;
+    gap:12px;
+}
+
 
 /*注文フォーム*/
 .orderArea{
