@@ -239,7 +239,7 @@ footer{
 	margin-top: auto;
 }
 .footer{
-    margin-top: 30px;
+/*    margin-top: 30px;*/
     background: #582f05;
     padding: 10px 20px;
     display: flex;
@@ -254,7 +254,7 @@ footer{
 	margin: 0;	
 }
 .adminArea form{
-	margin: 0;
+	margin: 10px;
 }
 .adminButton{
 	width: 160px;
@@ -457,7 +457,6 @@ body.menu{
 .categoryBakesImg{
 	margin: 100px auto;
 }
-
 .menuGrid{
     width: 90%;
     max-width: 1000px;
@@ -515,8 +514,6 @@ body.menu{
     margin-bottom:15px;
 }
 
-
-
 .bakesList{
     width:90%;
     max-width:1000px;
@@ -557,6 +554,17 @@ body.menu{
     color:#666;
     margin:0px;
 }
+.pieces{
+	color:#595959;
+	background-color: #b7b7b7;
+}
+.bakesInfo .price{
+    color:#595959;
+    font-size:15px;
+    margin-top:20px;
+    padding-top:15px;
+    border-top:1px solid #582f05;
+}
 .description{
     line-height:1.8;
     color:#555;
@@ -567,10 +575,58 @@ body.menu{
     gap:12px;
 }
 
+/*蜂のアニメーション*/
+.bee{
+    position:absolute;
+    width:350px;
+    height:auto;
+}
+
+#cakes,
+#pastries{
+    position:relative;
+}
+/*CAKESの左*/
+.beeLeft{
+    left: 20px;
+    top: 50%;
+    animation: beeLeftMove 2s ease-in-out infinite alternate;
+}
+/*PASTRIESの右*/
+.beeRight{
+    right: 20px;
+    top: 50%;
+    animation: beeRightMove 2s ease-in-out infinite alternate;
+}
+/*反転*/
+@keyframes beeLeftMove{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(25px);
+    }
+}
+
+@keyframes beeRightMove{
+    from{
+        transform:scaleX(-1) translateX(0);
+    }
+    to{
+        transform:scaleX(-1) translateX(25px);
+    }
+}
 
 /*注文フォーム*/
 .orderArea{
     max-width: 1000px;
     margin: 80px auto;
     padding: 20px;
+}
+.menuFooterImg{
+    display:block;
+    width:100%;
+    max-height:280px;
+    object-fit:cover;
+	margin-bottom: 0;
 }
