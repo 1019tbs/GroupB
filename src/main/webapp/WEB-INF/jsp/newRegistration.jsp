@@ -1,15 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%-- JSTLの基本タグを使用するための設定 --%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>新規会員登録 | Honey Bloom</title>
-<!-- css -->
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/css/style.css">
+
+<link
+    rel="stylesheet"
+    href="${pageContext.request.contextPath}/css/style.css">
 
 <style>
 body {
@@ -30,7 +40,9 @@ body {
     border: 1px solid #e6cfaa;
     border-radius: 12px;
     box-sizing: border-box;
-    box-shadow: 0 4px 12px rgba(100, 70, 30, 0.12);
+    box-shadow:
+        0 4px 12px
+        rgba(100, 70, 30, 0.12);
 }
 
 h1 {
@@ -77,7 +89,9 @@ select {
 input:focus,
 select:focus {
     border-color: #b67a33;
-    outline: 2px solid rgba(182, 122, 51, 0.18);
+    outline:
+        2px solid
+        rgba(182, 122, 51, 0.18);
 }
 
 .postal-row {
@@ -157,19 +171,23 @@ button,
 </style>
 </head>
 
-<body class= "newRegistration">
+<body class="newRegistration">
+
 <!-- 背景画像 -->
-<img src="${pageContext.request.contextPath}/images/registerTop.png"
-     class="registerTop"
-     alt="登録画面トップ">
+<img
+    src="${pageContext.request.contextPath}/images/registerTop.png"
+    class="registerTop"
+    alt="登録画面トップ">
 
-<img src="${pageContext.request.contextPath}/images/registerLeft.png"
-     class="registerLeft"
-     alt="登録画面左">
+<img
+    src="${pageContext.request.contextPath}/images/registerLeft.png"
+    class="registerLeft"
+    alt="登録画面左">
 
-<img src="${pageContext.request.contextPath}/images/registerRight.png"
-     class="registerRight"
-     alt="登録画面右">
+<img
+    src="${pageContext.request.contextPath}/images/registerRight.png"
+    class="registerRight"
+    alt="登録画面右">
 
 <div class="container">
 
@@ -179,42 +197,50 @@ button,
         必要事項を入力して「登録する」を押してください。
     </p>
 
-<%-- Controllerからエラーメッセージが渡された場合 --%>
-<% if (request.getAttribute("errorMsg") != null) {  %>
-    <div class="error-message">
-        <%= request.getAttribute("errorMsg") %>
-    </div> 
-<% } %>
+    <%--
+        ControllerからerrorMsgが渡された場合だけ、
+        エラーメッセージを表示します。
+    --%>
+    <c:if test="${not empty errorMsg}">
+        <div class="error-message">
+            <c:out value="${errorMsg}" />
+        </div>
+    </c:if>
 
-<form 
-    action="${pageContext.request.contextPath}/registration"
-    method="post">
-    
-    <div class="form-group">
-        <label for="memberId">
-            会員ID
-            <span class="required">必須</span>
-        </label>
-        
-        <input 
-            type="text"
-            id="memberId"
-            name="memberId"
-            value="${memberId}"
-            minlength="4" 
-            maxlength="20"
-            pattern="[A-Za-z0-9]+"
-            title="会員IDは半角英数字で入力してください"
-            autocomplete="username"
-            required>
-            
-         <span class="help-text">
-             半角英数字4～20文字で入力してください。
-             会員IDは登録後に変更できません。
-         </span>
-     </div>
-     
-      <div class="form-group">
+    <form
+        action="${pageContext.request.contextPath}/registration"
+        method="post">
+
+        <div class="form-group">
+
+<label for="memberId">
+    ログインID（会員ID）
+    <span class="required">必須</span>
+</label>
+
+<input
+    type="text"
+    id="memberId"
+    name="memberId"
+    value="${memberId}"
+    minlength="4"
+    maxlength="20"
+    pattern="[A-Za-z0-9]+"
+    placeholder="例：hanako123"
+    title="半角英数字4～20文字で入力してください"
+    autocomplete="username"
+    required>
+
+<span class="help-text">
+    ログイン時に使用する、ご自身で決めるIDです。
+    半角英数字4～20文字で入力してください。
+    登録後は変更できません。
+</span>
+
+        </div>
+
+        <div class="form-group">
+
             <label for="password">
                 パスワード
                 <span class="required">必須</span>
@@ -234,9 +260,11 @@ button,
             <span class="help-text">
                 英字と数字を含む8文字以上で入力してください。
             </span>
+
         </div>
 
         <div class="form-group">
+
             <label for="passwordConfirm">
                 パスワード（確認）
                 <span class="required">必須</span>
@@ -250,9 +278,11 @@ button,
                 maxlength="64"
                 autocomplete="new-password"
                 required>
+
         </div>
 
         <div class="form-group">
+
             <label for="memberName">
                 氏名
                 <span class="required">必須</span>
@@ -266,15 +296,18 @@ button,
                 maxlength="50"
                 autocomplete="name"
                 required>
+
         </div>
 
         <div class="form-group">
+
             <label for="postalCode">
                 郵便番号
                 <span class="required">必須</span>
             </label>
 
             <div class="postal-row">
+
                 <input
                     type="text"
                     id="postalCode"
@@ -294,14 +327,17 @@ button,
                     id="addressSearchButton">
                     住所検索
                 </button>
+
             </div>
 
             <span class="help-text">
                 ハイフンあり、なしのどちらでも入力できます。
             </span>
+
         </div>
 
         <div class="form-group">
+
             <label for="address">
                 住所
                 <span class="required">必須</span>
@@ -315,9 +351,11 @@ button,
                 maxlength="150"
                 autocomplete="street-address"
                 required>
+
         </div>
 
         <div class="form-group">
+
             <label for="phoneNumber">
                 電話番号
                 <span class="required">必須</span>
@@ -335,9 +373,11 @@ button,
                 title="電話番号を正しい形式で入力してください"
                 autocomplete="tel"
                 required>
+
         </div>
 
         <div class="form-group">
+
             <label for="birthDate">
                 生年月日
                 <span class="required">必須</span>
@@ -350,9 +390,11 @@ button,
                 value="${birthDate}"
                 autocomplete="bday"
                 required>
+
         </div>
 
         <div class="form-group">
+
             <label for="email">
                 メールアドレス
                 <span class="required">必須</span>
@@ -367,9 +409,11 @@ button,
                 placeholder="example@example.com"
                 autocomplete="email"
                 required>
+
         </div>
 
         <div class="form-group">
+
             <label for="paymentMethod">
                 支払方法
                 <span class="required">必須</span>
@@ -384,22 +428,36 @@ button,
                     選択してください
                 </option>
 
-                <option value="credit">
+                <option
+                    value="credit"
+                    ${paymentMethod == 'credit'
+                        ? 'selected' : ''}>
                     クレジットカード
                 </option>
 
-                <option value="bank">
+                <option
+                    value="bank"
+                    ${paymentMethod == 'bank'
+                        ? 'selected' : ''}>
                     銀行振込
                 </option>
 
-                <option value="cash_on_delivery">
+                <option
+                    value="cash_on_delivery"
+                    ${paymentMethod == 'cash_on_delivery'
+                        ? 'selected' : ''}>
                     代金引換
                 </option>
 
-                <option value="convenience_store">
+                <option
+                    value="convenience_store"
+                    ${paymentMethod == 'convenience_store'
+                        ? 'selected' : ''}>
                     コンビニ払い
                 </option>
+
             </select>
+
         </div>
 
         <div class="button-area">
@@ -417,59 +475,85 @@ button,
             </button>
 
         </div>
-        
-     </form>
+
+    </form>
+
 </div>
 
 <script>
 "use strict";
 
-const form = document.querySelector("form");
-const password = document.getElementById("password");
+const form =
+        document.querySelector("form");
+
+const password =
+        document.getElementById("password");
+
 const passwordConfirm =
         document.getElementById("passwordConfirm");
 
-form.addEventListener("submit", function(event) {
+/*
+ * 登録時にパスワードが一致するか確認します。
+ *
+ * Controller側でも確認しているため、
+ * JavaScriptを無効にされても登録されません。
+ */
+form.addEventListener(
+        "submit",
+        function(event) {
+
     passwordConfirm.setCustomValidity("");
 
-    if (password.value !== passwordConfirm.value) {
+    if (password.value !==
+            passwordConfirm.value) {
+
         event.preventDefault();
+
         passwordConfirm.setCustomValidity(
                 "確認用パスワードが一致していません");
+
         passwordConfirm.reportValidity();
     }
 });
 
-passwordConfirm.addEventListener("input", function() {
-    if (password.value === passwordConfirm.value) {
+passwordConfirm.addEventListener(
+        "input",
+        function() {
+
+    if (password.value ===
+            passwordConfirm.value) {
+
         passwordConfirm.setCustomValidity("");
     }
 });
 
-document.getElementById("addressSearchButton")
-        .addEventListener("click", function() {
+/*
+ * 郵便番号から住所を検索するボタンです。
+ *
+ * 現時点では住所検索Controllerが未接続のため、
+ * 入力値の確認だけ行います。
+ */
+document.getElementById(
+        "addressSearchButton")
+        .addEventListener(
+                "click",
+                function() {
 
     const postalCode =
-             document.getElementById("postalCode").value;
+            document.getElementById(
+                    "postalCode").value;
 
     const normalizedPostalCode =
-             postalCode.replace(/-/g, "");
+            postalCode.replace(/-/g, "");
 
-    if (!/^\d{7}$/.test(normalizedPostalCode)) {
-        alert("郵便番号を7桁で入力してください。");
+    if (!/^\d{7}$/.test(
+            normalizedPostalCode)) {
+
+        alert(
+            "郵便番号を7桁で入力してください。");
+
         return;
-}
-
- /*
-     * 住所検索は、Controller側に検索処理が完成したら接続します。
-     *
-     * 例：
-     * fetch(
-     *   contextPath
-     *   + "/address/search?postalCode="
-     *   + normalizedPostalCode
-     * )
-     */
+    }
 
     alert(
         "郵便番号から住所を検索する処理は"
@@ -478,5 +562,6 @@ document.getElementById("addressSearchButton")
 </script>
 
 <jsp:include page="common/footer.jsp" />
+
 </body>
 </html>
