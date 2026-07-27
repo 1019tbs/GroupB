@@ -29,7 +29,7 @@ public class PostalCodeDAO {
 
             if (rs.next()) {
                 PostalCodeSearch result = new PostalCodeSearch();
-                result.setPostal_code(rs.getString("postal_code"));
+                result.setPostalCode(rs.getString("postal_code"));
                 result.setPrefecture(rs.getString("prefecture"));
                 result.setCity(rs.getString("city"));
                 result.setTown(rs.getString("town"));

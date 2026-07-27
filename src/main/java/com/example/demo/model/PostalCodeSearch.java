@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostalCodeSearch {
-	private String postal_code;
+	private String postalCode;
 	private String prefecture;
 	private String city;
 	private String town;
