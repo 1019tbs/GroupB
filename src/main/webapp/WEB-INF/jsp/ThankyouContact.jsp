@@ -6,8 +6,10 @@
 <meta charset="UTF-8">
 <title>お問い合わせありがとうございました</title>
 </head>
-<body>
-
+<body class= "contact">
+<div class= "thankContainer">
+</div>
+<img alt="" src="">
 <h1>お問い合わせありがとうございました。</h1>
 
 <p>
