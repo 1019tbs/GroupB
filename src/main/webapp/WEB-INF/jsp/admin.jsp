@@ -24,7 +24,7 @@
 
     <br>
 
-    <form action="${pageContext.request.contextPath}/admin/stock" method="get">
+    <form action="${pageContext.request.contextPath}/inventory" method="get">
         <button type="submit">在庫確認</button>
     </form>
 

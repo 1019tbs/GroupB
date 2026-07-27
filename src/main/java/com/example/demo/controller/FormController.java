@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dao.FormContactDAO;
-import com.example.demo.dao.MenuDAO;
+import com.example.demo.dao.OrderDAO;
 import com.example.demo.model.FormContact;
-import com.example.demo.model.MenuList;
+import com.example.demo.model.Order;
 
 @Controller
 public class FormController {
@@ -22,7 +22,7 @@ public class FormController {
     private FormContactDAO formContactDAO;
 
     @Autowired
-    private MenuDAO menuDAO;
+    private OrderDAO orderDAO;
 
     /**
      * お問い合わせ画面表示
@@ -43,52 +43,76 @@ public class FormController {
     /**
      * お問い合わせ・予約送信
      */
-    
     @PostMapping("/form/submit")
     public String submitForm(
 
-            @RequestParam(name = "genre") String genre,
+            @RequestParam(name = "genre")
+            String genre,
 
-            @RequestParam(name = "customerName", required = false)
+            @RequestParam(
+                    name = "customerName",
+                    required = false)
             String customerName,
 
-            @RequestParam(name = "email", required = false)
+            @RequestParam(
+                    name = "email",
+                    required = false)
             String email,
 
-            @RequestParam(name = "phone", required = false)
+            @RequestParam(
+                    name = "phone",
+                    required = false)
             String phone,
 
-            @RequestParam(name = "subject", required = false)
+            @RequestParam(
+                    name = "subject",
+                    required = false)
             String subject,
 
-            @RequestParam(name = "message", required = false)
+            @RequestParam(
+                    name = "message",
+                    required = false)
             String message,
 
-            @RequestParam(name = "menuId", required = false)
+            @RequestParam(
+                    name = "menuId",
+                    required = false)
             Integer menuId,
 
-            @RequestParam(name = "reservationDate", required = false)
+            @RequestParam(
+                    name = "reservationDate",
+                    required = false)
             String reservationDate,
 
-            @RequestParam(name = "reservationTime", required = false)
+            @RequestParam(
+                    name = "reservationTime",
+                    required = false)
             String reservationTime,
-
-            @RequestParam(name = "numberOfPeople", required = false)
-            Integer numberOfPeople,
 
             Model model) {
 
-        if (customerName == null || customerName.isBlank()) {
-            model.addAttribute("errorMsg", "お名前を入力してください");
+        if (customerName == null
+                || customerName.isBlank()) {
+
+            model.addAttribute(
+                    "errorMsg",
+                    "お名前を入力してください");
+
             return returnInputPage(genre);
         }
 
-        if (email == null || email.isBlank()) {
-            model.addAttribute("errorMsg", "メールアドレスを入力してください");
+        if (email == null
+                || email.isBlank()) {
+
+            model.addAttribute(
+                    "errorMsg",
+                    "メールアドレスを入力してください");
+
             return returnInputPage(genre);
         }
 
         if ("contact".equals(genre)) {
+
             return saveContact(
                     customerName,
                     email,
@@ -99,6 +123,7 @@ public class FormController {
         }
 
         if ("reservation".equals(genre)) {
+
             return saveReservation(
                     customerName,
                     email,
@@ -106,15 +131,16 @@ public class FormController {
                     menuId,
                     reservationDate,
                     reservationTime,
-                    numberOfPeople,
                     model);
         }
 
-        model.addAttribute("errorMsg", "送信内容が正しくありません");
+        model.addAttribute(
+                "errorMsg",
+                "送信内容が正しくありません");
+
         return "form";
     }
 
-    
     /**
      * お問い合わせ保存
      */
@@ -126,13 +152,23 @@ public class FormController {
             String message,
             Model model) {
 
-        FormContact contact = new FormContact();
+        FormContact contact =
+                new FormContact();
 
-        contact.setCustomerName(customerName);
-        contact.setEmail(email);
-        contact.setPhone(phone);
-        contact.setSubject(subject);
-        contact.setMessage(message);
+        contact.setCustomerName(
+                customerName);
+
+        contact.setEmail(
+                email);
+
+        contact.setPhone(
+                phone);
+
+        contact.setSubject(
+                subject);
+
+        contact.setMessage(
+                message);
 
         if (!formContactDAO.insert(contact)) {
 
@@ -143,8 +179,13 @@ public class FormController {
             return "form";
         }
 
-        model.addAttribute("genre", "お問い合わせ");
-        model.addAttribute("customerName", customerName);
+        model.addAttribute(
+                "genre",
+                "お問い合わせ");
+
+        model.addAttribute(
+                "customerName",
+                customerName);
 
         return "ThankyouContact";
     }
@@ -159,27 +200,70 @@ public class FormController {
             Integer menuId,
             String reservationDate,
             String reservationTime,
-            Integer numberOfPeople,
             Model model) {
 
         try {
 
-            MenuList reservation = new MenuList();
+            /*
+             * 予約項目の未入力確認
+             */
+            if (menuId == null) {
 
-            reservation.setCustomerName(customerName);
-            reservation.setEmail(email);
-            reservation.setPhone(phone);
-            reservation.setMenuId(menuId);
+                model.addAttribute(
+                        "errorMsg",
+                        "商品を選択してください");
 
-            reservation.setReservationDate(
-                    LocalDate.parse(reservationDate));
+                return "menu";
+            }
 
-            reservation.setReservationTime(
-                    LocalTime.parse(reservationTime));
+            if (reservationDate == null
+                    || reservationDate.isBlank()) {
 
-            reservation.setNumberOfPeople(numberOfPeople);
+                model.addAttribute(
+                        "errorMsg",
+                        "予約日を入力してください");
 
-            if (!menuDAO.insertReservation(reservation)) {
+                return "menu";
+            }
+
+            if (reservationTime == null
+                    || reservationTime.isBlank()) {
+
+                model.addAttribute(
+                        "errorMsg",
+                        "予約時間を入力してください");
+
+                return "menu";
+            }
+
+            Order order =
+                    new Order();
+
+            order.setCustomerName(
+                    customerName);
+
+            order.setEmail(
+                    email);
+
+            order.setPhone(
+                    phone);
+
+            /*
+             * 画面ではmenuIdという名前だが、
+             * ordersテーブルではproduct_idとして保存する
+             */
+            order.setProductId(
+                    menuId.longValue());
+
+            order.setReservationDate(
+                    LocalDate.parse(
+                            reservationDate));
+
+            order.setReservationTime(
+                    LocalTime.parse(
+                            reservationTime));
+
+            if (!orderDAO.insert(order)) {
 
                 model.addAttribute(
                         "errorMsg",
@@ -188,12 +272,19 @@ public class FormController {
                 return "menu";
             }
 
-            model.addAttribute("genre", "予約");
-            model.addAttribute("customerName", customerName);
+            model.addAttribute(
+                    "genre",
+                    "予約");
+
+            model.addAttribute(
+                    "customerName",
+                    customerName);
 
             return "ThankyouShop";
 
         } catch (Exception e) {
+
+            e.printStackTrace();
 
             model.addAttribute(
                     "errorMsg",
@@ -203,11 +294,11 @@ public class FormController {
         }
     }
 
-
     /**
      * エラー時の戻り先判定
      */
-    private String returnInputPage(String genre) {
+    private String returnInputPage(
+            String genre) {
 
         if ("reservation".equals(genre)) {
             return "menu";

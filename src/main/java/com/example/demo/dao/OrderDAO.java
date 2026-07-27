@@ -15,18 +15,94 @@ import com.example.demo.model.Order;
 @Repository
 public class OrderDAO {
 
+    /*
+     * PostgreSQL接続情報
+     */
     private static final String JDBC_URL =
             "jdbc:postgresql://localhost:5432/groupb_project";
 
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASS = "psql";
+    private static final String DB_USER =
+            "postgres";
+
+    private static final String DB_PASS =
+            "psql";
+
 
     /**
-     * 予約一覧を取得
+     * 予約情報を登録する
+     *
+     * @param order 予約情報
+     * @return 登録成功：true
+     *         登録失敗：false
+     */
+    public boolean insert(Order order) {
+
+        String sql =
+                "INSERT INTO orders "
+              + "(customer_name, email, phone, product_id, "
+              + "reservation_date, reservation_time) "
+              + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (
+            Connection conn =
+                    DriverManager.getConnection(
+                            JDBC_URL,
+                            DB_USER,
+                            DB_PASS);
+
+            PreparedStatement ps =
+                    conn.prepareStatement(sql)
+        ) {
+
+            ps.setString(
+                    1,
+                    order.getCustomerName());
+
+            ps.setString(
+                    2,
+                    order.getEmail());
+
+            ps.setString(
+                    3,
+                    order.getPhone());
+
+            ps.setLong(
+                    4,
+                    order.getProductId());
+
+            ps.setDate(
+                    5,
+                    java.sql.Date.valueOf(
+                            order.getReservationDate()));
+
+            ps.setTime(
+                    6,
+                    java.sql.Time.valueOf(
+                            order.getReservationTime()));
+
+            int result =
+                    ps.executeUpdate();
+
+            return result == 1;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
+
+    /**
+     * 予約情報をすべて取得する
+     *
+     * @return 予約一覧
      */
     public List<Order> findAll() {
 
-        List<Order> orderList = new ArrayList<>();
+        List<Order> orderList =
+                new ArrayList<>();
 
         String sql =
                 "SELECT "
@@ -51,16 +127,17 @@ public class OrderDAO {
                             DB_USER,
                             DB_PASS);
 
-            PreparedStatement pStmt =
+            PreparedStatement ps =
                     conn.prepareStatement(sql);
 
             ResultSet rs =
-                    pStmt.executeQuery()
+                    ps.executeQuery()
         ) {
 
             while (rs.next()) {
 
-                Order order = new Order();
+                Order order =
+                        new Order();
 
                 order.setOrderId(
                         rs.getLong("order_id"));
@@ -80,22 +157,32 @@ public class OrderDAO {
                 order.setProductName(
                         rs.getString("product_name"));
 
-                order.setReservationDate(
-                        rs.getDate("reservation_date")
-                          .toLocalDate());
+                if (rs.getDate("reservation_date") != null) {
 
-                order.setReservationTime(
-                        rs.getTime("reservation_time")
-                          .toLocalTime());
+                    order.setReservationDate(
+                            rs.getDate("reservation_date")
+                              .toLocalDate());
+                }
 
-                order.setCreatedAt(
-                        rs.getTimestamp("created_at")
-                          .toLocalDateTime());
+                if (rs.getTime("reservation_time") != null) {
+
+                    order.setReservationTime(
+                            rs.getTime("reservation_time")
+                              .toLocalTime());
+                }
+
+                if (rs.getTimestamp("created_at") != null) {
+
+                    order.setCreatedAt(
+                            rs.getTimestamp("created_at")
+                              .toLocalDateTime());
+                }
 
                 orderList.add(order);
             }
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
