@@ -8,7 +8,9 @@
 <!-- cssファイル読み込み -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
-	
+</head>
+
+<body class="menu">
 <img class="menuTopImg" alt="メニュー上部画像" src="${pageContext.request.contextPath}/images/menu_top.png">
 <div class= "menuHeader">
 	<nav class= "menuNav">
@@ -19,25 +21,10 @@
 		<a href="#pastries">PASTRIES</a>
 	</nav>
 </div>
-
-</head>
-
-<body class="menu">
-<!--<img class="menuTopImg" alt="メニュー上部画像" src="${pageContext.request.contextPath}/images/menu_top.png">-->
-<!--<div class= "menuHeader">-->
-<!--	<nav class= "menuNav">-->
-<!--		<a href="#cakes">CAKES</a>-->
-<!--		/-->
-<!--		<a href="#bakes">BAKES</a>-->
-<!--		/-->
-<!--		<a href="#pastries">PASTRIES</a>-->
-<!--	</nav>-->
-<!--</div>-->
 <img class= "menuNextImg" alt="今週のベイク便り" src="${pageContext.request.contextPath}/images/menu_next.png">
 
-
 	<section id= "cakes">
-	<img class= "categoryCakeImg" alt="CAKES" src="${pageContext.request.contextPath}/images/category_cake.png">
+	<img class= "categoryImg categoryCakesImg" alt="CAKES" src="${pageContext.request.contextPath}/images/category_cake.png">
 	
 	<div class= "menuGrid">
 		<div class= "menuCard">
@@ -100,15 +87,78 @@
 			<input type= "number" name="mooseCount" min= "0" value= "0">
 			<button class= "cartButton">カート追加</button>
 			</div>
-			
 		</div>
 		
 	</div>
 	</section>
 	<section id= "bakes">
-	
+	<img class= "categoryImg categoryBakesImg" alt="BAKES" src="${pageContext.request.contextPath}/images/category_bakes.png">
+		<div class= "bakesList">
+			<div class= "bakesCard">
+			<img class= "bakesImg" alt="クラシック焼き菓子セット" src="${pageContext.request.contextPath}/images/bakes_classic.png">
+				<div class= "bakesInfo">
+				<h3 class= "itemName">クラシック焼き菓子セット</h3>
+				<div class= "englishRow">
+					<p class= "englishName">CLASSIC BAKE BOX</p>
+					<span class= "pieces">12 PIECES</span>
+				</div>
+				
+				<p class= "description">
+				ショートブレッド ×4  フロランタン×4<br>
+				アイシングクッキー ×2  バイカラクッキー ×2<br>
+				</p>
+				<p class= "price">￥1,650(税込み)</p>
+				<div class= "cardBottom">
+					<span>注文数</span>
+					<input type= "number" name= "classicCount"min= "0" value= "0">
+					<button class= "cartButton">カート追加</button>
+				</div>
+				</div>
+			</div>
+			
+			<div class= "bakesCard">
+			<img class= "bakesImg" alt="フルーティータイムセット" src="${pageContext.request.contextPath}/images/bakes_fruity.png">
+				<div class= "bakesInfo">
+				<h3 class= "itemName">フルーティータイムセット</h3>
+				<p class= "englishName">FRUITY TEA TIME BOX</p>
+				<p class= "description">
+				ラズベリーフィナンシェ ×2  レモンのパンケーキ ×2<br>
+				クランベリーとオレンジのフルーツケーキ ×2<br>
+				アプリコットとピスタチオのサブレサンド ×2<br>
+				</p>
+				<p class= "price">￥1,580(税込み)</p>
+				<div class= "cardBottom">
+					<span>注文数</span>
+					<input type= "number" name= "fruitTeaCount" min= "0" value= "0">
+					<button class= "cartButton">カート追加</button>
+				</div>
+				</div>
+			</div>
+			
+			<div class= "bakesCard">
+			<img class= "bakesImg" alt="ハニー&ナッツタイムセット" src="${pageContext.request.contextPath}/images/bakes_nuts.png">
+				<div class= "bakesInfo">
+				<h3 class= "itemName">Honey & ナッツタイムセット</h3>
+				<p class= "englishName">HONEY & NUTS BAKE BOX</p>
+				<p class= "description">
+				ハニー＆タイムのショートブレッド ×2<br>
+				アーモンドとくるみのフロランタン ×2<br>
+				はちみつロープ ×2 ／ メープルナッツフィナンシェ ×2<br>
+				</p>
+				<p class= "price">￥1,480(税込み)</p>
+				<div class= "cardBottom">
+					<span>注文数</span>
+					<input type= "number" name= "honeyNutCount" min= "0" value= "0">
+					<button class= "cartButton">カート追加</button>
+				</div>
+				</div>
+			</div>
+			
+		
+		</div>
 	</section>
 	<section id= "pastries">
+	<img class= "categoryImg categoryPastriesImg" alt="PASTRIES" src="${pageContext.request.contextPath}/images/category_pastries.png">
 	
 	</section>
 
@@ -133,7 +183,7 @@
 
 		<label>予約時間</label> <input type="time" name="reservationTime">
 
-		<label>予約人数</label> <input type="number" name="numberOfPeople" min="1">
+<!--		<label>予約人数</label> <input type="number" name="numberOfPeople" min="1">-->
 
 		<p style="color: red;">${errorMsg}</p>
 
