@@ -34,7 +34,7 @@ public class PostPostalCodeService {
 
 		// 4. ハイフンを除去した結果が「ちょうど7桁」になっているか確認
 		// ("12345678" のようなハイフンなし8文字などはここで弾かれる)
-		if (cleanCode.length() != 7) {
+		if (cleanCode.matches("\\d{7}")) {
 			return null;
 		}
 			// 5. 7桁に整えた郵便番号で DAO を呼び出し、検索結果を返す
