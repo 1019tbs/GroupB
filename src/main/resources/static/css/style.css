@@ -427,25 +427,72 @@ body.menu{
 }
 .menuTopImg{
 	width:100%;
-	display: block;
-	max-height: 650px;
-	object-fit: cover;
 }
 .menuNav{
 	position: absolute;
-    text-align: center;
 	left: 18%;
 	bottom: 20%;
     font-family: Georgia;
     font-size: 30px;
 }
-
 .menuNav a{
     color: #7a4a00;
     text-decoration: none;
     margin: 0 10px;
 }
-
 .menuNav a:hover{
     text-decoration: underline;
+}
+.menuNextImg,
+.categoryCakeImg{
+	display: block;
+	width: 100%;
+	max-width: 800px;
+	height: auto;
+	margin: 100px auto;
+}
+.categoryCakeImg{
+	margin: 200px auto;
+}
+.menuGrid{
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 30px;
+}
+.menuCard{
+    background:#ffffff;
+    border:2px solid #8c6b43;
+    border-radius:50px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 4px 8px rgba(0,0,0,.15);
+}
+.cardBottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+}
+.cardBottom input{
+    width:55px;
+}
+.cartButton{
+    width:90px;
+    height:30px;
+    background:#783f04;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:12px;
+
+}
+
+/*注文フォーム*/
+.orderArea{
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 20px;
 }
