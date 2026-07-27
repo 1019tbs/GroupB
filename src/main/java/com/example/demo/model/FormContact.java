@@ -1,22 +1,28 @@
 package com.example.demo.model;
 
-public class FormContact {
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-    private int contactId;
+public class FormContact implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private long contactId;
     private String customerName;
     private String subject;
     private String email;
     private String phone;
     private String message;
+    private LocalDateTime createdAt;
 
     public FormContact() {
     }
 
-    public int getContactId() {
+    public long getContactId() {
         return contactId;
     }
 
-    public void setContactId(int contactId) {
+    public void setContactId(long contactId) {
         this.contactId = contactId;
     }
 
@@ -24,9 +30,7 @@ public class FormContact {
         return customerName;
     }
 
-    public void setCustomerName(
-            String customerName) {
-
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
@@ -34,9 +38,7 @@ public class FormContact {
         return subject;
     }
 
-    public void setSubject(
-            String subject) {
-
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
@@ -44,9 +46,7 @@ public class FormContact {
         return email;
     }
 
-    public void setEmail(
-            String email) {
-
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -54,9 +54,7 @@ public class FormContact {
         return phone;
     }
 
-    public void setPhone(
-            String phone) {
-
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -64,9 +62,15 @@ public class FormContact {
         return message;
     }
 
-    public void setMessage(
-            String message) {
-
+    public void setMessage(String message) {
         this.message = message;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

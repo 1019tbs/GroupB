@@ -1,0 +1,233 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #f5f5f5;
+    font-family: Arial, "Yu Gothic", "Meiryo", sans-serif;
+    color: #333;
+}
+
+.contact-admin {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #666;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    opacity: 0.8;
+}
+
+.empty-message {
+    padding: 50px;
+    border-radius: 12px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-item {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr) 170px;
+    min-height: 220px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 左側の日付 */
+
+.contact-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    background-color: #fff8dc;
+    text-align: center;
+}
+
+.date-label {
+    font-size: 14px;
+    color: #777;
+}
+
+.date-value {
+    font-size: 16px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+/* 中央の本文 */
+
+.contact-content {
+    padding: 25px 30px;
+}
+
+.contact-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.contact-title h2 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.contact-id {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: #eee;
+    font-size: 13px;
+}
+
+.customer-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 25px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.contact-message {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 8px;
+    background-color: #fafafa;
+    line-height: 1.8;
+}
+
+.contact-message p {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* 右側のボタン */
+
+.contact-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    border-left: 1px solid #ddd;
+    background-color: #fafafa;
+}
+
+.contact-actions form {
+    width: 100%;
+}
+
+.action-button {
+    width: 100%;
+    padding: 11px 8px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    opacity: 0.8;
+}
+
+.detail-button {
+    background-color: #4d86c6;
+}
+
+.complete-button {
+    background-color: #4f9d69;
+}
+
+.delete-button {
+    background-color: #cc5555;
+}
+
+@media screen and (max-width: 850px) {
+
+    .contact-item {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-date {
+        flex-direction: row;
+        justify-content: flex-start;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .contact-actions {
+        flex-direction: row;
+        border-top: 1px solid #ddd;
+        border-left: none;
+    }
+
+    .contact-actions form {
+        flex: 1;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .contact-content {
+        padding: 20px;
+    }
+
+    .contact-title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .contact-actions {
+        flex-direction: column;
+    }
+}
