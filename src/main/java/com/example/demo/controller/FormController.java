@@ -2,9 +2,6 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-
-import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.dao.FormContactDAO;
 import com.example.demo.dao.MenuDAO;
 import com.example.demo.model.FormContact;
-import com.example.demo.model.Member;
 import com.example.demo.model.MenuList;
 
 @Controller
@@ -207,51 +203,6 @@ public class FormController {
         }
     }
 
-    /**
-     * 管理者画面
-     */
-    @GetMapping("/admin")
-    public String showAdmin(
-            HttpSession session,
-            Model model) {
-
-        Member loginMember =
-                (Member) session.getAttribute("loginMember");
-
-        if (loginMember == null) {
-
-            model.addAttribute(
-                    "errorMsg",
-                    "ログインしてください");
-
-            return "index";
-        }
-
-        if (!"admin".equals(loginMember.getRole())) {
-
-            model.addAttribute(
-                    "errorMsg",
-                    "管理者のみ閲覧できます");
-
-            return "main";
-        }
-
-        List<FormContact> contactList =
-                formContactDAO.findAll();
-
-        List<MenuList> reservationList =
-                menuDAO.findAllReservations();
-
-        model.addAttribute(
-                "contactList",
-                contactList);
-
-        model.addAttribute(
-                "reservationList",
-                reservationList);
-
-        return "admin";
-    }
 
     /**
      * エラー時の戻り先判定
