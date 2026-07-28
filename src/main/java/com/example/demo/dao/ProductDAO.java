@@ -15,32 +15,17 @@ import com.example.demo.model.Product;
 
 /**
  * productsテーブルへアクセスするDAOクラスです。
- *
- * 主な処理
- * ・商品をすべて取得する
- * ・商品IDで商品を1件取得する
- * ・在庫数を更新する
- * ・購入数量分だけ在庫を減らす
  */
 @Repository
 public class ProductDAO {
 
-    /*
-     * PostgreSQLへの接続情報です。
-     */
     private static final String JDBC_URL =
             "jdbc:postgresql://localhost:5432/groupb_project";
 
     private static final String DB_USER = "postgres";
     private static final String DB_PASS = "psql";
 
-    /*
-     * 商品一覧を取得するSQLです。
-     *
-     * product_idの小さい順に表示します。
-     */
-    private static final String SELECT_ALL =
-            "SELECT " +
+    private static final String PRODUCT_COLUMNS =
             "product_id, " +
             "product_name, " +
             "price, " +
@@ -48,75 +33,117 @@ public class ProductDAO {
             "category_id, " +
             "description, " +
             "image_url, " +
+            "active, " +
             "created_at, " +
-            "updated_at " +
+            "updated_at ";
+
+    /** お客様向け：取扱中の商品だけ取得します。 */
+    private static final String SELECT_ALL_ACTIVE =
+            "SELECT " + PRODUCT_COLUMNS +
             "FROM products " +
+            "WHERE active = TRUE " +
             "ORDER BY product_id";
 
-    /*
-     * 商品IDを指定して商品を1件取得するSQLです。
-     */
+    /** 管理者向け：取扱停止中の商品も含めて取得します。 */
+    private static final String SELECT_ALL_FOR_ADMIN =
+            "SELECT " + PRODUCT_COLUMNS +
+            "FROM products " +
+            "ORDER BY active DESC, product_id";
+
     private static final String SELECT_BY_ID =
-            "SELECT " +
-            "product_id, " +
-            "product_name, " +
-            "price, " +
-            "stock, " +
-            "category_id, " +
-            "description, " +
-            "image_url, " +
-            "created_at, " +
-            "updated_at " +
+            "SELECT " + PRODUCT_COLUMNS +
             "FROM products " +
             "WHERE product_id = ?";
 
-    /*
-     * 在庫数を指定された値へ変更するSQLです。
-     *
-     * 在庫を更新した時刻もupdated_atへ記録します。
-     */
-    private static final String UPDATE_STOCK =
-            "UPDATE products " +
-            "SET stock = ?, " +
+    private static final String SELECT_ACTIVE_BY_ID =
+            "SELECT " + PRODUCT_COLUMNS +
+            "FROM products " +
+            "WHERE product_id = ? " +
+            "AND active = TRUE";
+
+    private static final String EXISTS_BY_NAME =
+            "SELECT 1 " +
+            "FROM products " +
+            "WHERE LOWER(product_name) = LOWER(?) " +
+            "LIMIT 1";
+
+    private static final String EXISTS_BY_NAME_EXCEPT_ID =
+            "SELECT 1 " +
+            "FROM products " +
+            "WHERE LOWER(product_name) = LOWER(?) " +
+            "AND product_id <> ? " +
+            "LIMIT 1";
+
+    private static final String INSERT_PRODUCT =
+            "INSERT INTO products (" +
+            "product_name, price, stock, category_id, " +
+            "description, image_url, active" +
+            ") VALUES (?, ?, ?, ?, ?, ?, TRUE)";
+
+    private static final String UPDATE_PRODUCT =
+            "UPDATE products SET " +
+            "product_name = ?, " +
+            "price = ?, " +
+            "stock = ?, " +
+            "category_id = ?, " +
+            "description = ?, " +
+            "image_url = ?, " +
             "updated_at = CURRENT_TIMESTAMP " +
             "WHERE product_id = ?";
 
-    /*
-     * 在庫が足りる場合だけ、購入数量分を減らすSQLです。
-     *
-     * stock >= ? があるため、
-     * 在庫数より多い数量は減らせません。
-     */
-    private static final String DECREASE_STOCK =
-            "UPDATE products " +
-            "SET stock = stock - ?, " +
+    private static final String UPDATE_STOCK =
+            "UPDATE products SET " +
+            "stock = ?, " +
             "updated_at = CURRENT_TIMESTAMP " +
-            "WHERE product_id = ? " +
-            "AND stock >= ?";
+            "WHERE product_id = ?";
+
+    private static final String UPDATE_ACTIVE =
+            "UPDATE products SET " +
+            "active = ?, " +
+            "updated_at = CURRENT_TIMESTAMP " +
+            "WHERE product_id = ?";
 
     /**
-     * 商品をすべて取得します。
-     *
-     * @return 商品一覧
+     * 在庫が足り、かつ取扱中の場合だけ在庫を減らします。
+     */
+    private static final String DECREASE_STOCK =
+            "UPDATE products SET " +
+            "stock = stock - ?, " +
+            "updated_at = CURRENT_TIMESTAMP " +
+            "WHERE product_id = ? " +
+            "AND stock >= ? " +
+            "AND active = TRUE";
+
+    /**
+     * 既存コードとの互換性を保つ商品一覧取得です。
+     * お客様向けを想定し、取扱中だけ返します。
      */
     public List<Product> findAll() {
+        return findAllActive();
+    }
+
+    /** お客様向けの商品一覧を取得します。 */
+    public List<Product> findAllActive() {
+        return executeProductListQuery(SELECT_ALL_ACTIVE);
+    }
+
+    /** 管理者向けの商品一覧を取得します。 */
+    public List<Product> findAllForAdmin() {
+        return executeProductListQuery(SELECT_ALL_FOR_ADMIN);
+    }
+
+    private List<Product> executeProductListQuery(String sql) {
 
         List<Product> productList = new ArrayList<>();
 
         try (
             Connection conn = getConnection();
-            PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery()
         ) {
-
-            /*
-             * 取得した商品を1件ずつProductへ変換し、
-             * 商品一覧へ追加します。
-             */
             while (rs.next()) {
                 productList.add(mapRow(rs));
             }
-
             return productList;
 
         } catch (SQLException e) {
@@ -125,32 +152,29 @@ public class ProductDAO {
         }
     }
 
-    /**
-     * 商品IDを使って商品を1件検索します。
-     *
-     * @param productId 商品ID
-     * @return 商品が見つかった場合はProduct、
-     *         見つからなかった場合はOptional.empty()
-     */
+    /** 取扱状態を問わず商品IDで取得します。 */
     public Optional<Product> findById(long productId) {
+        return findOne(SELECT_BY_ID, productId);
+    }
+
+    /** 注文処理などで、取扱中の商品だけを商品IDで取得します。 */
+    public Optional<Product> findActiveById(long productId) {
+        return findOne(SELECT_ACTIVE_BY_ID, productId);
+    }
+
+    private Optional<Product> findOne(String sql, long productId) {
 
         try (
             Connection conn = getConnection();
-            PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)
+            PreparedStatement ps = conn.prepareStatement(sql)
         ) {
-
-            /*
-             * SQLの1番目の「?」へ商品IDを設定します。
-             */
             ps.setLong(1, productId);
 
             try (ResultSet rs = ps.executeQuery()) {
-
                 if (rs.next()) {
                     return Optional.of(mapRow(rs));
                 }
             }
-
             return Optional.empty();
 
         } catch (SQLException e) {
@@ -159,33 +183,107 @@ public class ProductDAO {
         }
     }
 
-    /**
-     * 商品の在庫数を指定された値へ変更します。
-     *
-     * @param productId 商品ID
-     * @param stock     変更後の在庫数
-     * @return 1件更新できた場合はtrue
-     */
+    /** 同じ商品名が登録済みか確認します。 */
+    public boolean existsByProductName(String productName) {
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(EXISTS_BY_NAME)
+        ) {
+            ps.setString(1, productName);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "商品名の重複確認に失敗しました。", e);
+        }
+    }
+
+    /** 編集対象以外に同じ商品名があるか確認します。 */
+    public boolean existsByProductNameExceptId(
+            String productName,
+            long productId) {
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps =
+                    conn.prepareStatement(EXISTS_BY_NAME_EXCEPT_ID)
+        ) {
+            ps.setString(1, productName);
+            ps.setLong(2, productId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "商品名の重複確認に失敗しました。", e);
+        }
+    }
+
+    /** 新しい商品を登録します。activeは必ずTRUEで登録します。 */
+    public boolean insert(Product product) {
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERT_PRODUCT)
+        ) {
+            setProductFields(ps, product);
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "商品の登録中にデータベースエラーが発生しました。", e);
+        }
+    }
+
+    /** 商品の基本情報と在庫数を更新します。 */
+    public boolean update(Product product) {
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(UPDATE_PRODUCT)
+        ) {
+            setProductFields(ps, product);
+            ps.setLong(7, product.getProductId());
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "商品情報の更新中にデータベースエラーが発生しました。", e);
+        }
+    }
+
+    private void setProductFields(
+            PreparedStatement ps,
+            Product product) throws SQLException {
+
+        ps.setString(1, product.getProductName());
+        ps.setBigDecimal(2, product.getPrice());
+        ps.setInt(3, product.getStock());
+        ps.setInt(4, product.getCategoryId());
+        ps.setString(5, product.getDescription());
+        ps.setString(6, product.getImageUrl());
+    }
+
+    /** 商品の在庫数を指定された値へ変更します。 */
     public boolean updateStock(long productId, int stock) {
+
+        if (stock < 0) {
+            throw new IllegalArgumentException(
+                    "在庫数は0以上で指定してください。");
+        }
 
         try (
             Connection conn = getConnection();
             PreparedStatement ps = conn.prepareStatement(UPDATE_STOCK)
         ) {
-
-            /*
-             * 1番目の「?」へ変更後の在庫数を設定します。
-             * 2番目の「?」へ商品IDを設定します。
-             */
             ps.setInt(1, stock);
             ps.setLong(2, productId);
-
-            /*
-             * 更新件数が1件ならtrueです。
-             *
-             * 商品IDが存在しなければ更新件数が0件になり、
-             * falseを返します。
-             */
             return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
@@ -194,37 +292,30 @@ public class ProductDAO {
         }
     }
 
-    /**
-     * 在庫が足りている場合だけ、
-     * 購入数量分の在庫を減らします。
-     *
-     * @param productId 商品ID
-     * @param quantity  購入数量
-     * @return 在庫を減らせた場合はtrue
-     */
-    public boolean decreaseStock(long productId, int quantity) {
+    /** 商品の取扱状態を変更します。 */
+    public boolean updateActive(long productId, boolean active) {
 
         try (
             Connection conn = getConnection();
-            PreparedStatement ps = conn.prepareStatement(DECREASE_STOCK)
+            PreparedStatement ps = conn.prepareStatement(UPDATE_ACTIVE)
         ) {
-
-            /*
-             * 1番目：在庫から減らす数量
-             * 2番目：商品ID
-             * 3番目：在庫が足りているか確認する数量
-             */
-            ps.setInt(1, quantity);
+            ps.setBoolean(1, active);
             ps.setLong(2, productId);
-            ps.setInt(3, quantity);
-
-            /*
-             * 次の場合は更新されずfalseになります。
-             *
-             * ・商品が存在しない
-             * ・在庫が不足している
-             */
             return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "商品の取扱状態の更新中にデータベースエラーが発生しました。", e);
+        }
+    }
+
+    /** 単独処理として購入数量分だけ在庫を減らします。 */
+    public boolean decreaseStock(long productId, int quantity) {
+
+        validateQuantity(quantity);
+
+        try (Connection conn = getConnection()) {
+            return decreaseStock(conn, productId, quantity);
 
         } catch (SQLException e) {
             throw new IllegalStateException(
@@ -233,57 +324,65 @@ public class ProductDAO {
     }
 
     /**
-     * PostgreSQLへ接続します。
-     *
-     * @return DB接続
-     * @throws SQLException DB接続に失敗した場合
+     * 指定されたConnectionを使って購入数量分だけ在庫を減らします。
+     * commit、rollback、closeはService側で行います。
      */
-    private Connection getConnection() throws SQLException {
+    public boolean decreaseStock(
+            Connection conn,
+            long productId,
+            int quantity) throws SQLException {
 
+        if (conn == null) {
+            throw new IllegalArgumentException(
+                    "DB接続が指定されていません。");
+        }
+
+        validateQuantity(quantity);
+
+        try (PreparedStatement ps =
+                conn.prepareStatement(DECREASE_STOCK)) {
+
+            ps.setInt(1, quantity);
+            ps.setLong(2, productId);
+            ps.setInt(3, quantity);
+
+            return ps.executeUpdate() == 1;
+        }
+    }
+
+    /** トランザクションで共有するConnectionを取得します。 */
+    public Connection openConnection() throws SQLException {
         return DriverManager.getConnection(
                 JDBC_URL,
                 DB_USER,
                 DB_PASS);
     }
 
-    /**
-     * ResultSetの現在の1行をProductへ変換します。
-     *
-     * DBのスネークケースと、
-     * Javaのキャメルケースを対応させています。
-     *
-     * @param rs 商品情報を持つResultSet
-     * @return Productオブジェクト
-     * @throws SQLException データ取得に失敗した場合
-     */
+    private Connection getConnection() throws SQLException {
+        return openConnection();
+    }
+
+    private void validateQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException(
+                    "購入数量は1以上で指定してください。");
+        }
+    }
+
     private Product mapRow(ResultSet rs) throws SQLException {
 
         Product product = new Product();
 
-        product.setProductId(
-                rs.getLong("product_id"));
-
-        product.setProductName(
-                rs.getString("product_name"));
-
-        product.setPrice(
-                rs.getBigDecimal("price"));
-
-        product.setStock(
-                rs.getInt("stock"));
-
-        product.setCategoryId(
-                rs.getInt("category_id"));
-
-        product.setDescription(
-                rs.getString("description"));
-
-        product.setImageUrl(
-                rs.getString("image_url"));
-
+        product.setProductId(rs.getLong("product_id"));
+        product.setProductName(rs.getString("product_name"));
+        product.setPrice(rs.getBigDecimal("price"));
+        product.setStock(rs.getInt("stock"));
+        product.setCategoryId(rs.getInt("category_id"));
+        product.setDescription(rs.getString("description"));
+        product.setImageUrl(rs.getString("image_url"));
+        product.setActive(rs.getBoolean("active"));
         product.setCreatedAt(
                 rs.getTimestamp("created_at").toLocalDateTime());
-
         product.setUpdatedAt(
                 rs.getTimestamp("updated_at").toLocalDateTime());
 
