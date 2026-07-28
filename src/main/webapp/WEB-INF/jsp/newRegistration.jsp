@@ -321,12 +321,12 @@ button,
                     autocomplete="postal-code"
                     required>
 
-                <button
-                    type="button"
-                    class="address-button"
-                    id="addressSearchButton">
-                    住所検索
-                </button>
+			<button
+    				type="button"
+    				class="address-button"
+    				id="addressSearchButton">
+    				住所検索
+    		</button>
 
             </div>
 
@@ -555,9 +555,38 @@ document.getElementById(
         return;
     }
 
-    alert(
-        "郵便番号から住所を検索する処理は"
-        + "Controller完成後に接続します。");
+ // Controller へ送るパラメータの準備
+    const formData = new URLSearchParams();
+    formData.append("postalCode", normalizedPostalCode);
+
+    // 裏側で Controller に問い合わせ (Fetch API)
+    fetch("${pageContext.request.contextPath}/search-address", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString()
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("通信エラーが発生しました");
+        }
+        return response.json(); // Controllerから届いたJSONを解析
+    })
+    .then(data => {
+        // data に PostalCodeSearch オブジェクト（住所データ）が入って返ってきます
+        if (data && data.prefecture) {
+            // 都道府県 + 市区町村 + 町域 を結合して住所欄（#address）に直接セット！
+            const fullAddress = data.prefecture + data.city + data.town;
+            document.getElementById("address").value = fullAddress;
+        } else {
+            alert("該当する住所が見つかりませんでした。");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("住所の取得に失敗しました。");
+    });
 });
 </script>
 
