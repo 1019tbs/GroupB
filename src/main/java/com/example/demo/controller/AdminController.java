@@ -23,14 +23,14 @@ public class AdminController {
                 (Member) session.getAttribute("loginMember");
 
         // 未ログインの場合
-        if (loginMember == null) {
-
-            model.addAttribute(
-                    "errorMsg",
-                    "ログインしてください");
-
-            return "redirect:/";
-        }
+//        if (loginMember == null) {
+//
+//            model.addAttribute(
+//                    "errorMsg",
+//                    "ログインしてください");
+//
+//            return "redirect:/";
+//        }
 
         // 管理者以外の場合
 //        if (!"admin".equals(loginMember.getRole())) {

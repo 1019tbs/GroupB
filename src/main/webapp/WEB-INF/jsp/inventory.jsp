@@ -152,6 +152,30 @@ th {
     color: #555555;
     font-size: 0.9rem;
 }
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.page-header h1 {
+    margin: 0;
+}
+.back-form {
+    margin: 0;
+}
+.back-button {
+    padding: 8px 14px;
+    border: 1px solid #888888;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #111111;
+    cursor: pointer;
+}
+.back-button:hover {
+    background-color: #eeeeee;
+}
 @media (max-width: 900px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -169,7 +193,17 @@ th {
 
 <body>
 <main>
-    <h1>商品・在庫管理</h1>
+    <div class="page-header">
+        <h1>商品・在庫管理</h1>
+
+        <form class="back-form"
+            action="${pageContext.request.contextPath}/admin"
+            method="get">
+            <button class="back-button" type="submit">
+                管理者画面へ戻る
+            </button>
+        </form>
+    </div>
 
     <c:if test="${not empty successMessage}">
         <p class="message-success">

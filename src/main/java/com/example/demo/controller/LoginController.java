@@ -15,14 +15,11 @@ import com.example.demo.model.Member;
 @Controller
 public class LoginController {
 
-    /*
-     * ログイン認証DAO
-     */
     @Autowired
     private LoginListDAO loginListDAO;
 
     /**
-     * ログイン画面表示
+     * ログイン画面を表示します。
      */
     @GetMapping({"/", "/index"})
     public String showLogin() {
@@ -31,7 +28,7 @@ public class LoginController {
     }
 
     /**
-     * ログイン処理
+     * ログイン処理を行います。
      */
     @PostMapping("/Login")
     public String login(
@@ -42,12 +39,11 @@ public class LoginController {
             @RequestParam(name = "pass")
             String pass,
 
-            // セッションを追加
             HttpSession session,
 
             Model model) {
 
-        // 会員ID未入力
+        // 会員IDが未入力の場合
         if (name == null || name.isBlank()) {
 
             model.addAttribute(
@@ -57,7 +53,7 @@ public class LoginController {
             return "index";
         }
 
-        // パスワード未入力
+        // パスワードが未入力の場合
         if (pass == null || pass.isBlank()) {
 
             model.addAttribute(
@@ -71,13 +67,13 @@ public class LoginController {
             return "index";
         }
 
-        // 入力値をMemberへ格納
+        // 入力されたログイン情報をMemberへ格納
         Member member = new Member();
 
         member.setMemberId(name);
         member.setPassword(pass);
 
-        // DAOでログイン認証
+        // DBから会員情報を検索
         Member loginMember =
                 loginListDAO.findByLogin(member);
 
@@ -96,25 +92,32 @@ public class LoginController {
         }
 
         /*
-         * ログイン成功
-         * セッションへログイン情報を保存
-         */
+        * ログイン成功
+        *
+        * main.jsp・在庫管理ではloginUserを使用し、
+        * 既存の管理者機能ではloginMemberを使用しているため、
+        * 移行期間中は両方の名前で保存します。
+        */
         session.setAttribute(
-                "loginMember",
+                "loginUser",
                 loginMember);
 
-        // メイン画面へ
+        session.setAttribute(
+        		"loginMember",
+        		loginMember);
+        
         return "main";
     }
-    
+
     /**
-     * メイン画面表示
+     * メイン画面を表示します。
      */
     @GetMapping("/main")
     public String showMain(HttpSession session) {
 
         // 未ログインならログイン画面へ戻す
-        if (session.getAttribute("loginMember") == null) {
+        if (session.getAttribute("loginUser") == null) {
+
             return "redirect:/";
         }
 
@@ -122,14 +125,14 @@ public class LoginController {
     }
 
     /**
-     * ログアウト
+     * ログアウト処理を行います。
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
 
+        // セッション内のログイン情報をすべて破棄
         session.invalidate();
 
         return "redirect:/";
     }
-
 }
