@@ -11,19 +11,20 @@
 </head>
 
 <body class="menu">
-<img class="menuTopImg" alt="メニュー上部画像" src="${pageContext.request.contextPath}/images/menu_top.png">
-<div class= "menuHeader">
-	<nav class= "menuNav">
-		<a href="#cakes">CAKES</a>
-		/
-		<a href="#bakes">BAKES</a>
-		/
-		<a href="#pastries">PASTRIES</a>
-	</nav>
-</div>
-<img class= "menuNextImg" alt="今週のベイク便り" src="${pageContext.request.contextPath}/images/menu_next.png">
-
-	<section id= "cakes">
+	<img class="menuTopImg" alt="メニュー上部画像" src="${pageContext.request.contextPath}/images/menu_top.png">
+	<div class= "menuHeader">
+		<nav class= "menuNav">
+			<a href="#cakes">CAKES</a>
+			/
+			<a href="#bakes">BAKES</a>
+			/
+			<a href="#pastries">PASTRIES</a>
+		</nav>
+	</div>
+	<img class= "menuNextImg" alt="今週のベイク便り" src="${pageContext.request.contextPath}/images/menu_next.png">
+	
+<form action="${pageContext.request.contextPath}/form/submit" method="post">
+		<section id= "cakes">
 	<img class= "categoryImg categoryCakesImg" alt="CAKES" src="${pageContext.request.contextPath}/images/category_cake.png">
 	
 	<div class= "menuGrid">
@@ -34,7 +35,7 @@
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
 			<input type= "number" name="operaCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>	
 		<div class= "menuCard">
@@ -44,7 +45,7 @@
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
 			<input type= "number" name="honeyCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>
 		<div class= "menuCard">
@@ -54,7 +55,7 @@
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
 			<input type= "number" name="bkforestCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>	
 		<div class= "menuCard">
@@ -64,7 +65,7 @@
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
 			<input type= "number" name="battenCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 			
 		</div>
@@ -75,7 +76,7 @@
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
 			<input type= "number" name="shuuCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>	
 		<div class= "menuCard">
@@ -85,13 +86,12 @@
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
 			<input type= "number" name="mooseCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>
 	</div>
 	<img class= "bee beeLeft" alt="蜂" src="${pageContext.request.contextPath}/images/hach_line.png">
 	</section>
-	
 	<section id= "bakes">
 	<img class= "categoryImg categoryBakesImg" alt="BAKES" src="${pageContext.request.contextPath}/images/category_bakes.png">
 		<div class= "bakesList">
@@ -112,7 +112,7 @@
 				<div class= "cardBottom">
 					<span>注文数</span>
 					<input type= "number" name= "classicCount"min= "0" value= "0">
-					<button class= "cartButton">カート追加</button>
+					<button type="button" class= "cartButton">カート追加</button>
 				</div>
 				</div>
 			</div>
@@ -134,7 +134,7 @@
 				<div class= "cardBottom">
 					<span>注文数</span>
 					<input type= "number" name= "fruitTeaCount" min= "0" value= "0">
-					<button class= "cartButton">カート追加</button>
+					<button type="button" class= "cartButton">カート追加</button>
 				</div>
 				</div>
 			</div>
@@ -156,7 +156,7 @@
 				<div class= "cardBottom">
 					<span>注文数</span>
 					<input type= "number" name= "honeyNutCount" min= "0" value= "0">
-					<button class= "cartButton">カート追加</button>
+					<button type="button" class= "cartButton">カート追加</button>
 				</div>
 				</div>
 			</div>
@@ -164,7 +164,7 @@
 		
 		</div>
 	</section>
-	<section id= "pastries">
+		<section id= "pastries">
 	<img class= "categoryImg categoryPastriesImg" alt="PASTRIES" src="${pageContext.request.contextPath}/images/category_pastries.png">
 	
 		<div class= "menuGrid">
@@ -174,8 +174,8 @@
 			<img class="itemImg" alt="ほうれん草とベーコンのキッシュ" src="${pageContext.request.contextPath}/images/pastries_quiche.png">
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
-			<input type= "number" name="operaCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<input type= "number" name="quicheCount" min= "0" value= "0">
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>	
 		<div class= "menuCard">
@@ -184,8 +184,8 @@
 			<img class="itemImg" alt="きのことチェダーの三角ハンドパイ" src="${pageContext.request.contextPath}/images/pastries_knkpie.png">
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
-			<input type= "number" name="honeyCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<input type= "number" name="knkpieCount" min= "0" value= "0">
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>
 		<div class= "menuCard">
@@ -194,8 +194,8 @@
 			<img class="itemImg" alt="トマトとリコッタのガレット" src="${pageContext.request.contextPath}/images/pastries_galette.png">
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
-			<input type= "number" name="bkforestCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<input type= "number" name="galetteCount" min= "0" value= "0">
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>	
 		<div class= "menuCard">
@@ -204,8 +204,8 @@
 			<img class="itemImg" alt="ハニーアップルパイ" src="${pageContext.request.contextPath}/images/pastries_apple.png">
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
-			<input type= "number" name="battenCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<input type= "number" name="appleCount" min= "0" value= "0">
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 			
 		</div>
@@ -215,8 +215,8 @@
 			<img class="itemImg" alt="ベリーピスタチオミルフィーユ" src="${pageContext.request.contextPath}/images/pastries_millef.png">
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
-			<input type= "number" name="shuuCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<input type= "number" name="millefCount" min= "0" value= "0">
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>	
 		<div class= "menuCard">
@@ -225,47 +225,62 @@
 			<img class="itemImg" alt="ヘーゼルナッツチョコパイ" src="${pageContext.request.contextPath}/images/pastries_choco.png">
 			<div class= "cardBottom">
 			<span class= "stock">注文数</span>
-			<input type= "number" name="mooseCount" min= "0" value= "0">
-			<button class= "cartButton">カート追加</button>
+			<input type= "number" name="chocoCount" min= "0" value= "0">
+			<button type="button" class= "cartButton">カート追加</button>
 			</div>
 		</div>
 	</div>
 	<img class= "bee beeRight" alt="蜂" src="${pageContext.request.contextPath}/images/hach_line.png">
 	</section>
-
-<!-- 注文フォーム。一旦divで囲ってます -->
-<div class= "orderArea">
-	<form action="${pageContext.request.contextPath}/form/submit"
-		method="post">
-
+	
+	<!-- 注文フォーム -->
+	<section id= "reservation" class= "orderArea">
+		<img class="reservationTopImg"  alt="予約トップ画像" src="${pageContext.request.contextPath}/images/line1.png">
+		<h2 class= "reservationTitle">ご予約情報入力</h2>
+		<p class= "reservationMessage">気になるメニューが決まりましたら、こちらから受け取り日時をご予約ください。</p>
+		
 		<!-- 予約を表す隠し項目 -->
-		<input type="hidden" name="genre" value="reservation"> <label>お名前</label>
-		<input type="text" name="customerName"> <label>メールアドレス</label>
-		<input type="email" name="email"> <label>電話番号</label> <input
-			type="text" name="phone"> <label>メニュー</label> <select
-			name="menuId">
-			<option value="">選択してください</option>
-
-			<option value="1">ハニートースト</option>
-
-			<option value="2">フラワーティー</option>
-		</select> <label>予約日</label> <input type="date" name="reservationDate">
-
-		<label>予約時間</label> <input type="time" name="reservationTime">
-
+		<input type="hidden" name="genre" value="reservation"> 
+		<div class= "reservationFormGrid">
+			<div class= "reservationFormGroup">
+				<label>お名前</label>
+				<input id= "customerName" type="text" name="customerName"
+				placeholder= "例）山田 太郎"> 
+			</div>
+			<div class= "reservationFormGroup">
+				<label>受取希望日</label>
+				<input id= "reservationDate" type="date" name="reservationDate"> 
+			</div>
+			<div class= "reservationFormGroup">
+				<label>メールアドレス</label>
+				<input id= "email" type="email" name="email"
+				placeholder= "例）example@example.com"> 
+			</div>
+			<div class= "reservationFormGroup">
+				<label>電話番号</label> 
+				<input id= "phone" type="text" name="phone"
+				placeholder= "例）090-1234-5678">
+			</div>
+		</div>
+		<p class="errorMsg">${errorMsg}</p>
+		<button type="submit">予約する</button>
+		
+<!--		<select name="menuId">-->
+<!--			<option value="">選択してください</option>-->
+<!--			<option value="1">ハニートースト</option>-->
+<!--			<option value="2">フラワーティー</option>-->
+<!--		</select> <label>受取希望日</label> <input type="date" name="reservationDate">-->
+<!--		<label>予約時間</label> <input type="time" name="reservationTime">-->
 <!--		<label>予約人数</label> <input type="number" name="numberOfPeople" min="1">-->
 
-		<p style="color: red;">${errorMsg}</p>
-
-		<button type="submit">予約する</button>
-
-	</form>
-
-</div>
-<footer>
-<img class= "menuFooterImg" alt="メニューフッター画像" src="${pageContext.request.contextPath}/images/menu_footer.png">
-</footer>
+	</section>
 	
+</form>
+	
+	<footer>
+	<img class= "menuFooterImg" alt="メニューフッター画像" src="${pageContext.request.contextPath}/images/menu_footer.png">
+	</footer>
 	<jsp:include page="common/footer.jsp"/>
-	</body>
+	
+</body>
 </html>

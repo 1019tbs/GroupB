@@ -236,7 +236,7 @@ button{
     height: 45px;
 }
 footer{
-	margin-top: auto;
+	margin: 0;
 }
 .footer{
 /*    margin-top: 30px;*/
@@ -575,10 +575,10 @@ body.menu{
     gap:12px;
 }
 
-/*蜂のアニメーション*/
+/*蜂のイラスト*/
 .bee{
     position:absolute;
-    width:350px;
+    width:200px;
     height:auto;
 }
 
@@ -588,41 +588,129 @@ body.menu{
 }
 /*CAKESの左*/
 .beeLeft{
-    left: 20px;
+    left: -30px;
     top: 50%;
     animation: beeLeftMove 2s ease-in-out infinite alternate;
 }
 /*PASTRIESの右*/
 .beeRight{
-    right: 20px;
+    right: -30px;
     top: 50%;
     animation: beeRightMove 2s ease-in-out infinite alternate;
 }
-/*反転*/
+/*反転のアニメーション*/
 @keyframes beeLeftMove{
-    from{
-        transform:translateX(0);
+    0%,49%{
+        transform: scaleX(1);
     }
-    to{
-        transform:translateX(25px);
+
+    50%,100%{
+        transform: scaleX(-1);
     }
 }
 
 @keyframes beeRightMove{
-    from{
-        transform:scaleX(-1) translateX(0);
+    0%,49%{
+        transform: scaleX(-1);
     }
-    to{
-        transform:scaleX(-1) translateX(25px);
+
+    50%,100%{
+        transform: scaleX(1);
     }
 }
 
 /*注文フォーム*/
 .orderArea{
+	width: 90%;
     max-width: 1000px;
-    margin: 80px auto;
-    padding: 20px;
+    margin: 120px auto 0;
+    padding: 60px;
 }
+.reservationTopImg{
+    display: block;
+    margin: 0 auto;
+    width: 500px; 
+    height: auto;
+}
+.reservationTitle{
+    text-align:center;
+    font-size:36px;
+    color:#7a4a00;
+    margin-bottom:20px;
+}
+.reservationMessage{
+	margin: 0 0 30px;
+}
+.orderArea form{
+    display:flex;
+    flex-direction:column;
+}
+.orderArea label{
+    font-weight:bold;
+    color:#7a4a00;
+    margin-top:20px;
+    margin-bottom:8px;
+}
+.orderArea input,
+.orderArea select{
+    width:100%;
+    padding:15px;
+    font-size:16px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+}
+.orderArea button[type="submit"]{
+    width:240px;
+    margin:50px auto 0;
+    padding:15px;
+    border:none;
+    border-radius:30px;
+    background:#7a4a00;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+.orderArea button[type="submit"]:hover{
+    background:#5c3500;
+}
+.reservationFormGrid{
+	display:grid;
+	grid-template-columns:1fr 1fr;
+	gap:30px;
+}
+.reservationFormGroup{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.reservationFormGroup label{
+    width: 120px;
+    color: #7a4a00;
+    font-weight: bold;
+}
+.reservationFormGroup input{
+    flex: 1;
+}
+.orderArea button[type="submit"]{
+    display:flex;
+	justify-content: center; /*横方向中央*/
+	align-items: center; /*縦方向中央*/
+    margin:50px auto 0;
+    width:200px;
+    height:48px;
+    background:#7a4a00;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+/*エラーメッセージ*/
+.errorMsg{
+    color:#d40000;
+    margin-top:10px;
+}
+
 .menuFooterImg{
     display:block;
     width:100%;
