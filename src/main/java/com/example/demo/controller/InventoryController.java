@@ -274,6 +274,7 @@ public class InventoryController {
             return false;
         }
 
+
         System.out.println(
                 "【確認】会員ID = "
                 + member.getMemberId());
@@ -288,5 +289,6 @@ public class InventoryController {
 
         return "ADMIN".equalsIgnoreCase(
                 member.getRole());
+
     }
 }

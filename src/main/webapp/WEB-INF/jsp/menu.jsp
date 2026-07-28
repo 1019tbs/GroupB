@@ -235,7 +235,7 @@
 	
 	<!-- 注文フォーム -->
 	<section id= "reservation" class= "orderArea">
-		<img class="reservationTopImg"  alt="予約トップ画像" src="${pageContext.request.contextPath}/images/line1.png">
+		<img class="lineImg"  alt="ライン" src="${pageContext.request.contextPath}/images/line1.png">
 		<h2 class= "reservationTitle">ご予約情報入力</h2>
 		<p class= "reservationMessage">気になるメニューが決まりましたら、こちらから受け取り日時をご予約ください。</p>
 		

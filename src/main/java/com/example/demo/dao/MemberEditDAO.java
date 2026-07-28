@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -96,6 +98,84 @@ public class MemberEditDAO {
 		}
 
 		return null;
+	}
+	
+	/*
+	 * 会員情報を全件取得する
+	 */
+	public List<Member> findAll() {
+
+	    List<Member> memberList = new ArrayList<>();
+
+	    String sql = "SELECT "
+	            + "member_id, "
+	            + "member_name, "
+	            + "postal_code, "
+	            + "address, "
+	            + "phone_number, "
+	            + "birth_date, "
+	            + "email, "
+	            + "payment_method, "
+	            + "role "
+	            + "FROM members "
+	            + "ORDER BY member_id";
+
+	    try (
+	            Connection conn = DriverManager.getConnection(
+	                    JDBC_URL,
+	                    DB_USER,
+	                    DB_PASS);
+
+	            PreparedStatement ps =
+	                    conn.prepareStatement(sql);
+
+	            ResultSet rs =
+	                    ps.executeQuery()) {
+
+	        while (rs.next()) {
+
+	            Member member = new Member();
+
+	            member.setMemberId(
+	                    rs.getString("member_id"));
+
+	            member.setMemberName(
+	                    rs.getString("member_name"));
+
+	            member.setPostalCode(
+	                    rs.getString("postal_code"));
+
+	            member.setAddress(
+	                    rs.getString("address"));
+
+	            member.setPhoneNumber(
+	                    rs.getString("phone_number"));
+
+	            Date birthDate =
+	                    rs.getDate("birth_date");
+
+	            if (birthDate != null) {
+	                member.setBirthDate(
+	                        birthDate.toLocalDate());
+	            }
+
+	            member.setEmail(
+	                    rs.getString("email"));
+
+	            member.setPaymentMethod(
+	                    rs.getString("payment_method"));
+
+	            member.setRole(
+	                    rs.getString("role"));
+
+	            memberList.add(member);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return memberList;
 	}
 
 	/*
