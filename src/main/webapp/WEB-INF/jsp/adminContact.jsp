@@ -14,21 +14,41 @@
 
 <link rel="stylesheet"
     href="${pageContext.request.contextPath}/css/adminContact.css">
+
+<!-- 管理画面で使用するアイコン -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
     <main class="contact-admin">
 
+        <!-- ページ上部 -->
         <div class="page-header">
 
-            <h1>お問い合わせ管理</h1>
+            <div class="page-heading">
+
+                <h1>
+                    <i class="bi bi-chat-left-text"></i>
+                    お問い合わせ管理
+                </h1>
+
+                <span class="page-subtitle">
+                    Honey Bloom Admin
+                </span>
+
+            </div>
 
             <form action="${pageContext.request.contextPath}/admin"
                 method="get">
 
                 <button type="submit" class="back-button">
+
+                    <i class="bi bi-arrow-left"></i>
+
                     管理者画面へ戻る
+
                 </button>
 
             </form>
@@ -41,7 +61,11 @@
             <c:when test="${empty contactList}">
 
                 <div class="empty-message">
+
+                    <i class="bi bi-inbox empty-icon"></i>
+
                     <p>お問い合わせ情報はありません。</p>
+
                 </div>
 
             </c:when>
@@ -78,26 +102,36 @@
                                     </span>
 
                                     <h2>
-                                        <c:out value="${contact.subject}"/>
+                                        <c:out value="${contact.subject}" />
                                     </h2>
 
                                 </div>
 
                                 <div class="customer-info">
 
-                                    <span>
-                                        お名前：
-                                        <c:out value="${contact.customerName}"/>
+                                    <span class="customer-info-item">
+
+                                        <i class="bi bi-person"></i>
+
+                                        <c:out
+                                            value="${contact.customerName}" />
+
                                     </span>
 
-                                    <span>
-                                        メール：
-                                        <c:out value="${contact.email}"/>
+                                    <span class="customer-info-item">
+
+                                        <i class="bi bi-envelope"></i>
+
+                                        <c:out value="${contact.email}" />
+
                                     </span>
 
-                                    <span>
-                                        電話番号：
-                                        <c:out value="${contact.phone}"/>
+                                    <span class="customer-info-item">
+
+                                        <i class="bi bi-telephone"></i>
+
+                                        <c:out value="${contact.phone}" />
+
                                     </span>
 
                                 </div>
@@ -105,7 +139,7 @@
                                 <div class="contact-message">
 
                                     <p>
-                                        <c:out value="${contact.message}"/>
+                                        <c:out value="${contact.message}" />
                                     </p>
 
                                 </div>
@@ -125,7 +159,9 @@
 
                                     <button type="submit"
                                         class="action-button detail-button">
-                                        詳細
+
+                                        詳細を見る
+
                                     </button>
 
                                 </form>
@@ -140,7 +176,9 @@
 
                                     <button type="submit"
                                         class="action-button complete-button">
+
                                         対応済みにする
+
                                     </button>
 
                                 </form>
@@ -156,7 +194,11 @@
 
                                     <button type="submit"
                                         class="action-button delete-button">
+
+                                        <i class="bi bi-trash"></i>
+
                                         削除
+
                                     </button>
 
                                 </form>
