@@ -32,9 +32,9 @@ public class PostPostalCodeService {
 		// 3. ハイフン（"-"）を取り除いて数字だけの文字列にする
 		String cleanCode = input.replace("-", "");
 
-		// 4. ハイフンを除去した結果が「ちょうど7桁」になっているか確認
+		// 4. ハイフンを除去した結果が「数字7桁」になっていない場合は null を返す
 		// ("12345678" のようなハイフンなし8文字などはここで弾かれる)
-		if (cleanCode.matches("\\d{7}")) {
+		if (!cleanCode.matches("\\d{7}")) {
 			return null;
 		}
 			// 5. 7桁に整えた郵便番号で DAO を呼び出し、検索結果を返す
