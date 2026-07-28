@@ -629,7 +629,7 @@ body.menu{
 .reservationTopImg{
     display: block;
     margin: 0 auto;
-    width: 400px; 
+    width: 500px; 
     height: auto;
 }
 .reservationTitle{
@@ -696,7 +696,7 @@ body.menu{
 	justify-content: center; /*横方向中央*/
 	align-items: center; /*縦方向中央*/
     margin:50px auto 0;
-    width:150px;
+    width:200px;
     height:48px;
     background:#7a4a00;
     color:#fff;
