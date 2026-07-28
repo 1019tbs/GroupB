@@ -258,12 +258,37 @@ public class InventoryController {
      */
     private boolean isAdmin(HttpSession session) {
 
-        Object sessionUser = session.getAttribute("loginUser");
+        Object sessionUser =
+                session.getAttribute("loginUser");
+
+        System.out.println(
+                "【確認】sessionのloginUser = "
+                + sessionUser);
 
         if (!(sessionUser instanceof Member member)) {
+
+            System.out.println(
+                    "【確認】loginUserが存在しない、"
+                    + "またはMemberではありません");
+
             return false;
         }
 
-        return "admin".equalsIgnoreCase(member.getRole());
+
+        System.out.println(
+                "【確認】会員ID = "
+                + member.getMemberId());
+
+        System.out.println(
+                "【確認】氏名 = "
+                + member.getMemberName());
+
+        System.out.println(
+                "【確認】role = "
+                + member.getRole());
+
+        return "ADMIN".equalsIgnoreCase(
+                member.getRole());
+
     }
 }

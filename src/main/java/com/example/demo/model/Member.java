@@ -23,4 +23,17 @@ public class Member {
     private String email;           // メールアドレス
     private String paymentMethod;   // 支払方法
     private String role;            // 権限
+
+    /**
+     * main.jspの
+     * ${loginUser.userName}
+     * という記述に対応するためのGetterです。
+     *
+     * 実際の氏名はmemberNameフィールドに保存されています。
+     *
+     * @return 会員氏名
+     */
+    public String getUserName() {
+        return memberName;
+    }
 }
