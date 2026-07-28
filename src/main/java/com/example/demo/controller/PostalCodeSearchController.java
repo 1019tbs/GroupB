@@ -22,7 +22,12 @@ public class PostalCodeSearchController {
 	public PostalCodeSearch searchAddress(@RequestParam(required = false) String postalCode) {
 
 		// Service を呼び出して住所を検索（見つからなければ null が返る）
-        PostalCodeSearch result = postPostalCodeService.execute(postalCode);
+		PostalCodeSearch result = postPostalCodeService.execute(postalCode);
+		
+		// 見つからなかった（null）場合、空のオブジェクトを返して JSON エラーを防ぐ
+        if (result == null) {
+            return new PostalCodeSearch();
+        }
 
         // （住所データまたはnull）をそのまま返す
         return result;
