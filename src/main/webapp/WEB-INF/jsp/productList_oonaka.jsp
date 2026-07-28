@@ -29,9 +29,20 @@
             <td>${product.stock}</td>
             <td>${product.description}</td>
             <td>
-                <button type="button">カートに入れる</button>
-            </td>
-        </tr>
+    <form action="${pageContext.request.contextPath}/cart/add"
+          method="post">
+
+        <input type="hidden"
+               name="productId"
+               value="${product.productId}">
+
+        <input type="hidden"
+               name="quantity"
+               value="1">
+
+        <button type="submit">カートに入れる</button>
+    </form>
+</td>
     </c:forEach>
 
 </table>
