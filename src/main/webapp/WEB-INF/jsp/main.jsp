@@ -12,10 +12,11 @@
 </head>
 
 <body class= "mainPage">
+<!-- 上部フリル -->
+<img class= "headerImg" alt="ヘッダー" src="${pageContext.request.contextPath}/images/frill.png">
+<img class= "mainImg" alt="メイン" src="${pageContext.request.contextPath}/images/main.png">
 
-<img alt="メイン画像" src="${pageContext.request.contextPath}/images/main.png" class= "mainImg">
 
-<!-- 上部 -->
 <div class= "topArea">
 	<h1>Honey Bloom
 	<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
@@ -40,13 +41,10 @@
 				</form>		
 		</div>
 	
-
 		<div class="subButtonArea">
-
 			<form action="${pageContext.request.contextPath}/member/edit_oonaka" method="get">
                 <button type="submit" class="subButton">会員情報変更</button>
-            </form>
-			
+            </form>			
 		    <form action="form" method= "get">
 		    	<button type= "submit" class="subButton">お問い合わせ</button>
 		    </form>
