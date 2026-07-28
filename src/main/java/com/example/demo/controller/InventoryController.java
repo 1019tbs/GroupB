@@ -264,6 +264,6 @@ public class InventoryController {
             return false;
         }
 
-        return "ADMIN".equalsIgnoreCase(member.getRole());
+        return "admin".equalsIgnoreCase(member.getRole());
     }
 }

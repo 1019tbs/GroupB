@@ -15,6 +15,9 @@ public class FormContact implements Serializable {
     private String message;
     private LocalDateTime createdAt;
 
+    // 0：未対応、1：対応済み
+    private int status;
+
     public FormContact() {
     }
 
@@ -72,5 +75,13 @@ public class FormContact implements Serializable {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
