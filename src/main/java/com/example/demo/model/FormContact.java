@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FormContact implements Serializable {
 
@@ -83,5 +84,16 @@ public class FormContact implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+    
+    public String getCreatedAtFormat() {
+
+        if (createdAt == null) {
+            return "";
+        }
+
+        return createdAt.format(
+                DateTimeFormatter.ofPattern(
+                        "yyyy-MM-dd HH:mm:ss"));
     }
 }

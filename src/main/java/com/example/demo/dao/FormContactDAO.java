@@ -15,207 +15,284 @@ import com.example.demo.model.FormContact;
 @Repository
 public class FormContactDAO {
 
-    /*
-     * PostgreSQL接続情報
-     */
-    private static final String JDBC_URL =
-            "jdbc:postgresql://localhost:5432/groupb_project";
+	/*
+	 * PostgreSQL接続情報
+	 */
+	private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/groupb_project";
 
-    private static final String DB_USER =
-            "postgres";
+	private static final String DB_USER = "postgres";
 
-    private static final String DB_PASS =
-            "psql";
+	private static final String DB_PASS = "psql";
 
+	/**
+	 * お問い合わせ内容を登録する
+	 *
+	 * @param contact お問い合わせ情報
+	 * @return 登録成功：true、登録失敗：false
+	 */
+	public boolean insert(
+			FormContact contact) {
 
-    /**
-     * お問い合わせ内容を登録する
-     *
-     * @param contact お問い合わせ情報
-     * @return 登録成功：true、登録失敗：false
-     */
-    public boolean insert(
-            FormContact contact) {
+		String sql = "INSERT INTO form_contact "
+				+ "(customer_name, subject, email, phone, message) "
+				+ "VALUES (?, ?, ?, ?, ?)";
 
-        String sql =
-                "INSERT INTO form_contact "
-              + "(customer_name, subject, email, phone, message) "
-              + "VALUES (?, ?, ?, ?, ?)";
+		try (
+				Connection conn = DriverManager.getConnection(
+						JDBC_URL,
+						DB_USER,
+						DB_PASS);
 
-        try (
-                Connection conn =
-                        DriverManager.getConnection(
-                                JDBC_URL,
-                                DB_USER,
-                                DB_PASS);
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                PreparedStatement ps =
-                        conn.prepareStatement(sql)
-        ) {
+			ps.setString(
+					1,
+					contact.getCustomerName());
 
-            ps.setString(
-                    1,
-                    contact.getCustomerName());
+			ps.setString(
+					2,
+					contact.getSubject());
 
-            ps.setString(
-                    2,
-                    contact.getSubject());
+			ps.setString(
+					3,
+					contact.getEmail());
 
-            ps.setString(
-                    3,
-                    contact.getEmail());
+			ps.setString(
+					4,
+					contact.getPhone());
 
-            ps.setString(
-                    4,
-                    contact.getPhone());
+			ps.setString(
+					5,
+					contact.getMessage());
 
-            ps.setString(
-                    5,
-                    contact.getMessage());
+			int result = ps.executeUpdate();
 
-            int result =
-                    ps.executeUpdate();
+			return result == 1;
 
-            return result == 1;
+		} catch (Exception e) {
 
-        } catch (Exception e) {
+			e.printStackTrace();
 
-            e.printStackTrace();
+			return false;
+		}
+	}
 
-            return false;
-        }
-    }
+	/**
+	 * お問い合わせ内容をすべて取得する
+	 *
+	 * @return お問い合わせ一覧
+	 */
+	public List<FormContact> findAll() {
 
+		List<FormContact> contactList = new ArrayList<>();
 
-    /**
-     * お問い合わせ内容をすべて取得する
-     *
-     * @return お問い合わせ一覧
-     */
-    public List<FormContact> findAll() {
+		String sql = "SELECT "
+				+ "contact_id, "
+				+ "customer_name, "
+				+ "subject, "
+				+ "email, "
+				+ "phone, "
+				+ "message, "
+				+ "created_at, "
+				+ "status "
+				+ "FROM form_contact "
+				+ "ORDER BY created_at DESC";
 
-        List<FormContact> contactList =
-                new ArrayList<>();
+		try (
+				Connection conn = DriverManager.getConnection(
+						JDBC_URL,
+						DB_USER,
+						DB_PASS);
 
-        String sql =
-                "SELECT "
-              + "contact_id, "
-              + "customer_name, "
-              + "subject, "
-              + "email, "
-              + "phone, "
-              + "message, "
-              + "created_at, "
-              + "status "
-              + "FROM form_contact "
-              + "ORDER BY created_at DESC";
+				PreparedStatement ps = conn.prepareStatement(sql);
 
-        try (
-                Connection conn =
-                        DriverManager.getConnection(
-                                JDBC_URL,
-                                DB_USER,
-                                DB_PASS);
+				ResultSet rs = ps.executeQuery()) {
 
-                PreparedStatement ps =
-                        conn.prepareStatement(sql);
+			while (rs.next()) {
 
-                ResultSet rs =
-                        ps.executeQuery()
-        ) {
+				FormContact contact = new FormContact();
 
-            while (rs.next()) {
+				contact.setContactId(
+						rs.getLong("contact_id"));
 
-                FormContact contact =
-                        new FormContact();
+				contact.setCustomerName(
+						rs.getString("customer_name"));
 
-                contact.setContactId(
-                        rs.getLong("contact_id"));
+				contact.setSubject(
+						rs.getString("subject"));
 
-                contact.setCustomerName(
-                        rs.getString("customer_name"));
+				contact.setEmail(
+						rs.getString("email"));
 
-                contact.setSubject(
-                        rs.getString("subject"));
+				contact.setPhone(
+						rs.getString("phone"));
 
-                contact.setEmail(
-                        rs.getString("email"));
+				contact.setMessage(
+						rs.getString("message"));
 
-                contact.setPhone(
-                        rs.getString("phone"));
+				Timestamp createdAt = rs.getTimestamp("created_at");
 
-                contact.setMessage(
-                        rs.getString("message"));
+				if (createdAt != null) {
 
-                Timestamp createdAt =
-                        rs.getTimestamp("created_at");
+					contact.setCreatedAt(
+							createdAt.toLocalDateTime());
+				}
 
-                if (createdAt != null) {
+				contact.setStatus(
+						rs.getInt("status"));
 
-                    contact.setCreatedAt(
-                            createdAt.toLocalDateTime());
-                }
+				contactList.add(contact);
+			}
 
-                contact.setStatus(
-                        rs.getInt("status"));
+		} catch (Exception e) {
 
-                contactList.add(contact);
-            }
+			e.printStackTrace();
+		}
 
-        } catch (Exception e) {
+		return contactList;
+	}
 
-            e.printStackTrace();
-        }
+	/**
+	 * お問い合わせの対応状況を更新する
+	 *
+	 * @param contactId お問い合わせID
+	 * @param status 対応状況（0：未対応、1：対応済み）
+	 * @return 更新成功：true、失敗：false
+	 */
+	public boolean updateStatus(
+			long contactId,
+			int status) {
 
-        return contactList;
-    }
+		String sql = "UPDATE form_contact "
+				+ "SET status = ? "
+				+ "WHERE contact_id = ?";
 
+		try (
+				Connection conn = DriverManager.getConnection(
+						JDBC_URL,
+						DB_USER,
+						DB_PASS);
 
-    /**
-     * お問い合わせの対応状況を更新する
-     *
-     * @param contactId お問い合わせID
-     * @param status 対応状況（0：未対応、1：対応済み）
-     * @return 更新成功：true、失敗：false
-     */
-    public boolean updateStatus(
-            long contactId,
-            int status) {
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        String sql =
-                "UPDATE form_contact "
-              + "SET status = ? "
-              + "WHERE contact_id = ?";
+			ps.setInt(
+					1,
+					status);
 
-        try (
-                Connection conn =
-                        DriverManager.getConnection(
-                                JDBC_URL,
-                                DB_USER,
-                                DB_PASS);
+			ps.setLong(
+					2,
+					contactId);
 
-                PreparedStatement ps =
-                        conn.prepareStatement(sql)
-        ) {
+			int result = ps.executeUpdate();
 
-            ps.setInt(
-                    1,
-                    status);
+			return result == 1;
 
-            ps.setLong(
-                    2,
-                    contactId);
+		} catch (Exception e) {
 
-            int result =
-                    ps.executeUpdate();
+			e.printStackTrace();
 
-            return result == 1;
+			return false;
+		}
+	}
 
-        } catch (Exception e) {
+	/**
+	 * お問い合わせを削除する
+	 *
+	 * @param contactId お問い合わせID
+	 * @return 削除成功：true、失敗：false
+	 */
+	public boolean delete(
+			long contactId) {
 
-            e.printStackTrace();
+		String sql = "DELETE FROM form_contact "
+				+ "WHERE contact_id = ?";
 
-            return false;
-        }
-    }
+		try (
+				Connection conn = DriverManager.getConnection(
+						JDBC_URL,
+						DB_USER,
+						DB_PASS);
+
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setLong(
+					1,
+					contactId);
+
+			int result = ps.executeUpdate();
+
+			return result == 1;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
+	/*
+	 * お問い合わせIDを指定して１件取得する
+	 * @param contactId　お問い合わせID
+	 * @retun　お問い合わせ情報
+	 */
+	public FormContact findById(
+			long contactId) {
+
+		String sql = "SELECT "
+				+ "contact_id, "
+				+ "customer_name, "
+				+ "subject, "
+				+ "email, "
+				+ "phone, "
+				+ "message, "
+				+ "created_at, "
+				+ "status "
+				+ "FROM form_contact "
+				+ "WHERE contact_id = ?";
+
+		try (
+				Connection conn = DriverManager.getConnection(
+						JDBC_URL,
+						DB_USER,
+						DB_PASS);
+
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setLong(1, contactId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					FormContact contact = new FormContact();
+					contact.setContactId(
+							rs.getLong("contact_id"));
+
+					contact.setCustomerName(
+							rs.getString("customer_name"));
+
+					contact.setSubject(
+							rs.getString("subject"));
+
+					contact.setEmail(
+							rs.getString("email"));
+
+					contact.setPhone(
+							rs.getString("phone"));
+
+					contact.setMessage(
+							rs.getString("message"));
+
+					Timestamp createdAt = rs.getTimestamp("created_at");
+
+					if (createdAt != null) {
+						contact.setCreatedAt(createdAt.toLocalDateTime());
+					}
+					contact.setStatus(rs.getInt("status"));
+					return contact;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
