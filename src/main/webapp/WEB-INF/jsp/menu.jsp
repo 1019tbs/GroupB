@@ -27,6 +27,11 @@
             <a href="${pageContext.request.contextPath}/cart">
                 ショッピングカート
             </a>
+            /
+           <a href="${pageContext.request.contextPath}/orders/history">
+                注文履歴
+           </a>
+            
         </nav>
     </div>
 

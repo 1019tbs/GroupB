@@ -18,7 +18,7 @@ import com.example.demo.service.CartService;
 import lombok.RequiredArgsConstructor;
 
 /**
- * ショッピングカート画面とカート追加処理を担当します。
+ * ショッピングカート画面とカート操作を担当します。
  */
 @Controller
 @RequiredArgsConstructor
@@ -61,9 +61,6 @@ public class CartController {
                     e.getMessage());
         }
 
-        /*
-         * 商品を続けて選べるよう、追加後はメニューへ戻します。
-         */
         return "redirect:/menu";
     }
 
@@ -94,8 +91,82 @@ public class CartController {
     }
 
     /**
-     * 現在のログイン処理で使用しているloginUserを優先し、
-     * クラスメイトの旧コードで使用していたloginMemberにも対応します。
+     * カート内商品の数量を変更します。
+     */
+    @PostMapping("/cart/update")
+    public String updateQuantity(
+            @RequestParam("productId") Long productId,
+            @RequestParam("quantity") int quantity,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        Member loginMember =
+                getLoginMember(session);
+
+        if (loginMember == null) {
+            return "redirect:/";
+        }
+
+        try {
+            cartService.updateQuantity(
+                    loginMember.getMemberId(),
+                    productId,
+                    quantity);
+
+            redirectAttributes.addFlashAttribute(
+                    "cartMessage",
+                    "数量を変更しました。");
+
+        } catch (IllegalArgumentException |
+                 IllegalStateException e) {
+
+            redirectAttributes.addFlashAttribute(
+                    "cartErrorMessage",
+                    e.getMessage());
+        }
+
+        return "redirect:/cart";
+    }
+
+    /**
+     * カートから商品を取り消します。
+     */
+    @PostMapping("/cart/remove")
+    public String removeItem(
+            @RequestParam("productId") Long productId,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        Member loginMember =
+                getLoginMember(session);
+
+        if (loginMember == null) {
+            return "redirect:/";
+        }
+
+        try {
+            cartService.removeItem(
+                    loginMember.getMemberId(),
+                    productId);
+
+            redirectAttributes.addFlashAttribute(
+                    "cartMessage",
+                    "商品をカートから取り消しました。");
+
+        } catch (IllegalArgumentException |
+                 IllegalStateException e) {
+
+            redirectAttributes.addFlashAttribute(
+                    "cartErrorMessage",
+                    e.getMessage());
+        }
+
+        return "redirect:/cart";
+    }
+
+    /**
+     * 現在のloginUserを優先し、
+     * 旧コードのloginMemberにも対応します。
      */
     private Member getLoginMember(
             HttpSession session) {
