@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,7 @@ public class FormContactDAO {
      * お問い合わせ内容を登録する
      *
      * @param contact お問い合わせ情報
-     * @return 登録成功：true
-     *         登録失敗：false
+     * @return 登録成功：true、登録失敗：false
      */
     public boolean insert(
             FormContact contact) {
@@ -43,14 +43,14 @@ public class FormContactDAO {
               + "VALUES (?, ?, ?, ?, ?)";
 
         try (
-            Connection conn =
-                    DriverManager.getConnection(
-                            JDBC_URL,
-                            DB_USER,
-                            DB_PASS);
+                Connection conn =
+                        DriverManager.getConnection(
+                                JDBC_URL,
+                                DB_USER,
+                                DB_PASS);
 
-            PreparedStatement ps =
-                    conn.prepareStatement(sql)
+                PreparedStatement ps =
+                        conn.prepareStatement(sql)
         ) {
 
             ps.setString(
@@ -104,22 +104,24 @@ public class FormContactDAO {
               + "subject, "
               + "email, "
               + "phone, "
-              + "message "
+              + "message, "
+              + "created_at, "
+              + "status "
               + "FROM form_contact "
-              + "ORDER BY contact_id DESC";
+              + "ORDER BY created_at DESC";
 
         try (
-            Connection conn =
-                    DriverManager.getConnection(
-                            JDBC_URL,
-                            DB_USER,
-                            DB_PASS);
+                Connection conn =
+                        DriverManager.getConnection(
+                                JDBC_URL,
+                                DB_USER,
+                                DB_PASS);
 
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
+                PreparedStatement ps =
+                        conn.prepareStatement(sql);
 
-            ResultSet rs =
-                    ps.executeQuery()
+                ResultSet rs =
+                        ps.executeQuery()
         ) {
 
             while (rs.next()) {
@@ -128,7 +130,7 @@ public class FormContactDAO {
                         new FormContact();
 
                 contact.setContactId(
-                        rs.getInt("contact_id"));
+                        rs.getLong("contact_id"));
 
                 contact.setCustomerName(
                         rs.getString("customer_name"));
@@ -145,6 +147,18 @@ public class FormContactDAO {
                 contact.setMessage(
                         rs.getString("message"));
 
+                Timestamp createdAt =
+                        rs.getTimestamp("created_at");
+
+                if (createdAt != null) {
+
+                    contact.setCreatedAt(
+                            createdAt.toLocalDateTime());
+                }
+
+                contact.setStatus(
+                        rs.getInt("status"));
+
                 contactList.add(contact);
             }
 
@@ -154,5 +168,54 @@ public class FormContactDAO {
         }
 
         return contactList;
+    }
+
+
+    /**
+     * お問い合わせの対応状況を更新する
+     *
+     * @param contactId お問い合わせID
+     * @param status 対応状況（0：未対応、1：対応済み）
+     * @return 更新成功：true、失敗：false
+     */
+    public boolean updateStatus(
+            long contactId,
+            int status) {
+
+        String sql =
+                "UPDATE form_contact "
+              + "SET status = ? "
+              + "WHERE contact_id = ?";
+
+        try (
+                Connection conn =
+                        DriverManager.getConnection(
+                                JDBC_URL,
+                                DB_USER,
+                                DB_PASS);
+
+                PreparedStatement ps =
+                        conn.prepareStatement(sql)
+        ) {
+
+            ps.setInt(
+                    1,
+                    status);
+
+            ps.setLong(
+                    2,
+                    contactId);
+
+            int result =
+                    ps.executeUpdate();
+
+            return result == 1;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return false;
+        }
     }
 }
