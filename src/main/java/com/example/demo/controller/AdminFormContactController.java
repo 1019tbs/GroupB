@@ -18,63 +18,131 @@ import com.example.demo.model.Member;
 @Controller
 public class AdminFormContactController {
 
-    @Autowired
-    private FormContactDAO formContactDAO;
+	@Autowired
+	private FormContactDAO formContactDAO;
 
-    /**
-     * 管理者用のお問い合わせ一覧画面を表示
-     */
-    @GetMapping("/admin/contact")
-    public String showContactList(
-            HttpSession session,
-            Model model) {
+	/**
+	 * 管理者用のお問い合わせ一覧画面を表示
+	 */
+	@GetMapping("/admin/contact")
+	public String showContactList(
+			HttpSession session,
+			Model model) {
 
-        Member loginMember =
-                (Member) session.getAttribute("loginMember");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 
-        // 未ログインの場合
-        if (loginMember == null) {
-            return "redirect:/";
-        }
+		// 未ログインの場合
+		if (loginMember == null) {
+			return "redirect:/";
+		}
 
-        // 管理者以外の場合
-/*        if (!"admin".equals(loginMember.getRole())) {
-            return "redirect:/main";
-        }
-*/
-        List<FormContact> contactList =
-                formContactDAO.findAll();
+		// 管理者以外の場合
+		/*        if (!"admin".equals(loginMember.getRole())) {
+		    return "redirect:/main";
+		}
+		*/
+		List<FormContact> contactList = formContactDAO.findAll();
 
-        model.addAttribute(
-                "contactList",
-                contactList);
+		model.addAttribute(
+				"contactList",
+				contactList);
 
-        return "adminContact";
-    }
-    
-    //お問い合わせを対応済みに変更する機能
-    @PostMapping("/admin/contact/status")
-    public String updateStatus(
+		return "adminContact";
+	}
+	
+	// お問い合わせの対応状況を変更する機能
+	@PostMapping("/admin/contact/status")
+	public String updateStatus(
 
-            @RequestParam("contactId")
-            long contactId,
+	        @RequestParam("contactId")
+	        long contactId,
 
-            HttpSession session) {
+	        @RequestParam("status")
+	        int status,
 
-        Member loginMember =
-                (Member) session.getAttribute("loginMember");
-    	
-    	//未ログイン
-    	if(loginMember == null) {
-    		return "redirect:/";
-    	}
-    	//管理者以外
-    	if(!"admin".equals(loginMember.getRole())) {
-    		return "redirect:/main";
-    	}
-    	
-    	//status = 1(対応済み)
-    	formContactDAO.updateStatus(contactId, 1);
-    	return "redirect:/admin/contact";
-    }
+	        HttpSession session) {
+
+	    Member loginMember =
+	            (Member) session.getAttribute("loginMember");
+
+	    // 未ログイン
+	    if (loginMember == null) {
+	        return "redirect:/";
+	    }
+
+	    // 管理者以外
+	    if (!"admin".equals(loginMember.getRole())) {
+	        return "redirect:/main";
+	    }
+
+	    // お問い合わせの対応状況を更新
+	    formContactDAO.updateStatus(
+	            contactId,
+	            status);
+
+	    return "redirect:/admin/contact";
+	}
+
+	//    お問い合わせ詳細画面を表示させる。
+	@GetMapping("/admin/contact/detail")
+	public String showContactDetail(
+
+			@RequestParam("contactId") long contactId,
+
+			HttpSession session,
+
+			Model model) {
+
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		// 未ログイン
+		if (loginMember == null) {
+			return "redirect:/";
+		}
+
+		// 管理者以外
+		
+		if (!"admin".equals(loginMember.getRole())) {
+		    return "redirect:/main";
+		}
+		
+
+		FormContact contact = formContactDAO.findById(contactId);
+
+		if (contact == null) {
+			return "redirect:/admin/contact";
+		}
+
+		model.addAttribute(
+				"contact",
+				contact);
+
+		return "adminContactDetail";
+	}
+
+	//お問い合わせを対応済みに変更する機能
+	@PostMapping("/admin/contact/delete")
+	public String deleteContact(
+
+			@RequestParam("contactId") long contactId,
+
+			HttpSession session) {
+
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		// 未ログイン
+		if (loginMember == null) {
+			return "redirect:/";
+		}
+
+		// 管理者以外
+		if (!"admin".equals(loginMember.getRole())) {
+			return "redirect:/main";
+		}
+
+		// お問い合わせを削除
+		formContactDAO.delete(contactId);
+
+		return "redirect:/admin/contact";
+	}
 }

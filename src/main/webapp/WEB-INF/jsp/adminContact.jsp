@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
@@ -13,209 +13,230 @@
 <title>お問い合わせ管理</title>
 
 <link rel="stylesheet"
-    href="${pageContext.request.contextPath}/css/adminContact.css">
+	href="${pageContext.request.contextPath}/css/adminContact.css">
 
 <!-- 管理画面で使用するアイコン -->
 <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
-    <main class="contact-admin">
+	<main class="contact-admin">
 
-        <!-- ページ上部 -->
-        <div class="page-header">
+		<!-- ページ上部 -->
+		<div class="page-header">
 
-            <div class="page-heading">
+			<div class="page-heading">
 
-                <h1>
-                    <i class="bi bi-chat-left-text"></i>
-                    お問い合わせ管理
-                </h1>
+				<h1>
+					<i class="bi bi-chat-left-text"></i> お問い合わせ管理
+				</h1>
 
-                <span class="page-subtitle">
-                    Honey Bloom Admin
-                </span>
+				<span class="page-subtitle"> Honey Bloom Admin </span>
 
-            </div>
+			</div>
 
-            <form action="${pageContext.request.contextPath}/admin"
-                method="get">
+			<form action="${pageContext.request.contextPath}/admin" method="get">
 
-                <button type="submit" class="back-button">
+				<button type="submit" class="back-button">
 
-                    <i class="bi bi-arrow-left"></i>
+					<i class="bi bi-arrow-left"></i> 管理者画面へ戻る
 
-                    管理者画面へ戻る
+				</button>
 
-                </button>
+			</form>
 
-            </form>
+		</div>
 
-        </div>
+		<c:choose>
 
-        <c:choose>
+			<%-- お問い合わせが存在しない場合 --%>
+			<c:when test="${empty contactList}">
 
-            <%-- お問い合わせが存在しない場合 --%>
-            <c:when test="${empty contactList}">
+				<div class="empty-message">
 
-                <div class="empty-message">
+					<i class="bi bi-inbox empty-icon"></i>
 
-                    <i class="bi bi-inbox empty-icon"></i>
+					<p>お問い合わせ情報はありません。</p>
 
-                    <p>お問い合わせ情報はありません。</p>
+				</div>
 
-                </div>
+			</c:when>
 
-            </c:when>
+			<%-- お問い合わせが存在する場合 --%>
+			<c:otherwise>
 
-            <%-- お問い合わせが存在する場合 --%>
-            <c:otherwise>
+				<div class="contact-list">
 
-                <div class="contact-list">
+					<c:forEach var="contact" items="${contactList}">
 
-                    <c:forEach var="contact" items="${contactList}">
+						<article class="contact-item">
 
-                        <article class="contact-item">
+							<%-- 左側：日付情報 --%>
+							<div class="contact-date">
 
-                            <%-- 左側：日付情報 --%>
-                            <div class="contact-date">
+								<span class="date-label"> 受付日 </span> <span class="date-value">
+									${contact.createdAt} </span>
 
-                                <span class="date-label">
-                                    受付日
-                                </span>
+							</div>
 
-                                <span class="date-value">
-                                    ${contact.createdAt}
-                                </span>
+							<%-- 中央：お問い合わせ内容 --%>
+							<div class="contact-content">
 
-                            </div>
+								<div class="contact-title">
 
-                            <%-- 中央：お問い合わせ内容 --%>
-                            <div class="contact-content">
+									<span class="contact-id"> No.${contact.contactId} </span>
 
-                                <div class="contact-title">
+									<h2>
+										<c:out value="${contact.subject}" />
+									</h2>
+									<c:choose>
 
-                                    <span class="contact-id">
-                                        No.${contact.contactId}
-                                    </span>
+										<c:when test="${contact.status == 1}">
 
-                                    <h2>
-                                        <c:out value="${contact.subject}" />
-                                    </h2>
+											<span class="status-label completed-status"> 対応済み </span>
 
-                                </div>
+										</c:when>
 
-                                <div class="customer-info">
+										<c:otherwise>
 
-                                    <span class="customer-info-item">
+											<span class="status-label pending-status"> 未対応 </span>
 
-                                        <i class="bi bi-person"></i>
+										</c:otherwise>
 
-                                        <c:out
-                                            value="${contact.customerName}" />
+									</c:choose>
 
-                                    </span>
+								</div>
 
-                                    <span class="customer-info-item">
+								<div class="customer-info">
 
-                                        <i class="bi bi-envelope"></i>
+									<span class="customer-info-item"> <i
+										class="bi bi-person"></i> <c:out
+											value="${contact.customerName}" />
 
-                                        <c:out value="${contact.email}" />
+									</span> <span class="customer-info-item"> <i
+										class="bi bi-envelope"></i> <c:out value="${contact.email}" />
 
-                                    </span>
+									</span> <span class="customer-info-item"> <i
+										class="bi bi-telephone"></i> <c:out value="${contact.phone}" />
 
-                                    <span class="customer-info-item">
+									</span>
 
-                                        <i class="bi bi-telephone"></i>
+								</div>
 
-                                        <c:out value="${contact.phone}" />
+								<div class="contact-message">
 
-                                    </span>
+									<p>
+										<c:choose>
 
-                                </div>
+											<%-- 100文字を超える場合 --%>
+											<c:when test="${contact.message.length() > 100}">
 
-                                <div class="contact-message">
+												<c:out value="${contact.message.substring(0, 100)}" />
 
-                                    <p>
-                                        <c:out value="${contact.message}" />
-                                    </p>
+                【省略】
 
-                                </div>
+ 									           </c:when>
 
-                            </div>
+											<%-- 100文字以内の場合 --%>
+											<c:otherwise>
 
-                            <%-- 右側：操作ボタン --%>
-                            <div class="contact-actions">
+												<c:out value="${contact.message}" />
 
-                                <form
-                                    action="${pageContext.request.contextPath}/admin/contact/detail"
-                                    method="get">
+											</c:otherwise>
 
-                                    <input type="hidden"
-                                        name="contactId"
-                                        value="${contact.contactId}">
+										</c:choose>
+									</p>
 
-                                    <button type="submit"
-                                        class="action-button detail-button">
+								</div>
 
-                                        詳細を見る
+							</div>
 
-                                    </button>
+							<%-- 右側：操作ボタン --%>
+							<div class="contact-actions">
 
-                                </form>
+								<form
+									action="${pageContext.request.contextPath}/admin/contact/detail"
+									method="get">
 
-                                <form
-                                    action="${pageContext.request.contextPath}/admin/contact/status"
-                                    method="post">
+									<input type="hidden" name="contactId"
+										value="${contact.contactId}">
 
-                                    <input type="hidden"
-                                        name="contactId"
-                                        value="${contact.contactId}">
+									<button type="submit" class="action-button detail-button">
 
-                                    <button type="submit"
-                                        class="action-button complete-button">
+										詳細を見る</button>
 
-                                        対応済みにする
+								</form>
+								<c:choose>
 
-                                    </button>
+									<%-- 未対応の場合 --%>
+									<c:when test="${contact.status == 0}">
 
-                                </form>
+										<form
+											action="${pageContext.request.contextPath}/admin/contact/status"
+											method="post">
 
-                                <form
-                                    action="${pageContext.request.contextPath}/admin/contact/delete"
-                                    method="post"
-                                    onsubmit="return confirm('このお問い合わせを削除しますか？');">
+											<input type="hidden" name="contactId"
+												value="${contact.contactId}"> <input type="hidden"
+												name="status" value="1">
 
-                                    <input type="hidden"
-                                        name="contactId"
-                                        value="${contact.contactId}">
+											<button type="submit" class="action-button complete-button">
 
-                                    <button type="submit"
-                                        class="action-button delete-button">
+												対応済みにする</button>
 
-                                        <i class="bi bi-trash"></i>
+										</form>
 
-                                        削除
+									</c:when>
 
-                                    </button>
+									<%-- 対応済みの場合 --%>
+									<c:otherwise>
 
-                                </form>
+										<form
+											action="${pageContext.request.contextPath}/admin/contact/status"
+											method="post">
 
-                            </div>
+											<input type="hidden" name="contactId"
+												value="${contact.contactId}"> <input type="hidden"
+												name="status" value="0">
 
-                        </article>
+											<button type="submit" class="action-button return-button">
 
-                    </c:forEach>
+												未対応に戻す</button>
 
-                </div>
+										</form>
 
-            </c:otherwise>
+									</c:otherwise>
 
-        </c:choose>
+								</c:choose>
+								<form
+									action="${pageContext.request.contextPath}/admin/contact/delete"
+									method="post" onsubmit="return confirm('このお問い合わせを削除しますか？');">
 
-    </main>
+									<input type="hidden" name="contactId"
+										value="${contact.contactId}">
+
+									<button type="submit" class="action-button delete-button">
+
+										<i class="bi bi-trash"></i> 削除
+
+									</button>
+
+								</form>
+
+							</div>
+
+						</article>
+
+					</c:forEach>
+
+				</div>
+
+			</c:otherwise>
+
+		</c:choose>
+
+	</main>
 
 </body>
 </html>

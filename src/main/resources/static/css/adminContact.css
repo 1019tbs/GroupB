@@ -26,6 +26,19 @@
     --shadow-color: rgba(76, 57, 42, 0.09);
 }
 
+.completed-status{
+    background:#d4edda;
+    color:#155724;
+}
+
+.pending-status{
+    background:#ffeeba;
+    color:#856404;
+}
+.complete-button{
+    background:#28a745;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -389,6 +402,9 @@ button {
     margin-top: 18px;
     padding: 16px 18px;
 
+    max-height: 150px;
+    overflow: hidden;
+
     border: 1px solid #f0ece7;
     border-radius: 9px;
 
@@ -402,7 +418,7 @@ button {
 .contact-message p {
     margin: 0;
 
-    white-space: pre-wrap;
+    white-space: normal;
     overflow-wrap: anywhere;
 }
 
