@@ -226,7 +226,6 @@ button{
 .menuTitle::after{
     margin-left: 10px;
 }
-
 .menuGroup{
     display: flex;
     flex-direction: column;
@@ -256,7 +255,7 @@ button{
 	cursor: pointer;
 }
 .menuButton{
-    width: 260px;
+    width: 220px;
     height: 50px;
 	cursor: pointer;
 }
@@ -425,17 +424,14 @@ body.contact{
     flex: 1;
 	border-radius: 5px;
 }
-
 .formItem label{
     display: block;
     margin-bottom: 8px;
 }
-
 .formItem input{
     width: 100%;
     box-sizing: border-box;
 }
-
 textarea{
     width: 100%;
     height: 120px;
@@ -512,11 +508,11 @@ textarea{
     margin: 15px 0;
 }
 .thankMessage{
-    width: 70%;
+    width: 60%;
     margin: 10px auto;
     padding: 25px;
     border: 1px solid #ffab40;
-	font-size: 20px;
+	font-size: 16px;
     border-radius: 8px;
     color: #7a4a00;
     line-height: 2;
@@ -859,4 +855,36 @@ body.menu{
     max-height:280px;
     object-fit:cover;
 	margin-bottom: 0;
+}
+/*===============
+注文完了フォーム
+===============*/
+body.thankyouPage{
+    text-align:center;
+}
+
+body.thankyouPage h1,
+body.thankyouPage p,
+body.thankyouPage h2,
+body.thankyouPage h3{
+    display:block;
+    text-align:center;
+}
+.thankyouBgImg{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    object-fit:cover;
+    z-index:-1;
+}
+.shopTitle{
+    display:flex;
+	flex-direction: column;
+    align-items:center;
+    gap:10px;
+}
+.shopTitle h1{
+    margin:0;
 }
