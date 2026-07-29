@@ -8,11 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.model.CartItem_oonaka;
 import com.example.demo.model.Product_oonaka;
 
-
-
+/**
+ * carts・cart_itemsテーブルへのアクセスを担当します。
+ *
+ * 既存処理を維持したまま、
+ * Spring管理対象へ変更しています。
+ */
+@Repository
 public class CartDAO {
 
     private static final String JDBC_URL =
@@ -56,7 +63,7 @@ public class CartDAO {
 
         return null;
     }
-    
+
     public Long createCart(String memberId) {
 
         String sql =
@@ -91,15 +98,20 @@ public class CartDAO {
 
         return null;
     }
-    
-    public void addProductToCart(Long cartId, Long productId, int quantity) {
+
+    public void addProductToCart(
+            Long cartId,
+            Long productId,
+            int quantity) {
 
         String sql =
-                "INSERT INTO cart_items (cart_id, product_id, quantity) "
+                "INSERT INTO cart_items "
+              + "(cart_id, product_id, quantity) "
               + "VALUES (?, ?, ?) "
               + "ON CONFLICT (cart_id, product_id) "
               + "DO UPDATE SET "
-              + "quantity = cart_items.quantity + EXCLUDED.quantity, "
+              + "quantity = cart_items.quantity "
+              + "+ EXCLUDED.quantity, "
               + "updated_at = CURRENT_TIMESTAMP";
 
         try (
@@ -121,11 +133,14 @@ public class CartDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(
+                    "商品をカートへ追加できませんでした。",
+                    e);
         }
     }
-    
-    public List<CartItem_oonaka> findCartItems(String memberId) {
+
+    public List<CartItem_oonaka> findCartItems(
+            String memberId) {
 
         List<CartItem_oonaka> cartList =
                 new ArrayList<>();
