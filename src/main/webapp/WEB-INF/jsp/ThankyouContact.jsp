@@ -12,7 +12,7 @@
 
 <body class= "contact">
 	<div class= "thankContainer">
-		<img class= "contactTopImg" alt="お問い合わせ完了トップ" src="${pageContext.request.contextPath}/images/thank you_mail.png">
+		<img class= "contactTopImg" alt="お問い合わせ完了トップ" src="${pageContext.request.contextPath}/images/thankyou_mail.png">
 		<h1 class= "thankTitle">THANK YOU FOR YOUR MESSAGE</h1>
 		<img class="lineImg"  alt="ライン" src="${pageContext.request.contextPath}/images/line1.png">
 		<h2 class="thankSubTitle">お問い合わせありがとうございました。</h2>

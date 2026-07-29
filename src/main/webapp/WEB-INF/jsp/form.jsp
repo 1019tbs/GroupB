@@ -18,7 +18,7 @@
 	</div>
 
 	<div class= "contactRight">
-		<h1 >Honey Bloom
+		<h1>Honey Bloom
 		<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
 		</h1>
 		<p>はちみつ香る、しあわせなお菓子時間</p>
