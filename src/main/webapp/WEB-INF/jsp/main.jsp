@@ -16,6 +16,34 @@
 <img class= "headerImg" alt="ヘッダー" src="${pageContext.request.contextPath}/images/frill.png">
 <img class= "mainImg" alt="メイン" src="${pageContext.request.contextPath}/images/main.png">
 
+<!-- 右上メニュー -->
+<div class= "headerMenu">
+	<form action="logout" method= "post">
+	<button class= "headerButton" type ="submit">
+	<img class="headerIcon" alt="ログアウト" src="${pageContext.request.contextPath}/images/icon_logout.png">
+	ログアウト
+	</button>
+	</form>
+	
+	<span>/</span>
+	
+	<form action="cart" method= "get">
+	<button class= "headerButton" type ="submit">
+	<img class="headerIcon" alt="カート" src="${pageContext.request.contextPath}/images/icon_cart.png">
+	カート
+	</button>
+	</form>
+	
+	<span>/</span>
+	
+	<form action="history" method= "get">
+	<button class= "headerButton" type ="submit">
+	<img class="headerIcon" alt="注文履歴" src="${pageContext.request.contextPath}/images/icon_log.png">
+	注文履歴
+	</button>
+	</form>
+	
+</div>
 
 <div class= "topArea">
 	<h1>Honey Bloom

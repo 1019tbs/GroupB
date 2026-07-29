@@ -9,26 +9,41 @@
 </head>
 
 <body>
-
-	<h1>管理者画面</h1>
-
+	<h1 class= "TopIcon">Honey Bloom
+	<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
+	</h1>
+	<p>－ 管理者ログイン中 －</p>
+	
+	<h2>管理者画面</h2>
+	<div>
+	
+	</div>
 	<form action="${pageContext.request.contextPath}/admin/contact"
 		method="get">
-		<button type="submit">お問い合わせ一覧</button>
+		<button type="submit">
+		<img alt="メール" src="${pageContext.request.contextPath}/images/icon_mail.png">
+		お問い合わせ一覧
+		</button>
 	</form>
 
 	<br>
 
 	<form action="${pageContext.request.contextPath}/admin/order"
 		method="get">
-		<button type="submit">予約一覧</button>
+		<button type="submit">
+		<img alt="予約" src="${pageContext.request.contextPath}/images/icon_yoyaku.png">
+		予約一覧
+		</button>
 	</form>
 
 	<br>
 
 	<form action="${pageContext.request.contextPath}/inventory"
 		method="get">
-		<button type="submit">在庫確認</button>
+		<button type="submit">
+		<img alt="在庫" src="${pageContext.request.contextPath}/images/icon_zaiko.png">
+		在庫確認
+		</button>
 	</form>
 	
 	<br>

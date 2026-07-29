@@ -14,6 +14,7 @@ import com.example.demo.dao.FormContactDAO;
 import com.example.demo.dao.OrderDAO;
 import com.example.demo.model.FormContact;
 import com.example.demo.model.Order;
+import com.example.demo.service.InventoryService;
 
 @Controller
 public class FormController {
@@ -24,20 +25,15 @@ public class FormController {
     @Autowired
     private OrderDAO orderDAO;
 
+    @Autowired
+    private InventoryService inventoryService;
+
     /**
      * お問い合わせ画面表示
      */
     @GetMapping("/form")
     public String showForm() {
         return "form";
-    }
-
-    /**
-     * メニュー・予約画面表示
-     */
-    @GetMapping("/menu")
-    public String showMenu() {
-        return "menu";
     }
 
     /**
@@ -98,7 +94,7 @@ public class FormController {
                     "errorMsg",
                     "お名前を入力してください");
 
-            return returnInputPage(genre);
+            return returnInputPage(genre, model);
         }
 
         if (email == null
@@ -108,7 +104,7 @@ public class FormController {
                     "errorMsg",
                     "メールアドレスを入力してください");
 
-            return returnInputPage(genre);
+            return returnInputPage(genre, model);
         }
 
         if ("contact".equals(genre)) {
@@ -213,7 +209,7 @@ public class FormController {
                         "errorMsg",
                         "商品を選択してください");
 
-                return "menu";
+                return returnMenu(model);
             }
 
             if (reservationDate == null
@@ -223,7 +219,7 @@ public class FormController {
                         "errorMsg",
                         "予約日を入力してください");
 
-                return "menu";
+                return returnMenu(model);
             }
 
             if (reservationTime == null
@@ -233,7 +229,7 @@ public class FormController {
                         "errorMsg",
                         "予約時間を入力してください");
 
-                return "menu";
+                return returnMenu(model);
             }
 
             Order order =
@@ -269,7 +265,7 @@ public class FormController {
                         "errorMsg",
                         "予約保存に失敗しました");
 
-                return "menu";
+                return returnMenu(model);
             }
 
             model.addAttribute(
@@ -290,7 +286,7 @@ public class FormController {
                     "errorMsg",
                     "入力内容が正しくありません");
 
-            return "menu";
+            return returnMenu(model);
         }
     }
 
@@ -298,12 +294,26 @@ public class FormController {
      * エラー時の戻り先判定
      */
     private String returnInputPage(
-            String genre) {
+            String genre,
+            Model model) {
 
         if ("reservation".equals(genre)) {
-            return "menu";
+            return returnMenu(model);
         }
 
         return "form";
+    }
+
+    /**
+     * 予約入力エラー時に、取扱中の商品一覧を再取得して
+     * メニュー画面へ戻します。
+     */
+    private String returnMenu(Model model) {
+
+        model.addAttribute(
+                "productList",
+                inventoryService.findAllActive());
+
+        return "menu";
     }
 }
