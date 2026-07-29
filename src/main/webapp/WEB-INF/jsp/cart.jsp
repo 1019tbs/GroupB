@@ -24,17 +24,17 @@
     </tr>
 
     <c:forEach var="item" items="${cartList}">
-    
+
         <c:set var="total"
           value="${total + item.subtotal}" />
-    
+
         <tr>
             <td>${item.product.productName}</td>
             <td>${item.product.price}円</td>
             <td>${item.quantity}</td>
             <td>${item.subtotal}円</td>
         </tr>
-        
+
     </c:forEach>
 
 </table>
@@ -46,7 +46,7 @@
 
 <br>
 
-<a href="${pageContext.request.contextPath}/products_oonaka">
+<a href="${pageContext.request.contextPath}/menu">
     商品一覧に戻る
 </a>
 
