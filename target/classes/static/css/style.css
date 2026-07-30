@@ -861,8 +861,11 @@ body.menu{
 ===============*/
 body.thankyouPage{
     text-align:center;
+	position: relative;
+	min-height: 100vh;
+    display:flex;
+    flex-direction:column;
 }
-
 body.thankyouPage h1,
 body.thankyouPage p,
 body.thankyouPage h2,
@@ -871,7 +874,7 @@ body.thankyouPage h3{
     text-align:center;
 }
 .thankyouBgImg{
-    position: fixed;
+    position:fixed;
     top:0;
     left:0;
     width:100%;
@@ -879,12 +882,79 @@ body.thankyouPage h3{
     object-fit:cover;
     z-index:-1;
 }
+.thankyouContainer{
+    position: relative;
+	top: 5%;
+	left: 4%;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    padding-top: 35px;
+    padding-right: 15%;
+
+    box-sizing: border-box;
+}
 .shopTitle{
-    display:flex;
+	position: absolute;
+	top: 0;
+	left: 50px;
+	display: flex;
 	flex-direction: column;
-    align-items:center;
-    gap:10px;
+	align-items: flex-start;
+	gap: 0;
 }
 .shopTitle h1{
-    margin:0;
+    margin-top:-20px;
+	font-size: 30px;
+}
+.shopTitle p{
+	margin: 0;
+	font-size: 14px;
+}
+.thankContent{
+	position: absolute;
+	top: 18%;
+	right: 18%;
+    width:360px;
+    margin-top:110px;
+    margin-right:170px;
+    text-align:center;
+}
+.thankContent h2{
+	font-size: 30px;
+	line-height: 1.5;
+}
+.line2{
+    width:300px;
+    margin:15px auto;
+    display:block;
+}
+.thankText{
+	line-height: 1.8;
+	margin-bottom: 20px;
+}
+.thankImg{
+    width:200px;
+    display:block;
+    margin:20px auto;
+}
+.thankWaitMessage{
+    width: 300px;
+    margin: 20px;
+	padding: 20px;
+    text-align: center;
+    line-height: 1.8;
+    color:#7a4a00;
+    font-size:16px;
+	border: 1px solid #f5a623;
+	border-radius: 10px;
+}
+.backButton{
+	margin: 10px;
+}
+footer{
+	margin-top: auto;
 }
