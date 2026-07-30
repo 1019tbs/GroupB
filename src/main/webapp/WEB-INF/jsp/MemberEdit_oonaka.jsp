@@ -9,8 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>会員情報変更</title>
+<!-- cssファイル読み込み -->
+<link rel="stylesheet"
+    href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body>
+
+<body class= "memberEditPage">
 
 <h1>会員情報変更</h1>
 
@@ -123,6 +127,6 @@
     </button>
 
 </form>
-
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
