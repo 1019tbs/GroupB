@@ -1,0 +1,176 @@
+package com.example.demo.service;
+
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.ShoppingOrder;
+
+import shopMail.ShopMail;
+
+@Service
+public class ShopMailOrderMailService
+        implements OrderMailService {
+
+    private static final int GROUP_NUMBER = 2;
+    private static final int HTML_FORMAT = 1;
+
+    @Override
+    public boolean sendOrderConfirmation(
+            long shoppingOrderId,
+            ShoppingOrder order,
+            List<CartItem_oonaka> cartItems) {
+
+        String subject =
+                "【Honey Bloom】ご注文を受け付けました";
+
+        String body =
+                createHtmlBody(
+                        shoppingOrderId,
+                        order,
+                        cartItems);
+
+        try {
+            ShopMail.send(
+                    GROUP_NUMBER,
+                    order.getEmail(),
+                    "Honey Bloom",
+                    subject,
+                    body,
+                    HTML_FORMAT);
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private String createHtmlBody(
+            long shoppingOrderId,
+            ShoppingOrder order,
+            List<CartItem_oonaka> cartItems) {
+
+        StringBuilder body = new StringBuilder();
+
+        body.append("<html>");
+        body.append("<body style=\"font-family: sans-serif;\">");
+
+        body.append("<h2>ご注文ありがとうございます</h2>");
+
+        body.append("<p>");
+        body.append(escapeHtml(order.getCustomerName()));
+        body.append(" 様</p>");
+
+        body.append("<p>");
+        body.append("以下の内容でご注文を受け付けました。");
+        body.append("</p>");
+
+        body.append("<p>");
+        body.append("<strong>注文番号：</strong>");
+        body.append(shoppingOrderId);
+        body.append("</p>");
+
+        body.append("""
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <th style="border: 1px solid #ccc; padding: 8px;">
+                            商品名
+                        </th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">
+                            単価
+                        </th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">
+                            数量
+                        </th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">
+                            小計
+                        </th>
+                    </tr>
+                """);
+
+        for (CartItem_oonaka item : cartItems) {
+
+            body.append("<tr>");
+
+            body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
+            body.append(
+                    escapeHtml(
+                            item.getProduct()
+                                    .getProductName()));
+            body.append("</td>");
+
+            body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
+            body.append(
+                    item.getProduct()
+                            .getPrice()
+                            .toPlainString());
+            body.append("円</td>");
+
+            body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
+            body.append(item.getQuantity());
+            body.append("</td>");
+
+            body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
+            body.append(
+                    item.getSubtotal()
+                            .toPlainString());
+            body.append("円</td>");
+
+            body.append("</tr>");
+        }
+
+        body.append("</table>");
+
+        body.append("<p style=\"font-size: 18px; font-weight: bold;\">");
+        body.append("合計金額：");
+        body.append(
+                order.getTotalAmount()
+                        .toPlainString());
+        body.append("円");
+        body.append("</p>");
+
+        body.append("<p>");
+        body.append("Honey Bloomをご利用いただき、");
+        body.append("ありがとうございました。");
+        body.append("</p>");
+
+        body.append("</body>");
+        body.append("</html>");
+
+        return body.toString();
+    }
+
+    private String escapeHtml(
+            String value) {
+
+        if (value == null) {
+            return "";
+        }
+
+        return value
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
+    }
+    private String formatPrice(
+    		BigDecimal price) {
+    	
+    	if (price == null) {
+    		return "0円";
+    	}
+    	
+    	NumberFormat formatter =
+    			NumberFormat.getNumberInstance(
+    					Locale.JAPAN);
+    	
+    	return formatter.format(price) + "円";
+    }
+}
