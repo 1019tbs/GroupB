@@ -282,7 +282,7 @@ public class CheckoutController {
             return "redirect:/menu";
         }
 
-        return "checkoutComplete";
+        return "ThankyouShop";
     }
 
     private void addCheckoutSummary(
