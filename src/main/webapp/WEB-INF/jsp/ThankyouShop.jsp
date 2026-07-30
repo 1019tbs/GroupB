@@ -8,11 +8,40 @@
 <!-- cssファイル読み込み -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
-
 </head>
 
 <body class="thankyouPage">
 <img class= "thankyouBgImg" alt="予約完了背景" src="${pageContext.request.contextPath}/images/thankyou_bg.png">
+	<!-- 右上メニュー -->
+	<div class= "shopHeaderMenu">
+	<form action="${pageContext.request.contextPath}/menu" method="get">
+	<button class="headerButton" type="submit">
+	<img class="headerIcon" alt="メニュー"
+	     src="${pageContext.request.contextPath}/images/icon_menu.png">
+	メニュー
+	</button>
+	</form>
+		<span>/</span>
+
+	<form action="${pageContext.request.contextPath}/cart" method="get">
+	<button class="headerButton" type="submit">
+	<img class="headerIcon" alt="カート"
+	     src="${pageContext.request.contextPath}/images/icon_cart.png">
+	カート
+	</button>
+	</form>
+
+	<span>/</span>
+
+	<form action="${pageContext.request.contextPath}/history" method="get">
+	<button class="headerButton" type="submit">
+	<img class="headerIcon" alt="注文履歴"
+	     src="${pageContext.request.contextPath}/images/icon_log.png">
+	注文履歴
+	</button>
+	</form>
+	
+	</div>
 	<div class= "thankyouContainer">
 		<div class= "shopTitle">
 			<h1>Honey Bloom

@@ -383,12 +383,17 @@
             <button type="submit">予約する</button>
         </section>
     </form>
-
+	<!-- フローティングカート -->
+	<a class="floatingCart"
+	   	href="${pageContext.request.contextPath}/cart">
+	    <img src="${pageContext.request.contextPath}/images/viewcart.png"
+	         alt="カートを見る">
+	</a>
     <footer>
         <img class="menuFooterImg" alt="メニューフッター画像"
             src="${pageContext.request.contextPath}/images/menu_footer.png">
     </footer>
-
+	
     <jsp:include page="common/footer.jsp"/>
 </body>
 </html>
