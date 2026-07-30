@@ -18,7 +18,7 @@
 
 <!-- 右上メニュー -->
 <div class= "headerMenu">
-	<form action="logout" method= "post">
+	<form action="${pageContext.request.contextPath}/Logout" method= "post">
 	<button class= "headerButton" type ="submit">
 	<img class="headerIcon" alt="ログアウト" src="${pageContext.request.contextPath}/images/icon_logout.png">
 	ログアウト
