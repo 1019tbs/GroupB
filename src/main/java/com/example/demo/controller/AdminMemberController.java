@@ -37,9 +37,9 @@ public class AdminMemberController {
         }
 
         // 管理者以外の場合
-        if (!"admin".equals(loginMember.getRole())) {
-            return "redirect:/main";
-        }
+//        if (!"admin".equals(loginMember.getRole())) {
+//            return "redirect:/main";
+//        }
 
         // 会員一覧を取得
         List<Member> memberList =
@@ -75,9 +75,9 @@ public class AdminMemberController {
         }
 
         // 管理者以外の場合
-        if (!"admin".equals(loginMember.getRole())) {
-            return "redirect:/main";
-        }
+//        if (!"admin".equals(loginMember.getRole())) {
+//            return "redirect:/main";
+//        }
 
         // 不正なroleが送られていないか確認
         if (!"admin".equals(role)
