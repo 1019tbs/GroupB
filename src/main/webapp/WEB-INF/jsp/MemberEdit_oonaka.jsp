@@ -15,6 +15,7 @@
 </head>
 
 <body class= "memberEditPage">
+<jsp:include page="common/header.jsp"/>
 
 <h1>会員情報変更</h1>
 
