@@ -9,10 +9,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.model.Product_oonaka;
+import com.example.demo.model.Product_cart;
 
 @Repository
-public class ProductDAO_oonaka {
+public class ProductCartDAO {
 
     private static final String JDBC_URL =
             "jdbc:postgresql://localhost:5432/groupb_project";
@@ -26,9 +26,9 @@ public class ProductDAO_oonaka {
     /*
      * 商品一覧を取得する
      */
-    public List<Product_oonaka> findAll() {
+    public List<Product_cart> findAll() {
 
-        List<Product_oonaka> productList = new ArrayList<>();
+        List<Product_cart> productList = new ArrayList<>();
 
         String sql =
                 "SELECT * FROM products ORDER BY product_id";
@@ -49,8 +49,8 @@ public class ProductDAO_oonaka {
 
             while (rs.next()) {
 
-                Product_oonaka product =
-                        new Product_oonaka();
+                Product_cart product =
+                        new Product_cart();
 
                 product.setProductId(
                         rs.getLong("product_id"));

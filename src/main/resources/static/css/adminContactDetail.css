@@ -1,0 +1,256 @@
+@charset "UTF-8";
+
+/* ==========================
+   共通
+========================== */
+
+*{
+	box-sizing:border-box;
+	margin:0;
+	padding:0;
+}
+
+body{
+	font-family:"Yu Gothic","Meiryo",sans-serif;
+	background:#f8f4eb;
+	color:#4d3d2c;
+	padding:40px 20px;
+	line-height:1.8;
+}
+
+/* ==========================
+   メイン
+========================== */
+
+.contact-detail-admin{
+	max-width:900px;
+	margin:0 auto;
+}
+
+/* ==========================
+   ヘッダー
+========================== */
+
+.page-header{
+
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+
+	margin-bottom:35px;
+	flex-wrap:wrap;
+	gap:20px;
+
+}
+
+.page-heading h1{
+
+	font-size:32px;
+	color:#5d4126;
+	font-weight:bold;
+	display:flex;
+	align-items:center;
+	gap:10px;
+
+}
+
+.page-subtitle{
+
+	display:block;
+	margin-top:8px;
+	font-size:14px;
+	color:#9b8061;
+	letter-spacing:1px;
+
+}
+
+/* ==========================
+   戻るボタン
+========================== */
+
+.back-button{
+
+	background:#8b6b4d;
+	color:white;
+
+	border:none;
+	border-radius:10px;
+
+	padding:12px 22px;
+
+	font-size:15px;
+	font-weight:bold;
+
+	cursor:pointer;
+
+	transition:.25s;
+
+	display:flex;
+	align-items:center;
+	gap:8px;
+
+	box-shadow:0 3px 8px rgba(0,0,0,.15);
+
+}
+
+.back-button:hover{
+
+	background:#6f543d;
+	transform:translateY(-2px);
+
+}
+
+/* ==========================
+   詳細カード
+========================== */
+
+.contact-detail{
+
+	background:#fffefb;
+
+	border-radius:18px;
+
+	padding:35px;
+
+	box-shadow:
+		0 6px 20px rgba(0,0,0,.12);
+
+	border:1px solid #e8dfd1;
+
+}
+
+/* ==========================
+   各項目
+========================== */
+
+.detail-row{
+
+	display:grid;
+	grid-template-columns:180px 1fr;
+
+	padding:18px 0;
+
+	border-bottom:1px solid #efe6d9;
+
+	align-items:center;
+
+}
+
+.detail-row:last-child{
+	border-bottom:none;
+}
+
+.detail-label{
+
+	font-weight:bold;
+	color:#7a5b3d;
+
+}
+
+.detail-value{
+
+	color:#3f3327;
+	word-break:break-word;
+
+}
+
+/* ==========================
+   メッセージ欄
+========================== */
+
+.detail-message{
+
+	margin-top:30px;
+
+}
+
+.detail-message .detail-label{
+
+	display:block;
+
+	margin-bottom:15px;
+
+	font-weight:bold;
+	color:#7a5b3d;
+
+}
+
+.message-text{
+
+	background:#faf7f2;
+
+	border:1px solid #e6ddd0;
+
+	border-radius:12px;
+
+	padding:22px;
+
+	min-height:220px;
+
+	white-space:pre-wrap;
+
+	word-break:break-word;
+
+	line-height:2;
+
+	font-size:15px;
+
+}
+
+/* ==========================
+   アイコン
+========================== */
+
+.bi{
+
+	color:#8b6b4d;
+
+}
+
+/* ==========================
+   スマホ対応
+========================== */
+
+@media(max-width:768px){
+
+	.page-header{
+
+		flex-direction:column;
+		align-items:flex-start;
+
+	}
+
+	.page-heading h1{
+
+		font-size:26px;
+
+	}
+
+	.detail-row{
+
+		grid-template-columns:1fr;
+		gap:6px;
+
+		padding:16px 0;
+
+	}
+
+	.detail-label{
+
+		font-size:14px;
+
+	}
+
+	.detail-value{
+
+		font-size:15px;
+
+	}
+
+	.contact-detail{
+
+		padding:25px;
+
+	}
+
+}

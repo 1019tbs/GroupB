@@ -15,15 +15,14 @@ import com.example.demo.model.PostalCodeSearch;
 import com.example.demo.service.MemberEditService;
 
 @Controller
-public class MemberEditController_oonaka {
+public class MemberEditController {
 
     private final MemberEditService memberEditService;
     // 郵便番号検索用DAOの追加
     private final PostalCodeDAO postalCodeDAO;
 
-    public MemberEditController_oonaka(
-            MemberEditService memberEditService,
-            PostalCodeDAO postalCodeDAO) {
+public MemberEditController(
+            MemberEditService memberEditService) {
 
         this.memberEditService = memberEditService;
         this.postalCodeDAO = postalCodeDAO;        

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.CartDAO;
 import com.example.demo.dao.ProductDAO;
-import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.CartItem;
 import com.example.demo.model.Product;
 
 import lombok.RequiredArgsConstructor;
@@ -117,7 +117,7 @@ public class CartService {
         }
     }
 
-    public List<CartItem_oonaka> findCartItems(
+    public List<CartItem> findCartItems(
             String memberId) {
 
         validateMemberId(memberId);

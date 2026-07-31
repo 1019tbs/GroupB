@@ -1,0 +1,306 @@
+@charset "UTF-8";
+
+/* =========================
+   共通設定
+========================= */
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	min-height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family:
+		"Yu Gothic",
+		"Meiryo",
+		sans-serif;
+
+	color: #59442f;
+
+	background:
+		radial-gradient(
+			circle at center,
+			#fffdf7 0%,
+			#f7eedc 55%,
+			#ead9bb 100%
+		);
+}
+
+/* =========================
+   ログアウト画面全体
+========================= */
+
+.logout-page {
+	min-height: 100vh;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	padding: 30px 20px;
+}
+
+/* =========================
+   カード
+========================= */
+
+.logout-card {
+	width: min(100%, 560px);
+
+	text-align: center;
+
+	background:
+		rgba(255, 253, 247, 0.94);
+
+	border:
+		2px solid #d7bd91;
+
+	border-radius: 28px;
+
+	padding:
+		30px 40px 38px;
+
+	box-shadow:
+		0 18px 40px
+		rgba(91, 65, 35, 0.18);
+
+	position: relative;
+
+	overflow: hidden;
+}
+
+.logout-card::before {
+	content: "";
+
+	position: absolute;
+
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 10px;
+
+	background:
+		linear-gradient(
+			90deg,
+			#c89c56,
+			#efd697,
+			#c89c56
+		);
+}
+
+/* =========================
+   蜂の画像
+========================= */
+
+.logout-image-area {
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+
+	margin-bottom: 10px;
+}
+
+.logout-image {
+	display: block;
+
+	width: min(100%, 310px);
+	height: auto;
+
+	object-fit: contain;
+
+	animation:
+		bee-wave 1.6s
+		ease-in-out infinite;
+}
+
+@keyframes bee-wave {
+
+	0%,
+	100% {
+		transform:
+			translateY(0)
+			rotate(-1deg);
+	}
+
+	50% {
+		transform:
+			translateY(-8px)
+			rotate(2deg);
+	}
+
+}
+
+/* =========================
+   文字
+========================= */
+
+.logout-title {
+	margin:
+		6px 0 12px;
+
+	font-size:
+		clamp(26px, 5vw, 36px);
+
+	color: #6a4a2c;
+
+	letter-spacing: 0.08em;
+}
+
+.logout-message {
+	margin: 0;
+
+	font-size: 17px;
+
+	color: #806548;
+}
+
+.redirect-message {
+	margin:
+		16px 0 8px;
+
+	font-size: 14px;
+
+	color: #a08361;
+}
+
+/* =========================
+   読み込みドット
+========================= */
+
+.loading-dots {
+	height: 24px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	gap: 7px;
+
+	margin-bottom: 18px;
+}
+
+.loading-dots span {
+	width: 8px;
+	height: 8px;
+
+	background: #b98a4e;
+
+	border-radius: 50%;
+
+	animation:
+		loading-dot 1.2s
+		infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(2) {
+	animation-delay: 0.15s;
+}
+
+.loading-dots span:nth-child(3) {
+	animation-delay: 0.3s;
+}
+
+@keyframes loading-dot {
+
+	0%,
+	80%,
+	100% {
+		transform: scale(0.7);
+		opacity: 0.45;
+	}
+
+	40% {
+		transform: scale(1.15);
+		opacity: 1;
+	}
+
+}
+
+/* =========================
+   ログイン画面へのリンク
+========================= */
+
+.login-link {
+	display: inline-block;
+
+	padding:
+		11px 24px;
+
+	color: #ffffff;
+
+	background: #8b6842;
+
+	border-radius: 999px;
+
+	text-decoration: none;
+
+	font-size: 14px;
+	font-weight: bold;
+
+	box-shadow:
+		0 4px 10px
+		rgba(91, 65, 35, 0.2);
+
+	transition:
+		transform 0.2s,
+		background-color 0.2s,
+		box-shadow 0.2s;
+}
+
+.login-link:hover {
+	background: #6f5034;
+
+	transform:
+		translateY(-2px);
+
+	box-shadow:
+		0 7px 14px
+		rgba(91, 65, 35, 0.25);
+}
+
+.login-link:focus-visible {
+	outline:
+		3px solid
+		rgba(200, 156, 86, 0.45);
+
+	outline-offset: 4px;
+}
+
+/* =========================
+   スマートフォン対応
+========================= */
+
+@media (max-width: 600px) {
+
+	.logout-page {
+		padding: 18px;
+	}
+
+	.logout-card {
+		padding:
+			25px 20px 30px;
+
+		border-radius: 22px;
+	}
+
+	.logout-image {
+		width: min(100%, 260px);
+	}
+
+	.logout-message {
+		font-size: 15px;
+	}
+
+	.redirect-message {
+		font-size: 13px;
+	}
+
+}

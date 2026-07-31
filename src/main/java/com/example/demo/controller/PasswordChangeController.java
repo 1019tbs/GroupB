@@ -12,11 +12,11 @@ import com.example.demo.model.Member;
 import com.example.demo.service.PasswordChangeService;
 
 @Controller
-public class PasswordChangeController_oonaka {
+public class PasswordChangeController {
 
     private final PasswordChangeService passwordChangeService;
 
-    public PasswordChangeController_oonaka(
+    public PasswordChangeController(
             PasswordChangeService passwordChangeService) {
 
         this.passwordChangeService =
