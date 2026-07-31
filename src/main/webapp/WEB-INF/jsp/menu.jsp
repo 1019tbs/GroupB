@@ -13,6 +13,7 @@
 </head>
 
 <body class="menu">
+<jsp:include page="common/header.jsp"/>
     <img class="menuTopImg" alt="メニュー上部画像"
         src="${pageContext.request.contextPath}/images/menu_top.png">
 

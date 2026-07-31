@@ -11,6 +11,7 @@
 </head>
 
 <body class= "contact">
+<jsp:include page="common/header.jsp"/>
 <div class= "contactContainer">
 	
 	<div class= "contactLeft">
