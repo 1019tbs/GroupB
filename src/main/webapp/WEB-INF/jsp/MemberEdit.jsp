@@ -25,7 +25,7 @@
     </p>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/member/edit_oonaka"
+<form action="${pageContext.request.contextPath}/member/edit"
       method="post">
 
     <p>
