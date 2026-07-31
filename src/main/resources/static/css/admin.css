@@ -15,13 +15,6 @@ body.adminPage{
 	width: 100%;
 	height: 140px;
 
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 150px;*/
-/*    object-fit: cover;*/
-/*    z-index: 1;*/
 }
 .adminHeader{
     position: absolute;
@@ -76,14 +69,26 @@ body.adminPage{
 }
 .adminMenuBox{
     display: grid;
-    grid-template-columns: 220px 220px;
-    gap: 30px 50px;
+    grid-template-columns: 400px 400px;
+    column-gap: 30px; /*横*/
+	row-gap: 30px; /*縦*/
     justify-content: center;
     align-items: center;
     margin-top: 50px;
 }
 .adminMenuBox button{
-	width: 300px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;  /*画像と文字の間隔*/
+	width: 400px;
 	height: 160px;
-	
+	background: #fdf8ebff;
+	color: #a9854e;
+	cursor: pointer;	
+}
+.adminMenuBox button img{
+    width:100px;
+    height:100px;
 }

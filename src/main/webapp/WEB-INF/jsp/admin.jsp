@@ -35,28 +35,29 @@
 				method="get">
 				<button type="submit">
 				<img alt="問い合わせ" src="${pageContext.request.contextPath}/images/icon_mail.png">
-				お問い合わせ一覧
+				<span>お問い合わせ一覧</span>
 				</button>
 			</form>
 			<form action="${pageContext.request.contextPath}/admin/order"
 				method="get">
 				<button type="submit">
 				<img alt="予約" src="${pageContext.request.contextPath}/images/icon_yoyaku.png">
-				予約一覧
+				<span>予約一覧</span>
 				</button>
 			</form>			
 			<form action="${pageContext.request.contextPath}/inventory"
 				method="get">
 				<button type="submit">
 				<img alt="在庫" src="${pageContext.request.contextPath}/images/icon_zaiko.png">
-				在庫確認
+				<span>在庫確認</span>
 				</button>
 			</form>
 			<form action="${pageContext.request.contextPath}/admin/member"
 				method="get">
 				<button type="submit">
 				<img alt="会員" src="">
-				会員管理</button>
+				<span>会員管理</span>
+				</button>
 			</form>
 		</div>
 	</div>
