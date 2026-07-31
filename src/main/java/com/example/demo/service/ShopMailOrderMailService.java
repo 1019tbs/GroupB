@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.CartItem;
 import com.example.demo.model.ShoppingOrder;
 
 import shopMail.ShopMail;
@@ -23,7 +23,7 @@ public class ShopMailOrderMailService
     public boolean sendOrderConfirmation(
             long shoppingOrderId,
             ShoppingOrder order,
-            List<CartItem_oonaka> cartItems) {
+            List<CartItem> cartItems) {
 
         String subject =
                 "【Honey Bloom】ご注文を受け付けました";
@@ -54,7 +54,7 @@ public class ShopMailOrderMailService
     private String createHtmlBody(
             long shoppingOrderId,
             ShoppingOrder order,
-            List<CartItem_oonaka> cartItems) {
+            List<CartItem> cartItems) {
 
         StringBuilder body = new StringBuilder();
 
@@ -94,7 +94,7 @@ public class ShopMailOrderMailService
                     </tr>
                 """);
 
-        for (CartItem_oonaka item : cartItems) {
+        for (CartItem item : cartItems) {
 
             body.append("<tr>");
 

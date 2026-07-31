@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.demo.service.ProductService_oonaka;
+import com.example.demo.service.ProductService;
 
 @Controller
-public class ProductController_oonaka {
+public class ProductController {
 
     @Autowired
-    private ProductService_oonaka productService;
+    private ProductService productService;
 
     /*
      * 商品一覧表示

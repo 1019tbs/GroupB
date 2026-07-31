@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-public class Product_oonaka {
+public class Product_cart {
 
     private long productId;
     private String productName;
@@ -23,13 +23,13 @@ public class Product_oonaka {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product_oonaka() {
+    public Product_cart() {
     }
 
     /**
      * 既存コードとの互換性を維持するコンストラクタです。
      */
-    public Product_oonaka(
+    public Product_cart(
             long productId,
             String productName,
             BigDecimal price,
