@@ -55,17 +55,26 @@
 
     <p>
         郵便番号：
-        <input type="text"
-               name="postalCode"
-               value="${member.postalCode}">
-    </p>
+		<input type="text"
+				id="postalCode"
+				name="postalCode"
+				value="${member.postalCode}">
+		<button
+				type="button"
+				class="address-button"
+				id="addressSearchButton"
+				onclick="searchAddress()">
+			住所検索
+		</button>
+	</p>
 
     <p>
         住所：
-        <input type="text"
-               name="address"
-               value="${member.address}">
-    </p>
+		<input type="text"
+				id="address"
+				name="address"
+				value="${member.address}">
+	</p>
 
     <p>
         電話番号：
@@ -128,6 +137,33 @@
     </button>
 
 </form>
+
+
+<script>
+function searchAddress() {
+    const postalCode = document.getElementById("postalCode").value;
+    
+    if (!postalCode) {
+        alert("郵便番号を入力してください。");
+        return;
+    }
+
+    fetch('${pageContext.request.contextPath}/member/search-address?postalCode=' + encodeURIComponent(postalCode))
+        .then(response => response.text())
+        .then(address => {
+            if (address) {
+                document.getElementById("address").value = address;
+            } else {
+                alert("該当する住所が見つかりませんでした。");
+            }
+        })
+        .catch(error => {
+            console.error("エラーが発生しました:", error);
+            alert("住所の取得に失敗しました。");
+        });
+}
+</script>
+
 <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

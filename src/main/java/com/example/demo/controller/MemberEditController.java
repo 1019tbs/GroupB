@@ -6,19 +6,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.dao.PostalCodeDAO;
 import com.example.demo.model.Member;
+import com.example.demo.model.PostalCodeSearch;
 import com.example.demo.service.MemberEditService;
 
 @Controller
 public class MemberEditController {
 
     private final MemberEditService memberEditService;
+    // 郵便番号検索用DAOの追加
+    private final PostalCodeDAO postalCodeDAO;
 
-    public MemberEditController(
+public MemberEditController(
             MemberEditService memberEditService) {
 
         this.memberEditService = memberEditService;
+        this.postalCodeDAO = postalCodeDAO;        
     }
 
     /*
@@ -148,4 +155,20 @@ public class MemberEditController {
 
         return "memberEditComplete_oonaka";
     }
+    /* 郵便番号を受け取り、DBから取得した住所文字列
+     （都道府県+市区町村+町名）を直接返すAPI */
+    @GetMapping(value = "/member/search-address", produces = "text/plain; charset=UTF-8")
+    @ResponseBody
+    public String searchAddress(@RequestParam String postalCode) {
+
+		PostalCodeSearch result = postalCodeDAO.findByPostalCode(postalCode);
+
+		if (result != null) {
+			// 例：「県」 + 「市区町村」 + 「町名」
+			return result.getPrefecture() + result.getCity() + result.getTown();
+		}
+		
+		 // 見つからない場合は空文字を返す
+		return "";
+	}    
 }

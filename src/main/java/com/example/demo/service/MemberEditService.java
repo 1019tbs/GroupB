@@ -52,9 +52,10 @@ public class MemberEditService {
             return "郵便番号を入力してください";
         }
 
-        if (!member.getPostalCode()
-                .matches("\\d{3}-\\d{4}")) {
-            return "郵便番号は999-9999形式で入力してください";
+     // ハイフンを取り除いて7桁の数字になっているかチェック
+        String cleanPostalCode = member.getPostalCode().replace("-", "");
+        if (!cleanPostalCode.matches("\\d{7}")) {
+            return "郵便番号は7桁の数字（ハイフン可）で入力してください";
         }
 
         if (member.getAddress() == null
@@ -67,11 +68,12 @@ public class MemberEditService {
             return "電話番号を入力してください";
         }
 
-        if (!member.getPhoneNumber()
-                .matches("\\d{2,4}-\\d{2,4}-\\d{4}")) {
-            return "電話番号はハイフン付きで入力してください";
+        // ★ハイフンを取り除いて10〜11桁の数字になっているかチェック
+        String cleanPhoneNumber = member.getPhoneNumber().replace("-", "");
+        if (!cleanPhoneNumber.matches("\\d{10,11}")) {
+            return "電話番号は10桁または11桁の数字（ハイフン可）で入力してください";
         }
-
+        
         if (member.getBirthDate() == null) {
             return "生年月日を入力してください";
         }
