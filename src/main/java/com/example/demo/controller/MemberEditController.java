@@ -11,11 +11,11 @@ import com.example.demo.model.Member;
 import com.example.demo.service.MemberEditService;
 
 @Controller
-public class MemberEditController_oonaka {
+public class MemberEditController {
 
     private final MemberEditService memberEditService;
 
-    public MemberEditController_oonaka(
+    public MemberEditController(
             MemberEditService memberEditService) {
 
         this.memberEditService = memberEditService;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Product_cart;
 
 @Repository
-public class ProductDAO_oonaka {
+public class ProductCartDAO {
 
     private static final String JDBC_URL =
             "jdbc:postgresql://localhost:5432/groupb_project";
