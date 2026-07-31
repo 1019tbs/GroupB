@@ -20,12 +20,17 @@ public class PostalCodeDAO {
 
     // 郵便番号から住所を取得するメソッド
     public PostalCodeSearch findByPostalCode(String postalCode) {
+    	if (postalCode == null || postalCode.isEmpty()) {
+            return null;
+        }
+    	
     	try {
     		Class.forName("org.postgresql.Driver");
     	} catch (ClassNotFoundException e) {
     		e.printStackTrace();
     	}
-    	String sql = "SELECT * FROM postal_code_search WHERE postal_code = ?";
+    	String sql = "SELECT * FROM postal_code_search "
+    		+ "WHERE REPLACE(postal_code, '-', '') = REPLACE(?, '-', '')";
 
     	// try(...) の中で Connection や PreparedStatement を生成することで、自動的に close されます
     	try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
