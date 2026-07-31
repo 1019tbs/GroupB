@@ -83,7 +83,7 @@
 			</div>
 
 			<div class="subButtonArea">
-				<form action="${pageContext.request.contextPath}/member/edit_oonaka"
+				<form action="${pageContext.request.contextPath}/member/edit"
 					method="get">
 					<button type="submit" class="subButton">会員情報変更</button>
 				</form>
@@ -94,15 +94,13 @@
 		</div>
 	</div>
 
-	<!--<div class="footer">-->
+	<!--footer-->
 
 	<div class="adminArea">
 		<form action="${pageContext.request.contextPath}/admin" method="get">
 			<button class="adminButton" type="submit">管理者画面</button>
 		</form>
 	</div>
-	</div>
-	<jsp:include page="common/footer.jsp" />
-
+	<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

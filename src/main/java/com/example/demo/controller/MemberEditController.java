@@ -22,7 +22,8 @@ public class MemberEditController {
     private final PostalCodeDAO postalCodeDAO;
 
 public MemberEditController(
-            MemberEditService memberEditService) {
+            MemberEditService memberEditService,
+            PostalCodeDAO postalCodeDAO) {
 
         this.memberEditService = memberEditService;
         this.postalCodeDAO = postalCodeDAO;        
@@ -71,7 +72,7 @@ public MemberEditController(
      * 変更画面から送信された内容を受け取り、
      * DBを更新する
      */
-    @PostMapping("/member/edit_oonaka")
+    @PostMapping("/member/edit")
     public String update(
             Member member,
             HttpSession session,
@@ -116,7 +117,7 @@ public MemberEditController(
                     "member",
                     member);
 
-            return "MemberEdit_oonaka";
+            return "MemberEdit";
         }
 
         boolean result =
@@ -132,7 +133,7 @@ public MemberEditController(
                     "member",
                     member);
 
-            return "MemberEdit_oonaka";
+            return "MemberEdit";
         }
 
         /*
@@ -153,7 +154,7 @@ public MemberEditController(
                 "member",
                 updatedMember);
 
-        return "memberEditComplete_oonaka";
+        return "memberEditComplete";
     }
     /* 郵便番号を受け取り、DBから取得した住所文字列
      （都道府県+市区町村+町名）を直接返すAPI */

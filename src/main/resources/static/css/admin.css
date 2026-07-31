@@ -60,12 +60,16 @@ body.adminPage{
     background: #ffe599;
 }
 .adminMain{
+	width: 100%;
 	max-width: 1000px;
-	height: auto;
+	margin: 30px auto;
     flex: 1;
 	background: #fdf8ebff;
 	border: 1px solid #a9854e;
 	border-radius: 15px;
+}
+.adminTitle{
+	text-align: center;
 }
 .adminMenuBox{
     display: grid;
@@ -86,7 +90,11 @@ body.adminPage{
 	height: 160px;
 	background: #fdf8ebff;
 	color: #a9854e;
-	cursor: pointer;	
+	cursor: pointer;
+	transition: 0.5s;
+}
+.adminMenuBox button:hover{
+	background: #fff2cc;
 }
 .adminMenuBox button img{
     width:100px;
