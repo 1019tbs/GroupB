@@ -1,3 +1,4 @@
+<!-- 管理者画面 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -6,59 +7,59 @@
 <head>
 <meta charset="UTF-8">
 <title>管理者画面</title>
+<!-- cssファイル読み込み -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
+
 </head>
 
-<body>
-	<h1 class= "TopIcon">Honey Bloom
-	<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
-	</h1>
-	<p>－ 管理者ログイン中 －</p>
-	
-	<h2>管理者画面</h2>
-	<div>
-	
+<body class= "adminPage">
+	<img class= "adminFrill" alt="上部フリル" src="${pageContext.request.contextPath}/images/frill.png" >
+	<header class= "adminHeader">
+		<div class= "adminLogo">
+			<h1 class= "TopIcon">Honey Bloom
+			<img class= "icon" alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" >
+			</h1>
+			<p>－ 管理者ログイン中 －</p>
+		</div>
+		<form action="${pageContext.request.contextPath}/main" method="get">
+		<button class= "adminBackButton" type= "submit">
+		メインメニューへ戻る
+		</button>
+		</form>
+	</header>
+	<div class= "adminMain">	
+		<h2 class= "adminTitle">管理者画面</h2>
+		<div class= "adminMenuBox">
+			<form action="${pageContext.request.contextPath}/admin/contact"
+				method="get">
+				<button type="submit">
+				<img alt="問い合わせ" src="${pageContext.request.contextPath}/images/icon_mail.png">
+				お問い合わせ一覧
+				</button>
+			</form>
+			<form action="${pageContext.request.contextPath}/admin/order"
+				method="get">
+				<button type="submit">
+				<img alt="予約" src="${pageContext.request.contextPath}/images/icon_yoyaku.png">
+				予約一覧
+				</button>
+			</form>			
+			<form action="${pageContext.request.contextPath}/inventory"
+				method="get">
+				<button type="submit">
+				<img alt="在庫" src="${pageContext.request.contextPath}/images/icon_zaiko.png">
+				在庫確認
+				</button>
+			</form>
+			<form action="${pageContext.request.contextPath}/admin/member"
+				method="get">
+				<button type="submit">
+				<img alt="会員" src="">
+				会員管理</button>
+			</form>
+		</div>
 	</div>
-	<form action="${pageContext.request.contextPath}/admin/contact"
-		method="get">
-		<button type="submit">
-		<img alt="メール" src="${pageContext.request.contextPath}/images/icon_mail.png">
-		お問い合わせ一覧
-		</button>
-	</form>
-
-	<br>
-
-	<form action="${pageContext.request.contextPath}/admin/order"
-		method="get">
-		<button type="submit">
-		<img alt="予約" src="${pageContext.request.contextPath}/images/icon_yoyaku.png">
-		予約一覧
-		</button>
-	</form>
-
-	<br>
-
-	<form action="${pageContext.request.contextPath}/inventory"
-		method="get">
-		<button type="submit">
-		<img alt="在庫" src="${pageContext.request.contextPath}/images/icon_zaiko.png">
-		在庫確認
-		</button>
-	</form>
-	
-	<br>
-	
-	<form action="${pageContext.request.contextPath}/admin/member"
-		method="get">
-		<button type="submit">会員管理</button>
-	</form>
-
-	<br>
-	<br>
-
-	<form action="${pageContext.request.contextPath}/main" method="get">
-		<button type="submit">メインメニューへ戻る</button>
-	</form>
-
+	<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
