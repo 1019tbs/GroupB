@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.CartItem;
 import com.example.demo.model.CheckoutForm;
 import com.example.demo.model.Member;
 import com.example.demo.model.OrderCompletionResult;
@@ -66,7 +66,7 @@ public class CheckoutController {
                 PENDING_CART_SIGNATURE);
 
         try {
-            List<CartItem_oonaka> cartItems =
+            List<CartItem> cartItems =
                     checkoutService
                             .getCartItemsForCheckout(
                                     loginMember.getMemberId());
@@ -117,7 +117,7 @@ public class CheckoutController {
             return "redirect:/";
         }
 
-        List<CartItem_oonaka> cartItems;
+        List<CartItem> cartItems;
 
         try {
             cartItems =
@@ -287,7 +287,7 @@ public class CheckoutController {
 
     private void addCheckoutSummary(
             Model model,
-            List<CartItem_oonaka> cartItems) {
+            List<CartItem> cartItems) {
 
         BigDecimal total =
                 checkoutService

@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.CartItem;
 import com.example.demo.model.ShoppingOrder;
 
 /**
@@ -16,5 +16,5 @@ public interface OrderMailService {
     boolean sendOrderConfirmation(
             long shoppingOrderId,
             ShoppingOrder order,
-            List<CartItem_oonaka> cartItems);
+            List<CartItem> cartItems);
 }

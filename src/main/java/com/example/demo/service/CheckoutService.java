@@ -17,7 +17,7 @@ import com.example.demo.dao.CheckoutMemberDAO;
 import com.example.demo.dao.ProductDAO;
 import com.example.demo.dao.ShoppingOrderDAO;
 import com.example.demo.dao.ShoppingOrderItemDAO;
-import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.CartItem;
 import com.example.demo.model.CheckoutForm;
 import com.example.demo.model.Member;
 import com.example.demo.model.OrderCompletionResult;
@@ -108,13 +108,13 @@ public class CheckoutService {
         return form;
     }
 
-    public List<CartItem_oonaka>
+    public List<CartItem>
             getCartItemsForCheckout(
                     String memberId) {
 
         validateMemberId(memberId);
 
-        List<CartItem_oonaka> cartItems =
+        List<CartItem> cartItems =
                 cartService.findCartItems(
                         memberId);
 
@@ -212,21 +212,21 @@ public class CheckoutService {
     }
 
     public BigDecimal calculateTotal(
-            List<CartItem_oonaka> cartItems) {
+            List<CartItem> cartItems) {
 
         if (cartItems == null) {
             return BigDecimal.ZERO;
         }
 
         return cartItems.stream()
-                .map(CartItem_oonaka::getSubtotal)
+                .map(CartItem::getSubtotal)
                 .reduce(
                         BigDecimal.ZERO,
                         BigDecimal::add);
     }
 
     public String createCartSignature(
-            List<CartItem_oonaka> cartItems) {
+            List<CartItem> cartItems) {
 
         validateCartItems(cartItems);
 
@@ -269,7 +269,7 @@ public class CheckoutService {
 
         long shoppingOrderId;
         ShoppingOrder completedOrder;
-        List<CartItem_oonaka> completedItems;
+        List<CartItem> completedItems;
 
         try (Connection conn =
                 productDAO.openConnection()) {
@@ -288,7 +288,7 @@ public class CheckoutService {
                             "カートが見つかりません。");
                 }
 
-                List<CartItem_oonaka> cartItems =
+                List<CartItem> cartItems =
                         cartDAO.findCartItems(
                                 conn,
                                 memberId);
@@ -323,7 +323,7 @@ public class CheckoutService {
                                 conn,
                                 order);
 
-                for (CartItem_oonaka cartItem
+                for (CartItem cartItem
                         : cartItems) {
 
                     long productId =
@@ -489,7 +489,7 @@ public class CheckoutService {
     private ShoppingOrderItem
             createShoppingOrderItem(
                     long shoppingOrderId,
-                    CartItem_oonaka cartItem) {
+                    CartItem cartItem) {
 
         ShoppingOrderItem item =
                 new ShoppingOrderItem();
@@ -516,7 +516,7 @@ public class CheckoutService {
     }
 
     private void validateCartItems(
-            List<CartItem_oonaka> cartItems) {
+            List<CartItem> cartItems) {
 
         if (cartItems == null
                 || cartItems.isEmpty()) {
@@ -525,7 +525,7 @@ public class CheckoutService {
                     "カートに商品がありません。");
         }
 
-        for (CartItem_oonaka item : cartItems) {
+        for (CartItem item : cartItems) {
 
             if (item == null
                     || item.getProduct() == null) {

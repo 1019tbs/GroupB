@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.model.CartItem_oonaka;
+import com.example.demo.model.CartItem;
 import com.example.demo.model.Member;
 import com.example.demo.service.CartService;
 
@@ -79,7 +79,7 @@ public class CartController {
             return "redirect:/";
         }
 
-        List<CartItem_oonaka> cartList =
+        List<CartItem> cartList =
                 cartService.findCartItems(
                         loginMember.getMemberId());
 

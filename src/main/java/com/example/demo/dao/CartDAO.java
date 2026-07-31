@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.model.CartItem_oonaka;
-import com.example.demo.model.Product_oonaka;
+import com.example.demo.model.CartItem;
+import com.example.demo.model.Product_cart;
 
 /**
  * carts・cart_itemsテーブルへのアクセスを担当します。
@@ -293,7 +293,7 @@ public class CartDAO {
     /**
      * 通常のカート画面用です。
      */
-    public List<CartItem_oonaka>
+    public List<CartItem>
             findCartItems(
                     String memberId) {
 
@@ -319,7 +319,7 @@ public class CartDAO {
      * 読み取った後に数量・価格・取扱状態が
      * 同時更新されにくい状態にします。
      */
-    public List<CartItem_oonaka>
+    public List<CartItem>
             findCartItems(
                     Connection conn,
                     String memberId)
@@ -331,7 +331,7 @@ public class CartDAO {
                 true);
     }
 
-    private List<CartItem_oonaka>
+    private List<CartItem>
             findCartItems(
                     Connection conn,
                     String memberId,
@@ -340,7 +340,7 @@ public class CartDAO {
 
         validateConnection(conn);
 
-        List<CartItem_oonaka> cartList =
+        List<CartItem> cartList =
                 new ArrayList<>();
 
         String sql =
@@ -408,12 +408,12 @@ public class CartDAO {
         }
     }
 
-    private CartItem_oonaka mapCartItem(
+    private CartItem mapCartItem(
             ResultSet rs)
             throws SQLException {
 
-        Product_oonaka product =
-                new Product_oonaka();
+        Product_cart product =
+                new Product_cart();
 
         product.setProductId(
                 rs.getLong("product_id"));
@@ -447,7 +447,7 @@ public class CartDAO {
                 rs.getTimestamp("updated_at")
                         .toLocalDateTime());
 
-        return new CartItem_oonaka(
+        return new CartItem(
                 product,
                 rs.getInt("quantity"));
     }

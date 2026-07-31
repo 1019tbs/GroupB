@@ -2,28 +2,28 @@ package com.example.demo.model;
 
 import java.math.BigDecimal;
 
-public class CartItem_oonaka {
+public class CartItem {
 
-    private Product_oonaka product;
+    private Product_cart product;
     private int quantity;
 
-    public CartItem_oonaka() {
+    public CartItem() {
     }
 
-    public CartItem_oonaka(
-            Product_oonaka product,
+    public CartItem(
+            Product_cart product,
             int quantity) {
 
         this.product = product;
         this.quantity = quantity;
     }
 
-    public Product_oonaka getProduct() {
+    public Product_cart getProduct() {
         return product;
     }
 
     public void setProduct(
-            Product_oonaka product) {
+            Product_cart product) {
 
         this.product = product;
     }
