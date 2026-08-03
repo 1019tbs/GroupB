@@ -26,7 +26,9 @@ public class ShopMailOrderMailService
             List<CartItem> cartItems) {
 
         String subject =
-                "【Honey Bloom】ご注文を受け付けました";
+                order.isPickup()
+                ? "【Honey Bloom】店頭受取のご予約を受け付けました"
+                : "【Honey Bloom】ご注文を受け付けました";
 
         String body =
                 createHtmlBody(
@@ -61,14 +63,38 @@ public class ShopMailOrderMailService
         body.append("<html>");
         body.append("<body style=\"font-family: sans-serif;\">");
 
-        body.append("<h2>ご注文ありがとうございます</h2>");
+        body.append(order.isPickup()
+                ? "<h2>店頭受取のご予約ありがとうございます</h2>"
+                : "<h2>ご注文ありがとうございます</h2>");
 
         body.append("<p>");
         body.append(escapeHtml(order.getCustomerName()));
         body.append(" 様</p>");
 
         body.append("<p>");
-        body.append("以下の内容でご注文を受け付けました。");
+        body.append(order.isPickup()
+                ? "以下の内容で店頭受取のご予約を受け付けました。"
+                : "以下の内容でご注文を受け付けました。");
+        body.append("</p>");
+
+        body.append("<p><strong>受取方法：</strong>");
+        body.append(escapeHtml(
+                order.getFulfillmentMethodLabel()));
+        body.append("</p>");
+
+        if (order.isPickup()) {
+            body.append("<p><strong>受取日時：</strong>");
+            body.append(escapeHtml(
+                    order.getPickupDateText()));
+            body.append(" ");
+            body.append(escapeHtml(
+                    order.getPickupTimeText()));
+            body.append("</p>");
+        }
+
+        body.append("<p><strong>支払方法：</strong>");
+        body.append(escapeHtml(
+                order.getPaymentMethodLabel()));
         body.append("</p>");
 
         body.append("<p>");
@@ -106,21 +132,18 @@ public class ShopMailOrderMailService
             body.append("</td>");
 
             body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
-            body.append(
-                    item.getProduct()
-                            .getPrice()
-                            .toPlainString());
-            body.append("円</td>");
+            body.append(formatPrice(
+                    item.getProduct().getPrice()));
+            body.append("</td>");
 
             body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
             body.append(item.getQuantity());
             body.append("</td>");
 
             body.append("<td style=\"border: 1px solid #ccc; padding: 8px;\">");
-            body.append(
-                    item.getSubtotal()
-                            .toPlainString());
-            body.append("円</td>");
+            body.append(formatPrice(
+                    item.getSubtotal()));
+            body.append("</td>");
 
             body.append("</tr>");
         }
@@ -129,11 +152,13 @@ public class ShopMailOrderMailService
 
         body.append("<p style=\"font-size: 18px; font-weight: bold;\">");
         body.append("合計金額：");
-        body.append(
-                order.getTotalAmount()
-                        .toPlainString());
-        body.append("円");
+        body.append(formatPrice(
+                order.getTotalAmount()));
         body.append("</p>");
+
+        if (order.isPickup()) {
+            body.append("<p>ご指定の日時に店舗へお越しください。</p>");
+        }
 
         body.append("<p>");
         body.append("Honey Bloomをご利用いただき、");

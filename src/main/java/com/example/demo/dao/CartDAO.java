@@ -104,9 +104,17 @@ public class CartDAO {
     public Long createCart(
             String memberId) {
 
+        return createCart(memberId, "DELIVERY");
+    }
+
+    public Long createCart(
+            String memberId,
+            String fulfillmentMethod) {
+
         String sql =
-                "INSERT INTO carts (member_id) "
-              + "VALUES (?) "
+                "INSERT INTO carts "
+              + "(member_id, fulfillment_method) "
+              + "VALUES (?, ?) "
               + "RETURNING cart_id";
 
         try (
@@ -116,6 +124,7 @@ public class CartDAO {
         ) {
 
             ps.setString(1, memberId);
+            ps.setString(2, fulfillmentMethod);
 
             try (ResultSet rs =
                     ps.executeQuery()) {
@@ -133,6 +142,103 @@ public class CartDAO {
             throw new IllegalStateException(
                     "ショッピングカートの作成に失敗しました。",
                     e);
+        }
+    }
+
+    public String findFulfillmentMethod(
+            String memberId) {
+
+        String sql =
+                "SELECT fulfillment_method "
+              + "FROM carts "
+              + "WHERE member_id = ?";
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setString(1, memberId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next()
+                        ? rs.getString("fulfillment_method")
+                        : null;
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "カートの受取方法を取得できませんでした。", e);
+        }
+    }
+
+    public String findFulfillmentMethod(
+            Connection conn,
+            long cartId) throws SQLException {
+
+        validateConnection(conn);
+
+        String sql =
+                "SELECT fulfillment_method "
+              + "FROM carts "
+              + "WHERE cart_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, cartId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next()
+                        ? rs.getString("fulfillment_method")
+                        : null;
+            }
+        }
+    }
+
+    public boolean updateFulfillmentMethod(
+            long cartId,
+            String fulfillmentMethod) {
+
+        String sql =
+                "UPDATE carts "
+              + "SET fulfillment_method = ?, "
+              + "updated_at = CURRENT_TIMESTAMP "
+              + "WHERE cart_id = ?";
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setString(1, fulfillmentMethod);
+            ps.setLong(2, cartId);
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "カートの受取方法を設定できませんでした。", e);
+        }
+    }
+
+    public void resetFulfillmentMethodIfEmpty(
+            String memberId) {
+
+        String sql =
+                "UPDATE carts c "
+              + "SET fulfillment_method = NULL, "
+              + "updated_at = CURRENT_TIMESTAMP "
+              + "WHERE c.member_id = ? "
+              + "AND NOT EXISTS ("
+              + "SELECT 1 FROM cart_items ci "
+              + "WHERE ci.cart_id = c.cart_id)";
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setString(1, memberId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(
+                    "カート情報を更新できませんでした。", e);
         }
     }
 
@@ -353,6 +459,8 @@ public class CartDAO {
               + "p.description, "
               + "p.image_url, "
               + "p.active, "
+              + "p.pickup_available, "
+              + "p.delivery_available, "
               + "p.created_at, "
               + "p.updated_at, "
               + "ci.quantity "
@@ -404,7 +512,22 @@ public class CartDAO {
 
             ps.setLong(1, cartId);
 
-            return ps.executeUpdate() > 0;
+            boolean deleted = ps.executeUpdate() > 0;
+
+            if (!deleted) {
+                return false;
+            }
+
+            try (PreparedStatement resetPs =
+                    conn.prepareStatement(
+                            "UPDATE carts "
+                          + "SET fulfillment_method = NULL, "
+                          + "updated_at = CURRENT_TIMESTAMP "
+                          + "WHERE cart_id = ?")) {
+
+                resetPs.setLong(1, cartId);
+                return resetPs.executeUpdate() == 1;
+            }
         }
     }
 
@@ -438,6 +561,12 @@ public class CartDAO {
 
         product.setActive(
                 rs.getBoolean("active"));
+
+        product.setPickupAvailable(
+                rs.getBoolean("pickup_available"));
+
+        product.setDeliveryAvailable(
+                rs.getBoolean("delivery_available"));
 
         product.setCreatedAt(
                 rs.getTimestamp("created_at")

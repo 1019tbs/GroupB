@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CartService {
 
+    private static final Set<String> VALID_FULFILLMENT_METHODS =
+            Set.of("DELIVERY", "PICKUP");
+
     private final CartDAO cartDAO;
     private final ProductDAO productDAO;
 
@@ -29,12 +33,30 @@ public class CartService {
             Long productId,
             int quantity) {
 
+        addToCart(
+                memberId,
+                productId,
+                quantity,
+                "DELIVERY");
+    }
+
+    public void addToCart(
+            String memberId,
+            Long productId,
+            int quantity,
+            String fulfillmentMethod) {
+
         validateMemberId(memberId);
         validateProductId(productId);
         validateQuantity(quantity);
+        validateFulfillmentMethod(fulfillmentMethod);
 
         Product product =
                 findPurchasableProduct(productId);
+
+        validateProductAvailability(
+                product,
+                fulfillmentMethod);
 
         int currentQuantity =
                 cartDAO.findQuantity(
@@ -57,7 +79,29 @@ public class CartService {
                 cartDAO.findCartIdByMemberId(memberId);
 
         if (cartId == null) {
-            cartId = cartDAO.createCart(memberId);
+            cartId = cartDAO.createCart(
+                    memberId,
+                    fulfillmentMethod);
+        } else {
+            String currentMethod =
+                    cartDAO.findFulfillmentMethod(memberId);
+
+            if (currentMethod == null) {
+                if (!cartDAO.updateFulfillmentMethod(
+                        cartId,
+                        fulfillmentMethod)) {
+
+                    throw new IllegalStateException(
+                            "カートの受取方法を設定できませんでした。");
+                }
+
+            } else if (!currentMethod.equals(
+                    fulfillmentMethod)) {
+
+                throw new IllegalArgumentException(
+                        "カートには別の受取方法の商品が入っています。"
+                        + "現在の注文を完了するか、カートを空にしてください。");
+            }
         }
 
         cartDAO.addProductToCart(
@@ -115,6 +159,8 @@ public class CartService {
             throw new IllegalStateException(
                     "取消対象の商品がカートにありません。");
         }
+
+        cartDAO.resetFulfillmentMethodIfEmpty(memberId);
     }
 
     public List<CartItem> findCartItems(
@@ -123,6 +169,13 @@ public class CartService {
         validateMemberId(memberId);
 
         return cartDAO.findCartItems(memberId);
+    }
+
+    public String getFulfillmentMethod(
+            String memberId) {
+
+        validateMemberId(memberId);
+        return cartDAO.findFulfillmentMethod(memberId);
     }
 
     /**
@@ -174,6 +227,39 @@ public class CartService {
         if (quantity <= 0) {
             throw new IllegalArgumentException(
                     "数量は1以上で指定してください。");
+        }
+    }
+
+    private void validateFulfillmentMethod(
+            String fulfillmentMethod) {
+
+        if (fulfillmentMethod == null
+                || !VALID_FULFILLMENT_METHODS.contains(
+                        fulfillmentMethod)) {
+
+            throw new IllegalArgumentException(
+                    "受取方法が正しくありません。");
+        }
+    }
+
+    private void validateProductAvailability(
+            Product product,
+            String fulfillmentMethod) {
+
+        if ("DELIVERY".equals(fulfillmentMethod)
+                && !Boolean.TRUE.equals(
+                        product.getDeliveryAvailable())) {
+
+            throw new IllegalArgumentException(
+                    "この商品は通販に対応していません。");
+        }
+
+        if ("PICKUP".equals(fulfillmentMethod)
+                && !Boolean.TRUE.equals(
+                        product.getPickupAvailable())) {
+
+            throw new IllegalArgumentException(
+                    "この商品は店頭受取に対応していません。");
         }
     }
 }

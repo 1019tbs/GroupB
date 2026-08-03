@@ -1,7 +1,9 @@
 package com.example.demo.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,9 @@ public class ShoppingOrder {
     private String paymentMethod;
     private BigDecimal totalAmount;
     private String orderStatus;
+    private String fulfillmentMethod;
+    private LocalDate pickupDate;
+    private LocalTime pickupTime;
     private String checkoutToken;
     private LocalDateTime createdAt;
 
@@ -71,6 +76,11 @@ public class ShoppingOrder {
             return "コンビニ払い";
         }
 
+        if ("pay_at_store".equals(
+                paymentMethod)) {
+            return "店頭支払い";
+        }
+
         return paymentMethod == null
                 ? ""
                 : paymentMethod;
@@ -79,7 +89,9 @@ public class ShoppingOrder {
     public String getOrderStatusLabel() {
 
         if ("ORDERED".equals(orderStatus)) {
-            return "注文済み";
+            return isPickup()
+                    ? "予約受付済み"
+                    : "注文済み";
         }
 
         if ("CANCELLED".equals(orderStatus)) {
@@ -93,5 +105,41 @@ public class ShoppingOrder {
         return orderStatus == null
                 ? ""
                 : orderStatus;
+    }
+
+    public boolean isPickup() {
+        return "PICKUP".equals(fulfillmentMethod);
+    }
+
+    public boolean isDelivery() {
+        return "DELIVERY".equals(fulfillmentMethod);
+    }
+
+    public String getFulfillmentMethodLabel() {
+        if (isPickup()) {
+            return "店頭受取";
+        }
+        if (isDelivery()) {
+            return "通販";
+        }
+        return fulfillmentMethod == null
+                ? ""
+                : fulfillmentMethod;
+    }
+
+    public String getPickupDateText() {
+        return pickupDate == null
+                ? ""
+                : pickupDate.format(
+                        DateTimeFormatter.ofPattern(
+                                "yyyy/MM/dd"));
+    }
+
+    public String getPickupTimeText() {
+        return pickupTime == null
+                ? ""
+                : pickupTime.format(
+                        DateTimeFormatter.ofPattern(
+                                "HH:mm"));
     }
 }

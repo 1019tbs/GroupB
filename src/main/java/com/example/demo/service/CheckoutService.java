@@ -3,6 +3,9 @@ package com.example.demo.service;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -38,12 +41,24 @@ public class CheckoutService {
                     CheckoutService.class);
 
     private static final Set<String>
-            VALID_PAYMENT_METHODS =
+            DELIVERY_PAYMENT_METHODS =
                     Set.of(
                             "credit",
                             "bank",
                             "cash_on_delivery",
                             "convenience_store");
+
+    private static final Set<String>
+            PICKUP_PAYMENT_METHODS =
+                    Set.of(
+                            "credit",
+                            "bank",
+                            "convenience_store",
+                            "pay_at_store");
+
+    private static final Set<String>
+            VALID_FULFILLMENT_METHODS =
+                    Set.of("DELIVERY", "PICKUP");
 
     private final CheckoutMemberDAO
             checkoutMemberDAO;
@@ -118,9 +133,29 @@ public class CheckoutService {
                 cartService.findCartItems(
                         memberId);
 
-        validateCartItems(cartItems);
+        validateCartItems(
+                cartItems,
+                getCartFulfillmentMethod(memberId));
 
         return cartItems;
+    }
+
+    public String getCartFulfillmentMethod(
+            String memberId) {
+
+        validateMemberId(memberId);
+
+        String fulfillmentMethod =
+                cartService.getFulfillmentMethod(memberId);
+
+        if (!VALID_FULFILLMENT_METHODS.contains(
+                fulfillmentMethod)) {
+
+            throw new IllegalStateException(
+                    "カートの受取方法が設定されていません。");
+        }
+
+        return fulfillmentMethod;
     }
 
     public void validateAndNormalize(
@@ -149,6 +184,15 @@ public class CheckoutService {
         form.setPaymentMethod(
                 trim(form.getPaymentMethod()));
 
+        form.setFulfillmentMethod(
+                trim(form.getFulfillmentMethod()));
+
+        form.setPickupDate(
+                trim(form.getPickupDate()));
+
+        form.setPickupTime(
+                trim(form.getPickupTime()));
+
         require(
                 form.getCustomerName(),
                 "氏名を入力してください。");
@@ -158,22 +202,37 @@ public class CheckoutService {
                     "氏名は100文字以内で入力してください。");
         }
 
-        require(
-                form.getPostalCode(),
-                "郵便番号を入力してください。");
+        validateFulfillmentMethod(
+                form.getFulfillmentMethod());
 
-        if (form.getPostalCode().length() > 20) {
-            throw new IllegalArgumentException(
-                    "郵便番号は20文字以内で入力してください。");
-        }
+        if ("DELIVERY".equals(
+                form.getFulfillmentMethod())) {
 
-        require(
-                form.getAddress(),
-                "住所を入力してください。");
+            require(
+                    form.getPostalCode(),
+                    "郵便番号を入力してください。");
 
-        if (form.getAddress().length() > 255) {
-            throw new IllegalArgumentException(
-                    "住所は255文字以内で入力してください。");
+            if (form.getPostalCode().length() > 20) {
+                throw new IllegalArgumentException(
+                        "郵便番号は20文字以内で入力してください。");
+            }
+
+            require(
+                    form.getAddress(),
+                    "住所を入力してください。");
+
+            if (form.getAddress().length() > 255) {
+                throw new IllegalArgumentException(
+                        "住所は255文字以内で入力してください。");
+            }
+
+            form.setPickupDate("");
+            form.setPickupTime("");
+
+        } else {
+            validatePickupDateTime(form);
+            form.setPostalCode("");
+            form.setAddress("");
         }
 
         require(
@@ -203,7 +262,13 @@ public class CheckoutService {
                 form.getPaymentMethod(),
                 "支払方法を選択してください。");
 
-        if (!VALID_PAYMENT_METHODS.contains(
+        Set<String> availablePaymentMethods =
+                "PICKUP".equals(
+                        form.getFulfillmentMethod())
+                        ? PICKUP_PAYMENT_METHODS
+                        : DELIVERY_PAYMENT_METHODS;
+
+        if (!availablePaymentMethods.contains(
                 form.getPaymentMethod())) {
 
             throw new IllegalArgumentException(
@@ -226,11 +291,15 @@ public class CheckoutService {
     }
 
     public String createCartSignature(
-            List<CartItem> cartItems) {
+            List<CartItem> cartItems,
+            String fulfillmentMethod) {
 
-        validateCartItems(cartItems);
+        validateCartItems(
+                cartItems,
+                fulfillmentMethod);
 
-        return cartItems.stream()
+        return fulfillmentMethod + "|"
+                + cartItems.stream()
                 .sorted(
                         Comparator.comparingLong(
                                 item ->
@@ -245,6 +314,14 @@ public class CheckoutService {
                         + item.getQuantity())
                 .collect(
                         Collectors.joining(";"));
+    }
+
+    public String createCartSignature(
+            List<CartItem> cartItems) {
+
+        return createCartSignature(
+                cartItems,
+                "DELIVERY");
     }
 
     /**
@@ -293,11 +370,26 @@ public class CheckoutService {
                                 conn,
                                 memberId);
 
-                validateCartItems(cartItems);
+                String currentFulfillmentMethod =
+                        cartDAO.findFulfillmentMethod(
+                                conn,
+                                cartId);
+
+                if (!form.getFulfillmentMethod().equals(
+                        currentFulfillmentMethod)) {
+
+                    throw new IllegalStateException(
+                            "確認後にカートの受取方法が変更されました。");
+                }
+
+                validateCartItems(
+                        cartItems,
+                        currentFulfillmentMethod);
 
                 String currentSignature =
                         createCartSignature(
-                                cartItems);
+                                cartItems,
+                                currentFulfillmentMethod);
 
                 if (!expectedCartSignature.equals(
                         currentSignature)) {
@@ -454,6 +546,14 @@ public class CheckoutService {
         return order.getPaymentMethodLabel();
     }
 
+    public String getFulfillmentMethodLabel(
+            String fulfillmentMethod) {
+
+        return "PICKUP".equals(fulfillmentMethod)
+                ? "店頭受取"
+                : "通販";
+    }
+
     private ShoppingOrder createShoppingOrder(
             String memberId,
             CheckoutForm form,
@@ -480,6 +580,19 @@ public class CheckoutService {
                 totalAmount);
         order.setOrderStatus(
                 "ORDERED");
+        order.setFulfillmentMethod(
+                form.getFulfillmentMethod());
+
+        if ("PICKUP".equals(
+                form.getFulfillmentMethod())) {
+
+            order.setPickupDate(
+                    LocalDate.parse(
+                            form.getPickupDate()));
+            order.setPickupTime(
+                    LocalTime.parse(
+                            form.getPickupTime()));
+        }
         order.setCheckoutToken(
                 checkoutToken);
 
@@ -516,7 +629,10 @@ public class CheckoutService {
     }
 
     private void validateCartItems(
-            List<CartItem> cartItems) {
+            List<CartItem> cartItems,
+            String fulfillmentMethod) {
+
+        validateFulfillmentMethod(fulfillmentMethod);
 
         if (cartItems == null
                 || cartItems.isEmpty()) {
@@ -538,6 +654,22 @@ public class CheckoutService {
                 throw new IllegalStateException(
                         "取扱停止中の商品があります。"
                         + "カート内容を確認してください。");
+            }
+
+            if ("DELIVERY".equals(fulfillmentMethod)
+                    && !item.getProduct()
+                            .isDeliveryAvailable()) {
+
+                throw new IllegalStateException(
+                        "通販に対応していない商品があります。");
+            }
+
+            if ("PICKUP".equals(fulfillmentMethod)
+                    && !item.getProduct()
+                            .isPickupAvailable()) {
+
+                throw new IllegalStateException(
+                        "店頭受取に対応していない商品があります。");
             }
 
             if (item.getQuantity() <= 0) {
@@ -572,6 +704,53 @@ public class CheckoutService {
         if (checkoutToken.length() > 36) {
             throw new IllegalArgumentException(
                     "注文確認用トークンが正しくありません。");
+        }
+    }
+
+    private void validateFulfillmentMethod(
+            String fulfillmentMethod) {
+
+        if (!VALID_FULFILLMENT_METHODS.contains(
+                fulfillmentMethod)) {
+
+            throw new IllegalArgumentException(
+                    "受取方法が正しくありません。");
+        }
+    }
+
+    private void validatePickupDateTime(
+            CheckoutForm form) {
+
+        require(
+                form.getPickupDate(),
+                "受取希望日を入力してください。");
+
+        require(
+                form.getPickupTime(),
+                "受取希望時間を入力してください。");
+
+        try {
+            LocalDate pickupDate =
+                    LocalDate.parse(
+                            form.getPickupDate());
+
+            LocalTime pickupTime =
+                    LocalTime.parse(
+                            form.getPickupTime());
+
+            if (LocalDateTime.of(
+                    pickupDate,
+                    pickupTime)
+                    .isBefore(LocalDateTime.now())) {
+
+                throw new IllegalArgumentException(
+                        "受取希望日時は現在より後を指定してください。");
+            }
+
+        } catch (java.time.format.DateTimeParseException e) {
+            throw new IllegalArgumentException(
+                    "受取希望日時の形式が正しくありません。",
+                    e);
         }
     }
 
