@@ -394,7 +394,7 @@
         <img class="menuFooterImg" alt="メニューフッター画像"
             src="${pageContext.request.contextPath}/images/menu_footer.png">
     </footer>
-	
+	<script src="${pageContext.request.contextPath}/JS/Cart.js"></script>
     <jsp:include page="common/footer.jsp"/>
 </body>
 </html>
