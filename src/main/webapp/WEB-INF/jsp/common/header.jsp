@@ -13,7 +13,7 @@
 		<form action="${pageContext.request.contextPath}/main" method="get">
 			<button class="headerButton" type="submit">
 				<img class="headerIcon" alt="メインメニューに戻る"
-					src="${pageContext.request.contextPath}/images/icon_main.png">
+					src="${pageContext.request.contextPath}/images/icon_main2.png">
 				メインメニューへ
 			</button>
 		</form>
