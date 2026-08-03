@@ -55,7 +55,7 @@
 			<form action="${pageContext.request.contextPath}/admin/member"
 				method="get">
 				<button type="submit">
-				<img alt="会員" src="">
+				<img alt="会員"  src="${pageContext.request.contextPath}/images/icon_member.png">
 				<span>会員管理</span>
 				</button>
 			</form>
