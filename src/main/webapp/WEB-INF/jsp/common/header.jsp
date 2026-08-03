@@ -30,7 +30,7 @@
 
 		<span>/</span>
 
-		<form action="cart" method="get">
+		<form action="${pageContext.request.contextPath}/cart" method="get">
 			<button class="headerButton" type="submit">
 				<img class="headerIcon" alt="カート"
 					src="${pageContext.request.contextPath}/images/icon_cart.png">
@@ -40,7 +40,7 @@
 
 		<span>/</span>
 
-		<form action="history" method="get">
+		<form action="${pageContext.request.contextPath}/orders/history" method="get">
 			<button class="headerButton" type="submit">
 				<img class="headerIcon" alt="注文履歴"
 					src="${pageContext.request.contextPath}/images/icon_log.png">
