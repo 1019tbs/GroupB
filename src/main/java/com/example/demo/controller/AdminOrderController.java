@@ -37,10 +37,10 @@ public class AdminOrderController {
         }
 
         // 管理者以外の場合
-/*        if (!"admin".equals(loginMember.getRole())) {
+        if (!"admin".equals(loginMember.getRole())) {
             return "redirect:/main";
         }
-*/
+
         List<Order> orderList =
                 orderDAO.findAll();
 

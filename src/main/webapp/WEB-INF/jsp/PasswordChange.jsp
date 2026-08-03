@@ -21,6 +21,7 @@
 </c:if>
 
 <form action="${pageContext.request.contextPath}/member/PasswordChange"
+
       method="post">
 
     <p>
@@ -48,7 +49,7 @@
 </form>
 
 <p>
-    <a href="${pageContext.request.contextPath}/member/edit_oonaka">
+    <a href="${pageContext.request.contextPath}/member/edit">
         会員情報変更画面へ戻る
     </a>
 </p>

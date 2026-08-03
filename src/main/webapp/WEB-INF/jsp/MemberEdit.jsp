@@ -28,6 +28,7 @@
 </c:if>
 
 <form action="${pageContext.request.contextPath}/member/PasswordChange"
+
       method="post">
 
     <p>
@@ -137,6 +138,14 @@
     
 </form>
 
+<!-- <form action="${pageContext.request.contextPath}/member/password"
+      method="get">
+
+    <button type="submit">
+        パスワード変更はこちら
+    </button>
+
+</form> -->
 
 
 <script>
