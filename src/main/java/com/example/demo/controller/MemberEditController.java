@@ -21,12 +21,12 @@ public class MemberEditController {
     // 郵便番号検索用DAOの追加
     private final PostalCodeDAO postalCodeDAO;
 
-public MemberEditController(
+    public MemberEditController(
             MemberEditService memberEditService,
             PostalCodeDAO postalCodeDAO) {
 
         this.memberEditService = memberEditService;
-        this.postalCodeDAO = postalCodeDAO;        
+        this.postalCodeDAO = postalCodeDAO;
     }
 
     /*
