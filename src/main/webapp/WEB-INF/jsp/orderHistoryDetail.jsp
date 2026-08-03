@@ -22,16 +22,25 @@
     <section class="orderHistoryCard">
 
         <h2>
-            注文番号：
+            <c:out value="${order.fulfillmentMethodLabel}" />
+            ／ 注文番号：
             <c:out
                 value="${order.shoppingOrderId}" />
         </h2>
 
         <p>
-            購入日時：
+            受付日時：
             <c:out
                 value="${order.createdAtText}" />
         </p>
+
+        <c:if test="${order.pickup}">
+            <p>
+                受取日時：
+                <c:out value="${order.pickupDateText}" />
+                <c:out value="${order.pickupTimeText}" />
+            </p>
+        </c:if>
 
         <p>
             状態：
@@ -99,17 +108,17 @@
                     value="${order.customerName}" />
             </dd>
 
-            <dt>郵便番号</dt>
-            <dd>
-                <c:out
-                    value="${order.postalCode}" />
-            </dd>
+            <c:if test="${order.delivery}">
+                <dt>郵便番号</dt>
+                <dd>
+                    <c:out value="${order.postalCode}" />
+                </dd>
 
-            <dt>住所</dt>
-            <dd>
-                <c:out
-                    value="${order.address}" />
-            </dd>
+                <dt>住所</dt>
+                <dd>
+                    <c:out value="${order.address}" />
+                </dd>
+            </c:if>
 
             <dt>電話番号</dt>
             <dd>

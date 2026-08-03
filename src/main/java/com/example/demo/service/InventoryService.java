@@ -215,6 +215,22 @@ public class InventoryService {
                     "カテゴリーを選択してください。");
         }
 
+        boolean pickupAvailable =
+                Boolean.TRUE.equals(
+                        product.getPickupAvailable());
+
+        boolean deliveryAvailable =
+                Boolean.TRUE.equals(
+                        product.getDeliveryAvailable());
+
+        if (!pickupAvailable && !deliveryAvailable) {
+            throw new IllegalArgumentException(
+                    "店頭受取または通販のどちらかを選択してください。");
+        }
+
+        product.setPickupAvailable(pickupAvailable);
+        product.setDeliveryAvailable(deliveryAvailable);
+
         String description = product.getDescription();
 
         if (description != null) {

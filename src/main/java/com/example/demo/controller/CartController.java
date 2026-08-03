@@ -33,6 +33,8 @@ public class CartController {
     public String addToCart(
             @RequestParam("productId") Long productId,
             @RequestParam("quantity") int quantity,
+            @RequestParam("fulfillmentMethod")
+            String fulfillmentMethod,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
@@ -47,7 +49,8 @@ public class CartController {
             cartService.addToCart(
                     loginMember.getMemberId(),
                     productId,
-                    quantity);
+                    quantity,
+                    fulfillmentMethod);
 
             redirectAttributes.addFlashAttribute(
                     "cartMessage",
@@ -86,6 +89,11 @@ public class CartController {
         model.addAttribute(
                 "cartList",
                 cartList);
+
+        model.addAttribute(
+                "fulfillmentMethod",
+                cartService.getFulfillmentMethod(
+                        loginMember.getMemberId()));
 
         return "cart";
     }

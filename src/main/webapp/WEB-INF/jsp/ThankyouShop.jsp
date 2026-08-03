@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ご予約ありがとうございました></title>
+<title>ご注文ありがとうございました</title>
 <!-- cssファイル読み込み -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
@@ -33,7 +34,7 @@
 
 	<span>/</span>
 
-	<form action="${pageContext.request.contextPath}/history" method="get">
+		<form action="${pageContext.request.contextPath}/orders/history" method="get">
 	<button class="headerButton" type="submit">
 	<img class="headerIcon" alt="注文履歴"
 	     src="${pageContext.request.contextPath}/images/icon_log.png">
@@ -53,15 +54,40 @@
 			<h2>Thank you<br>
 			for your order!</h2>
 			<img class= "line2" alt="line2" src="${pageContext.request.contextPath}/images/line2.png">
-			<p class= "thankText">
-			ご予約ありがとうございました。<br>
-			ご注文内容は、ご登録のメールアドレスへお送りしています。
-			</p>
+				<p class="thankText">
+				<c:choose>
+					<c:when test="${fulfillmentMethod == 'PICKUP'}">
+						店頭受取のご予約ありがとうございました。<br>
+						受取日時：<c:out value="${pickupDate}" />
+						<c:out value="${pickupTime}" />
+					</c:when>
+					<c:otherwise>
+						ご注文ありがとうございました。
+					</c:otherwise>
+				</c:choose>
+				<br>注文番号：<c:out value="${completedOrderId}" />
+				<br>
+				<c:choose>
+					<c:when test="${mailSent}">
+						ご注文内容をメールアドレスへ送信しました。
+					</c:when>
+					<c:otherwise>
+						ご注文内容は注文履歴から確認できます。
+					</c:otherwise>
+				</c:choose>
+				</p>
 			<img class= "thankImg" alt="梱包画像" src="${pageContext.request.contextPath}/images/thankyou.png">
-			<div class = "thankWaitMessage">
-			Honey Bloomのお菓子が届くまで、<br>
-			もうしばらくお待ちください。
-			</div>
+				<div class="thankWaitMessage">
+				<c:choose>
+					<c:when test="${fulfillmentMethod == 'PICKUP'}">
+						ご指定の日時に店舗へお越しください。
+					</c:when>
+					<c:otherwise>
+						Honey Bloomのお菓子が届くまで、<br>
+						もうしばらくお待ちください。
+					</c:otherwise>
+				</c:choose>
+				</div>
 			<a class= "backButton" href="${pageContext.request.contextPath}/main">
 			TOPへ戻る
 			</a>

@@ -39,6 +39,9 @@ public class ShoppingOrderDAO {
           + "payment_method, "
           + "total_amount, "
           + "order_status, "
+          + "fulfillment_method, "
+          + "pickup_date, "
+          + "pickup_time, "
           + "checkout_token, "
           + "created_at ";
 
@@ -53,8 +56,11 @@ public class ShoppingOrderDAO {
           + "payment_method, "
           + "total_amount, "
           + "order_status, "
+          + "fulfillment_method, "
+          + "pickup_date, "
+          + "pickup_time, "
           + "checkout_token"
-          + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+          + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
           + "RETURNING shopping_order_id";
 
     private static final String
@@ -136,6 +142,28 @@ public class ShoppingOrderDAO {
 
             ps.setString(
                     10,
+                    order.getFulfillmentMethod());
+
+            if (order.getPickupDate() == null) {
+                ps.setNull(11, java.sql.Types.DATE);
+            } else {
+                ps.setDate(
+                        11,
+                        java.sql.Date.valueOf(
+                                order.getPickupDate()));
+            }
+
+            if (order.getPickupTime() == null) {
+                ps.setNull(12, java.sql.Types.TIME);
+            } else {
+                ps.setTime(
+                        12,
+                        java.sql.Time.valueOf(
+                                order.getPickupTime()));
+            }
+
+            ps.setString(
+                    13,
                     order.getCheckoutToken());
 
             try (ResultSet rs =
@@ -281,6 +309,22 @@ public class ShoppingOrderDAO {
         order.setOrderStatus(
                 rs.getString(
                         "order_status"));
+
+        order.setFulfillmentMethod(
+                rs.getString(
+                        "fulfillment_method"));
+
+        if (rs.getDate("pickup_date") != null) {
+            order.setPickupDate(
+                    rs.getDate("pickup_date")
+                            .toLocalDate());
+        }
+
+        if (rs.getTime("pickup_time") != null) {
+            order.setPickupTime(
+                    rs.getTime("pickup_time")
+                            .toLocalTime());
+        }
 
         order.setCheckoutToken(
                 rs.getString(

@@ -34,6 +34,8 @@ public class ProductDAO {
             "description, " +
             "image_url, " +
             "active, " +
+            "pickup_available, " +
+            "delivery_available, " +
             "created_at, " +
             "updated_at ";
 
@@ -77,8 +79,9 @@ public class ProductDAO {
     private static final String INSERT_PRODUCT =
             "INSERT INTO products (" +
             "product_name, price, stock, category_id, " +
-            "description, image_url, active" +
-            ") VALUES (?, ?, ?, ?, ?, ?, TRUE)";
+            "description, image_url, active, " +
+            "pickup_available, delivery_available" +
+            ") VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, ?)";
 
     private static final String UPDATE_PRODUCT =
             "UPDATE products SET " +
@@ -88,6 +91,8 @@ public class ProductDAO {
             "category_id = ?, " +
             "description = ?, " +
             "image_url = ?, " +
+            "pickup_available = ?, " +
+            "delivery_available = ?, " +
             "updated_at = CURRENT_TIMESTAMP " +
             "WHERE product_id = ?";
 
@@ -249,7 +254,7 @@ public class ProductDAO {
             PreparedStatement ps = conn.prepareStatement(UPDATE_PRODUCT)
         ) {
             setProductFields(ps, product);
-            ps.setLong(7, product.getProductId());
+            ps.setLong(9, product.getProductId());
             return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
@@ -268,6 +273,10 @@ public class ProductDAO {
         ps.setInt(4, product.getCategoryId());
         ps.setString(5, product.getDescription());
         ps.setString(6, product.getImageUrl());
+        ps.setBoolean(7, Boolean.TRUE.equals(
+                product.getPickupAvailable()));
+        ps.setBoolean(8, Boolean.TRUE.equals(
+                product.getDeliveryAvailable()));
     }
 
     /** 商品の在庫数を指定された値へ変更します。 */
@@ -381,6 +390,10 @@ public class ProductDAO {
         product.setDescription(rs.getString("description"));
         product.setImageUrl(rs.getString("image_url"));
         product.setActive(rs.getBoolean("active"));
+        product.setPickupAvailable(
+                rs.getBoolean("pickup_available"));
+        product.setDeliveryAvailable(
+                rs.getBoolean("delivery_available"));
         product.setCreatedAt(
                 rs.getTimestamp("created_at").toLocalDateTime());
         product.setUpdatedAt(

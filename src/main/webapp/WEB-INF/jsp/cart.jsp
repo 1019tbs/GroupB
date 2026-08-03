@@ -17,6 +17,20 @@
 
     <h1>ショッピングカート</h1>
 
+    <c:if test="${not empty fulfillmentMethod}">
+        <p class="cartFulfillmentMethod">
+            受取方法：
+            <strong>
+                <c:choose>
+                    <c:when test="${fulfillmentMethod == 'PICKUP'}">
+                        店頭受取
+                    </c:when>
+                    <c:otherwise>通販</c:otherwise>
+                </c:choose>
+            </strong>
+        </p>
+    </c:if>
+
     <c:if test="${not empty cartMessage}">
         <p class="successMessage">
             <c:out value="${cartMessage}" />
@@ -67,7 +81,11 @@
 
                         <c:if test="${not item.product.active
                                 or item.product.stock <= 0
-                                or item.quantity > item.product.stock}">
+                                or item.quantity > item.product.stock
+                                or (fulfillmentMethod == 'DELIVERY'
+                                    and not item.product.deliveryAvailable)
+                                or (fulfillmentMethod == 'PICKUP'
+                                    and not item.product.pickupAvailable)}">
 
                             <c:set var="canPurchase"
                                 value="false" />
@@ -147,6 +165,16 @@
                                         （残り${item.product.stock}個）
                                     </c:when>
 
+                                    <c:when test="${fulfillmentMethod == 'DELIVERY'
+                                            and not item.product.deliveryAvailable}">
+                                        通販対象外
+                                    </c:when>
+
+                                    <c:when test="${fulfillmentMethod == 'PICKUP'
+                                            and not item.product.pickupAvailable}">
+                                        店頭受取対象外
+                                    </c:when>
+
                                     <c:otherwise>
                                         購入可能
                                     </c:otherwise>
@@ -194,13 +222,18 @@
                 <c:choose>
                     <c:when test="${canPurchase}">
                         <a href="${pageContext.request.contextPath}/checkout/input">
-                            購入する
+                            <c:choose>
+                                <c:when test="${fulfillmentMethod == 'PICKUP'}">
+                                    店頭受取を予約する
+                                </c:when>
+                                <c:otherwise>購入する</c:otherwise>
+                            </c:choose>
                         </a>
                     </c:when>
 
                     <c:otherwise>
                         <button type="button" disabled>
-                            購入する
+                            注文手続きへ
                         </button>
                     </c:otherwise>
                 </c:choose>
