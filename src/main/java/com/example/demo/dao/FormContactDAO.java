@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,10 +92,9 @@ public class FormContactDAO {
 				+ "email, "
 				+ "phone, "
 				+ "message, "
-				+ "created_at, "
 				+ "status "
 				+ "FROM form_contact "
-				+ "ORDER BY created_at DESC";
+				+ "ORDER BY contact_id DESC";
 
 		try (
 				Connection conn = DriverManager.getConnection(
@@ -129,14 +127,6 @@ public class FormContactDAO {
 
 				contact.setMessage(
 						rs.getString("message"));
-
-				Timestamp createdAt = rs.getTimestamp("created_at");
-
-				if (createdAt != null) {
-
-					contact.setCreatedAt(
-							createdAt.toLocalDateTime());
-				}
 
 				contact.setStatus(
 						rs.getInt("status"));
@@ -246,7 +236,6 @@ public class FormContactDAO {
 				+ "email, "
 				+ "phone, "
 				+ "message, "
-				+ "created_at, "
 				+ "status "
 				+ "FROM form_contact "
 				+ "WHERE contact_id = ?";
@@ -281,11 +270,6 @@ public class FormContactDAO {
 					contact.setMessage(
 							rs.getString("message"));
 
-					Timestamp createdAt = rs.getTimestamp("created_at");
-
-					if (createdAt != null) {
-						contact.setCreatedAt(createdAt.toLocalDateTime());
-					}
 					contact.setStatus(rs.getInt("status"));
 					return contact;
 				}

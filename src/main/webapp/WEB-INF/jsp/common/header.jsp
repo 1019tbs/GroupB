@@ -4,9 +4,9 @@
 <header>
 	<!-- 上部フリル -->
 	<img class="headerImg" alt="ヘッダー"
-		src="${pageContext.request.contextPath}/images/frill.png"> <img
-		class="mainImg" alt="メイン"
-		src="${pageContext.request.contextPath}/images/main.png">
+		src="${pageContext.request.contextPath}/images/frill.png"> 
+<!--		<img class="mainImg" alt="メイン"-->
+<!--		src="${pageContext.request.contextPath}/images/main.png">-->
 
 	<!-- 右上メニュー -->
 	<div class="headerMenu">
@@ -29,7 +29,7 @@
 		</form>
 
 		<span>/</span>
-
+		
 		<form action="${pageContext.request.contextPath}/cart" method="get">
 			<button class="headerButton" type="submit">
 				<img class="headerIcon" alt="カート"
