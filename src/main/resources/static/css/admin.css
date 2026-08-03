@@ -52,7 +52,9 @@ body.adminPage{
 
     border: 1px solid #783f04;
     border-radius: 30px;
-
+	display: flex;
+	align-items: center;
+	justify-content: center;
     font-size: 15px;
     cursor: pointer;
 }
@@ -60,12 +62,19 @@ body.adminPage{
     background: #ffe599;
 }
 .adminMain{
+	width: 100%;
 	max-width: 1000px;
-	height: auto;
+	margin: 30px auto;
     flex: 1;
 	background: #fdf8ebff;
 	border: 1px solid #a9854e;
 	border-radius: 15px;
+}
+.adminTitle{
+	font-size: 36px;
+	font-weight: 400;
+	letter-spacing: 0.4em;
+	text-align: center;
 }
 .adminMenuBox{
     display: grid;
@@ -86,7 +95,11 @@ body.adminPage{
 	height: 160px;
 	background: #fdf8ebff;
 	color: #a9854e;
-	cursor: pointer;	
+	cursor: pointer;
+	transition: 0.5s;
+}
+.adminMenuBox button:hover{
+	background: #fff2cc;
 }
 .adminMenuBox button img{
     width:100px;

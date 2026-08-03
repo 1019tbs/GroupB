@@ -21,7 +21,9 @@ public class MemberEditController {
     // 郵便番号検索用DAOの追加
     private final PostalCodeDAO postalCodeDAO;
 
+
     public MemberEditController(
+
             MemberEditService memberEditService,
             PostalCodeDAO postalCodeDAO) {
 

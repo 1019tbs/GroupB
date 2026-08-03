@@ -20,7 +20,8 @@
     </p>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/member/password"
+<form action="${pageContext.request.contextPath}/member/PasswordChange"
+
       method="post">
 
     <p>

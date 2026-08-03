@@ -26,7 +26,8 @@ public class PasswordChangeController {
     /*
      * パスワード変更画面を表示
      */
-    @GetMapping("/member/password")
+    @GetMapping("/member/PasswordChange")
+
     public String showPasswordChange(
             HttpSession session) {
 
@@ -43,7 +44,8 @@ public class PasswordChangeController {
     /*
      * パスワード変更処理
      */
-    @PostMapping("/member/password")
+    @PostMapping("/member/PasswordChange")
+
     public String changePassword(
             @RequestParam(name = "currentPassword")
             String currentPassword,
@@ -91,6 +93,7 @@ public class PasswordChangeController {
             return "PasswordChange";
         }
 
-        return "passwordChangeComplete";
+        return "PasswordChangeComplete";
+
     }
 }
