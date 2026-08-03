@@ -93,7 +93,7 @@ public class PasswordChangeController {
             return "PasswordChange";
         }
 
-        return "PasswordChangeComplete";
+        return "passwordChangeComplete";
 
     }
 }
