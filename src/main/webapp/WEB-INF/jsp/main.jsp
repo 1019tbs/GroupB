@@ -83,7 +83,7 @@
 			</div>
 
 			<div class="subButtonArea">
-				<form action="${pageContext.request.contextPath}/member/edit_oonaka"
+				<form action="${pageContext.request.contextPath}/member/edit"
 					method="get">
 					<button type="submit" class="subButton">会員情報変更</button>
 				</form>
