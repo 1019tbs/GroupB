@@ -32,7 +32,7 @@ public MemberEditController(
     /*
      * 会員情報変更画面を表示
      */
-    @GetMapping("/member/edit_oonaka")
+    @GetMapping("/member/edit")
     public String showEdit(
             HttpSession session,
             Model model) {
@@ -65,7 +65,7 @@ public MemberEditController(
                 "member",
                 member);
 
-        return "MemberEdit_oonaka";
+        return "MemberEdit";
     }
 
     /*

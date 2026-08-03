@@ -12,6 +12,8 @@
 <!-- cssファイル読み込み -->
 <link rel="stylesheet"
     href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
+    href="${pageContext.request.contextPath}/css/memberEdit.css"> 
 </head>
 
 <body class= "memberEditPage">
@@ -25,7 +27,7 @@
     </p>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/member/edit_oonaka"
+<form action="${pageContext.request.contextPath}/member/PasswordChange"
       method="post">
 
     <p>
@@ -122,21 +124,19 @@
             </option>
         </select>
     </p>
-
-    <button type="submit">
-        変更する
-    </button>
+    
+    <div class= "memberButtonArea">
+    	<button type="submit"
+    		onclick="location.href=page'Context.request.contextPath}/member/PasswordChange'" >
+        	パスワード変更画面
+    	</button>
+        <button type="submit">
+        	会員情報を変更する
+    	</button>
+    </div>
     
 </form>
 
-<form action="${pageContext.request.contextPath}/member/password_oonaka"
-      method="get">
-
-    <button type="submit">
-        パスワード変更はこちら
-    </button>
-
-</form>
 
 
 <script>
