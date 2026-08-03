@@ -26,7 +26,7 @@ public class PasswordChangeController {
     /*
      * パスワード変更画面を表示
      */
-    @GetMapping("/member/password_oonaka")
+    @GetMapping("/member/password")
     public String showPasswordChange(
             HttpSession session) {
 
@@ -37,13 +37,13 @@ public class PasswordChangeController {
             return "redirect:/";
         }
 
-        return "PasswordChange_oonaka";
+        return "PasswordChange";
     }
 
     /*
      * パスワード変更処理
      */
-    @PostMapping("/member/password_oonaka")
+    @PostMapping("/member/password")
     public String changePassword(
             @RequestParam(name = "currentPassword")
             String currentPassword,
@@ -73,7 +73,7 @@ public class PasswordChangeController {
                     "errorMsg",
                     "新しいパスワードが一致しません");
 
-            return "PasswordChange_oonaka";
+            return "PasswordChange";
         }
 
         boolean result =
@@ -88,9 +88,9 @@ public class PasswordChangeController {
                     "errorMsg",
                     "現在のパスワードまたは入力内容を確認してください");
 
-            return "PasswordChange_oonaka";
+            return "PasswordChange";
         }
 
-        return "passwordChangeComplete_oonaka";
+        return "passwordChangeComplete";
     }
 }
