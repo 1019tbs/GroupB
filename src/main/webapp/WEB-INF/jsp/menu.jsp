@@ -15,7 +15,7 @@
 <body class="menu">
 <jsp:include page="common/header.jsp"/>
     <img class="menuTopImg" alt="メニュー上部画像"
-        src="${pageContext.request.contextPath}/images/menu_top.png">
+        src="${pageContext.request.contextPath}/images/menu_top2.png">
 
     <div class="menuHeader">
         <nav class="menuNav">
@@ -407,7 +407,7 @@
 	</a>
     <footer>
         <img class="menuFooterImg" alt="メニューフッター画像"
-            src="${pageContext.request.contextPath}/images/menu_footer.png">
+            src="${pageContext.request.contextPath}/images/menu_footer2.png">
     </footer>
 	<script src="${pageContext.request.contextPath}/JS/Cart.js"></script>
     <jsp:include page="common/footer.jsp"/>
