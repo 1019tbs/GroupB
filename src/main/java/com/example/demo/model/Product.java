@@ -41,6 +41,12 @@ public class Product {
     /** 取扱状態（true:取扱中、false:取扱停止） */
     private Boolean active = true;
 
+    /** 店頭受取で販売できるか */
+    private Boolean pickupAvailable = true;
+
+    /** 通販で販売できるか */
+    private Boolean deliveryAvailable = true;
+
     /** 商品登録日時 */
     private LocalDateTime createdAt;
 
@@ -69,6 +75,35 @@ public class Product {
         this.description = description;
         this.imageUrl = imageUrl;
         this.active = true;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    /**
+     * 販売方法追加前のAllArgsConstructorとの互換性を残します。
+     */
+    public Product(
+            Long productId,
+            String productName,
+            BigDecimal price,
+            Integer stock,
+            Integer categoryId,
+            String description,
+            String imageUrl,
+            Boolean active,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
+
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+        this.stock = stock;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.active = active;
+        this.pickupAvailable = true;
+        this.deliveryAvailable = true;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

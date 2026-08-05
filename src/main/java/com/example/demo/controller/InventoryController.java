@@ -67,6 +67,10 @@ public class InventoryController {
             @RequestParam int categoryId,
             @RequestParam(required = false) String description,
             @RequestParam String imageUrl,
+            @RequestParam(defaultValue = "false")
+            boolean pickupAvailable,
+            @RequestParam(defaultValue = "false")
+            boolean deliveryAvailable,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
@@ -81,6 +85,8 @@ public class InventoryController {
         product.setCategoryId(categoryId);
         product.setDescription(description);
         product.setImageUrl(imageUrl);
+        product.setPickupAvailable(pickupAvailable);
+        product.setDeliveryAvailable(deliveryAvailable);
 
         try {
             inventoryService.register(product);
@@ -166,6 +172,10 @@ public class InventoryController {
             @RequestParam int categoryId,
             @RequestParam(required = false) String description,
             @RequestParam String imageUrl,
+            @RequestParam(defaultValue = "false")
+            boolean pickupAvailable,
+            @RequestParam(defaultValue = "false")
+            boolean deliveryAvailable,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
@@ -181,6 +191,8 @@ public class InventoryController {
         product.setCategoryId(categoryId);
         product.setDescription(description);
         product.setImageUrl(imageUrl);
+        product.setPickupAvailable(pickupAvailable);
+        product.setDeliveryAvailable(deliveryAvailable);
 
         try {
             inventoryService.updateProduct(product);

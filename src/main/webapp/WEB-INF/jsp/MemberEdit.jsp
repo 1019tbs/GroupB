@@ -26,7 +26,7 @@
 		</p>
 	</c:if>
 
-	<form action="${pageContext.request.contextPath}/member/PasswordChange"
+	<form action="${pageContext.request.contextPath}/member/edit"
 		method="post">
 
 		<p>

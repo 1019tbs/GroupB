@@ -10,9 +10,27 @@
 <meta charset="UTF-8">
 <title>パスワード変更</title>
 </head>
-<body>
+<!-- CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/memberEdit.css">
 
-<h1>パスワード変更</h1>
+<body class= "passwordChange">
+	<img class="headerImg" 
+   	alt="Header画像"
+   	src="${pageContext.request.contextPath}/images/edit_top.png">
+    <header class="HeaderBox">
+        <h1>
+            <span>Honey Bloom.</span>
+            <img
+                src="${pageContext.request.contextPath}/images/icon.png"
+                class="icon"
+                alt="Honey Bloomのアイコン">
+        </h1>
+        <p class="subtitle">
+            ～ PASSWORD CHANGE ～
+        </p>
+        <h2>パスワード変更</h2>
+    </header>
+
 
 <c:if test="${not empty errorMsg}">
     <p style="color:red;">

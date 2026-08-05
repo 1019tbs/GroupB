@@ -172,6 +172,24 @@ button, .back-link {
                 </select>
             </div>
 
+            <div class="form-field form-field-wide">
+                <span>販売方法（1つ以上選択）</span>
+                <label>
+                    <input type="checkbox"
+                        name="pickupAvailable"
+                        value="true"
+                        ${product.pickupAvailable ? 'checked' : ''}>
+                    店頭受取可能
+                </label>
+                <label>
+                    <input type="checkbox"
+                        name="deliveryAvailable"
+                        value="true"
+                        ${product.deliveryAvailable ? 'checked' : ''}>
+                    通販可能
+                </label>
+            </div>
+
             <div class="form-field">
                 <label for="imageUrl">商品画像</label>
                 <select id="imageUrl"

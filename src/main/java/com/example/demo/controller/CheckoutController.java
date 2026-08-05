@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,12 +38,12 @@ public class CheckoutController {
                     "pendingCheckout";
 
     private static final String
-            PENDING_CHECKOUT_TOKEN =
-                    "pendingCheckoutToken";
-
-    private static final String
             PENDING_CART_SIGNATURE =
                     "pendingCartSignature";
+
+    private static final String
+            PENDING_CHECKOUT_VALUES =
+                    "pendingCheckoutValues";
 
     private final CheckoutService
             checkoutService;
@@ -59,16 +61,15 @@ public class CheckoutController {
             return "redirect:/";
         }
 
-        session.removeAttribute(
-                PENDING_CHECKOUT_TOKEN);
-
-        session.removeAttribute(
-                PENDING_CART_SIGNATURE);
-
         try {
             List<CartItem> cartItems =
                     checkoutService
                             .getCartItemsForCheckout(
+                                    loginMember.getMemberId());
+
+            String fulfillmentMethod =
+                    checkoutService
+                            .getCartFulfillmentMethod(
                                     loginMember.getMemberId());
 
             CheckoutForm checkoutForm =
@@ -80,6 +81,9 @@ public class CheckoutController {
                                 .createInitialForm(
                                         loginMember.getMemberId());
             }
+
+            checkoutForm.setFulfillmentMethod(
+                    fulfillmentMethod);
 
             addCheckoutSummary(
                     model,
@@ -136,6 +140,11 @@ public class CheckoutController {
         }
 
         try {
+            checkoutForm.setFulfillmentMethod(
+                    checkoutService
+                            .getCartFulfillmentMethod(
+                                    loginMember.getMemberId()));
+
             checkoutService
                     .validateAndNormalize(
                             checkoutForm);
@@ -164,19 +173,21 @@ public class CheckoutController {
         String cartSignature =
                 checkoutService
                         .createCartSignature(
-                                cartItems);
+                                cartItems,
+                                checkoutForm
+                                        .getFulfillmentMethod());
 
         session.setAttribute(
                 PENDING_CHECKOUT,
                 checkoutForm);
 
         session.setAttribute(
-                PENDING_CHECKOUT_TOKEN,
-                checkoutToken);
-
-        session.setAttribute(
                 PENDING_CART_SIGNATURE,
                 cartSignature);
+
+        storePendingCheckoutValues(
+                session,
+                checkoutForm);
 
         addCheckoutSummary(
                 model,
@@ -191,19 +202,36 @@ public class CheckoutController {
                 checkoutToken);
 
         model.addAttribute(
+                "cartSignature",
+                cartSignature);
+
+        model.addAttribute(
                 "paymentMethodLabel",
                 checkoutService
                         .getPaymentMethodLabel(
                                 checkoutForm
                                         .getPaymentMethod()));
 
+        model.addAttribute(
+                "fulfillmentMethodLabel",
+                checkoutService
+                        .getFulfillmentMethodLabel(
+                                checkoutForm
+                                        .getFulfillmentMethod()));
+
         return "checkoutConfirm";
     }
 
     @PostMapping("/complete")
     public String complete(
+            @ModelAttribute
+            CheckoutForm postedCheckoutForm,
             @RequestParam("checkoutToken")
             String checkoutToken,
+            @RequestParam(
+                    value = "cartSignature",
+                    required = false)
+            String postedCartSignature,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
@@ -214,34 +242,55 @@ public class CheckoutController {
             return "redirect:/";
         }
 
-        CheckoutForm checkoutForm =
-                getPendingCheckout(session);
-
-        String sessionToken =
-                getSessionString(
-                        session,
-                        PENDING_CHECKOUT_TOKEN);
-
-        String expectedCartSignature =
-                getSessionString(
-                        session,
-                        PENDING_CART_SIGNATURE);
-
-        if (checkoutForm == null
-                || sessionToken == null
-                || expectedCartSignature == null
-                || !sessionToken.equals(
-                        checkoutToken)) {
-
-            redirectAttributes.addFlashAttribute(
-                    "cartErrorMessage",
-                    "注文確認情報が失効しました。"
-                    + "もう一度カートから進んでください。");
-
-            return "redirect:/cart";
-        }
-
         try {
+            CheckoutForm checkoutForm =
+                    getPendingCheckout(session);
+
+            if (!hasCustomerName(checkoutForm)) {
+                checkoutForm =
+                        getPendingCheckoutValues(
+                                session);
+            }
+
+            if (!hasCustomerName(checkoutForm)) {
+                checkoutForm = postedCheckoutForm;
+            }
+
+            String fulfillmentMethod =
+                    checkoutService
+                            .getCartFulfillmentMethod(
+                                    loginMember.getMemberId());
+
+            checkoutForm.setFulfillmentMethod(
+                    fulfillmentMethod);
+
+            String expectedCartSignature =
+                    postedCartSignature;
+
+            if (expectedCartSignature == null
+                    || expectedCartSignature.isBlank()) {
+
+                expectedCartSignature =
+                        getSessionString(
+                                session,
+                                PENDING_CART_SIGNATURE);
+            }
+
+            if (expectedCartSignature == null
+                    || expectedCartSignature.isBlank()) {
+
+                List<CartItem> currentCartItems =
+                        checkoutService
+                                .getCartItemsForCheckout(
+                                        loginMember.getMemberId());
+
+                expectedCartSignature =
+                        checkoutService
+                                .createCartSignature(
+                                        currentCartItems,
+                                        fulfillmentMethod);
+            }
+
             OrderCompletionResult result =
                     checkoutService.placeOrder(
                             loginMember.getMemberId(),
@@ -258,6 +307,18 @@ public class CheckoutController {
             redirectAttributes.addFlashAttribute(
                     "mailSent",
                     result.isMailSent());
+
+            redirectAttributes.addFlashAttribute(
+                    "fulfillmentMethod",
+                    checkoutForm.getFulfillmentMethod());
+
+            redirectAttributes.addFlashAttribute(
+                    "pickupDate",
+                    checkoutForm.getPickupDate());
+
+            redirectAttributes.addFlashAttribute(
+                    "pickupTime",
+                    checkoutForm.getPickupTime());
 
             return "redirect:/checkout/complete";
 
@@ -332,6 +393,119 @@ public class CheckoutController {
                 : null;
     }
 
+    private void storePendingCheckoutValues(
+            HttpSession session,
+            CheckoutForm form) {
+
+        Map<String, String> values =
+                new HashMap<>();
+
+        values.put(
+                "customerName",
+                form.getCustomerName());
+        values.put(
+                "postalCode",
+                form.getPostalCode());
+        values.put(
+                "address",
+                form.getAddress());
+        values.put(
+                "phone",
+                form.getPhone());
+        values.put(
+                "email",
+                form.getEmail());
+        values.put(
+                "paymentMethod",
+                form.getPaymentMethod());
+        values.put(
+                "fulfillmentMethod",
+                form.getFulfillmentMethod());
+        values.put(
+                "pickupDate",
+                form.getPickupDate());
+        values.put(
+                "pickupTime",
+                form.getPickupTime());
+
+        session.setAttribute(
+                PENDING_CHECKOUT_VALUES,
+                values);
+    }
+
+    private CheckoutForm getPendingCheckoutValues(
+            HttpSession session) {
+
+        Object storedValues =
+                session.getAttribute(
+                        PENDING_CHECKOUT_VALUES);
+
+        if (!(storedValues instanceof Map<?, ?> values)) {
+            return null;
+        }
+
+        CheckoutForm form =
+                new CheckoutForm();
+
+        form.setCustomerName(
+                getMapString(
+                        values,
+                        "customerName"));
+        form.setPostalCode(
+                getMapString(
+                        values,
+                        "postalCode"));
+        form.setAddress(
+                getMapString(
+                        values,
+                        "address"));
+        form.setPhone(
+                getMapString(
+                        values,
+                        "phone"));
+        form.setEmail(
+                getMapString(
+                        values,
+                        "email"));
+        form.setPaymentMethod(
+                getMapString(
+                        values,
+                        "paymentMethod"));
+        form.setFulfillmentMethod(
+                getMapString(
+                        values,
+                        "fulfillmentMethod"));
+        form.setPickupDate(
+                getMapString(
+                        values,
+                        "pickupDate"));
+        form.setPickupTime(
+                getMapString(
+                        values,
+                        "pickupTime"));
+
+        return form;
+    }
+
+    private String getMapString(
+            Map<?, ?> values,
+            String key) {
+
+        Object value = values.get(key);
+
+        return value instanceof String string
+                ? string
+                : "";
+    }
+
+    private boolean hasCustomerName(
+            CheckoutForm form) {
+
+        return form != null
+                && form.getCustomerName() != null
+                && !form.getCustomerName().isBlank();
+    }
+
     private void clearPendingCheckout(
             HttpSession session) {
 
@@ -339,10 +513,10 @@ public class CheckoutController {
                 PENDING_CHECKOUT);
 
         session.removeAttribute(
-                PENDING_CHECKOUT_TOKEN);
+                PENDING_CART_SIGNATURE);
 
         session.removeAttribute(
-                PENDING_CART_SIGNATURE);
+                PENDING_CHECKOUT_VALUES);
     }
 
     private Member getLoginMember(

@@ -40,16 +40,25 @@
                 <section class="orderHistoryCard">
 
                     <h2>
-                        注文番号：
+                        <c:out value="${order.fulfillmentMethodLabel}" />
+                        ／ 注文番号：
                         <c:out
                             value="${order.shoppingOrderId}" />
                     </h2>
 
                     <p>
-                        購入日時：
+                        受付日時：
                         <c:out
                             value="${order.createdAtText}" />
                     </p>
+
+                    <c:if test="${order.pickup}">
+                        <p>
+                            受取日時：
+                            <c:out value="${order.pickupDateText}" />
+                            <c:out value="${order.pickupTimeText}" />
+                        </p>
+                    </c:if>
 
                     <p>
                         状態：

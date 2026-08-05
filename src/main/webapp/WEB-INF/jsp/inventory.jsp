@@ -263,6 +263,24 @@ th {
                     </select>
                 </div>
 
+                <div class="form-field form-field-wide">
+                    <span>販売方法（1つ以上選択）</span>
+                    <label>
+                        <input type="checkbox"
+                            name="pickupAvailable"
+                            value="true"
+                            checked>
+                        店頭受取可能
+                    </label>
+                    <label>
+                        <input type="checkbox"
+                            name="deliveryAvailable"
+                            value="true"
+                            checked>
+                        通販可能
+                    </label>
+                </div>
+
                 <div class="form-field">
                     <label for="imageUrl">商品画像</label>
                     <select id="imageUrl"
@@ -317,6 +335,7 @@ th {
                     <th>現在庫</th>
                     <th>在庫変更</th>
                     <th>状態</th>
+                    <th>販売方法</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -372,6 +391,15 @@ th {
                                     <c:out value="${product.stock}" />個
                                 </c:otherwise>
                             </c:choose>
+                        </td>
+
+                        <td>
+                            <c:if test="${product.pickupAvailable}">
+                                <div>店頭受取</div>
+                            </c:if>
+                            <c:if test="${product.deliveryAvailable}">
+                                <div>通販</div>
+                            </c:if>
                         </td>
 
                         <td>
@@ -445,7 +473,7 @@ th {
 
                 <c:if test="${empty productList}">
                     <tr>
-                        <td colspan="8">商品が登録されていません。</td>
+                        <td colspan="9">商品が登録されていません。</td>
                     </tr>
                 </c:if>
             </tbody>

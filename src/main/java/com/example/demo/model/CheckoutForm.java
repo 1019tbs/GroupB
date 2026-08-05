@@ -26,4 +26,26 @@ public class CheckoutForm implements Serializable {
     private String phone;
     private String email;
     private String paymentMethod;
+    private String fulfillmentMethod;
+    private String pickupDate;
+    private String pickupTime;
+
+    /**
+     * 受取方法追加前のコンストラクタとの互換性を残します。
+     */
+    public CheckoutForm(
+            String customerName,
+            String postalCode,
+            String address,
+            String phone,
+            String email,
+            String paymentMethod) {
+
+        this.customerName = customerName;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paymentMethod = paymentMethod;
+    }
 }

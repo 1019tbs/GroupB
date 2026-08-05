@@ -88,6 +88,10 @@
                                 name="productId"
                                 value="${product.productId}">
 
+                            <input type="hidden"
+                                name="fulfillmentMethod"
+                                value="${product.deliveryAvailable ? 'DELIVERY' : 'PICKUP'}">
+
                             <span class="stock">注文数</span>
 
                             <input type="number"
@@ -179,6 +183,10 @@
                                     name="productId"
                                     value="${product.productId}">
 
+                                <input type="hidden"
+                                    name="fulfillmentMethod"
+                                    value="${product.deliveryAvailable ? 'DELIVERY' : 'PICKUP'}">
+
                                 <span>注文数</span>
 
                                 <input type="number"
@@ -248,6 +256,10 @@
                                 name="productId"
                                 value="${product.productId}">
 
+                            <input type="hidden"
+                                name="fulfillmentMethod"
+                                value="${product.deliveryAvailable ? 'DELIVERY' : 'PICKUP'}">
+
                             <span class="stock">注文数</span>
 
                             <input type="number"
@@ -282,11 +294,8 @@
             src="${pageContext.request.contextPath}/images/hach_line.png">
     </section>
 
-    <!--
-        既存のFormControllerによる単品予約機能は別フォームとして維持します。
-        カート用formとの入れ子を避けています。
-    -->
-    <form action="${pageContext.request.contextPath}/form/submit"
+    <!-- 店頭受取予約は、共通カート・チェックアウトへ接続します。 -->
+    <form action="${pageContext.request.contextPath}/pickup/start"
         method="post">
 
         <section id="reservation" class="orderArea">
@@ -299,10 +308,6 @@
                 気になるメニューが決まりましたら、こちらから受け取り日時をご予約ください。
             </p>
 
-            <input type="hidden"
-                name="genre"
-                value="reservation">
-
             <div class="reservationFormGrid">
                 <div class="reservationFormGroup">
                     <label for="customerName">お名前</label>
@@ -310,19 +315,21 @@
                         type="text"
                         name="customerName"
                         value="${param.customerName}"
+                        required
                         placeholder="例）山田 太郎">
 
-                    <!-- 既存の単品予約で使用する商品選択 -->
+                    <!-- 店頭受取可能な商品のみ選択できます。 -->
                     <label for="menuId">予約商品</label>
-                    <select id="menuId" name="menuId">
+                    <select id="menuId" name="productId" required>
                         <option value="">商品を選択してください</option>
 
                         <c:forEach var="product"
                             items="${productList}">
 
-                            <c:if test="${product.stock > 0}">
+                            <c:if test="${product.stock > 0
+                                    and product.pickupAvailable}">
                                 <option value="${product.productId}"
-                                    <c:if test="${param.menuId == product.productId}">
+                                    <c:if test="${param.productId == product.productId}">
                                         selected
                                     </c:if>>
                                     <c:out value="${product.productName}" />
@@ -330,6 +337,10 @@
                             </c:if>
                         </c:forEach>
                     </select>
+
+                    <input type="hidden"
+                        name="quantity"
+                        value="1">
                 </div>
 
                 <div class="reservationFormGroup">
@@ -340,7 +351,8 @@
                     <input id="reservationDate"
                         type="date"
                         name="reservationDate"
-                        value="${param.reservationDate}">
+                        value="${param.reservationDate}"
+                        required>
 
                     <label for="reservationTime">
                         受取希望時間
@@ -349,7 +361,8 @@
                     <input id="reservationTime"
                         type="time"
                         name="reservationTime"
-                        value="${param.reservationTime}">
+                        value="${param.reservationTime}"
+                        required>
                 </div>
 
                 <div class="reservationFormGroup">
@@ -361,6 +374,7 @@
                         type="email"
                         name="email"
                         value="${param.email}"
+                        required
                         placeholder="例）example@example.com">
                 </div>
 
@@ -373,6 +387,7 @@
                         type="text"
                         name="phone"
                         value="${param.phone}"
+                        required
                         placeholder="例）090-1234-5678">
                 </div>
             </div>
@@ -381,7 +396,7 @@
                 <c:out value="${errorMsg}" />
             </p>
 
-            <button type="submit">予約する</button>
+            <button type="submit">予約内容を確認する</button>
         </section>
     </form>
 	<!-- フローティングカート -->

@@ -20,6 +20,9 @@ public class Product_cart {
      */
     private boolean active = true;
 
+    private boolean pickupAvailable = true;
+    private boolean deliveryAvailable = true;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -130,6 +133,26 @@ public class Product_cart {
             boolean active) {
 
         this.active = active;
+    }
+
+    public boolean isPickupAvailable() {
+        return pickupAvailable;
+    }
+
+    public void setPickupAvailable(
+            boolean pickupAvailable) {
+
+        this.pickupAvailable = pickupAvailable;
+    }
+
+    public boolean isDeliveryAvailable() {
+        return deliveryAvailable;
+    }
+
+    public void setDeliveryAvailable(
+            boolean deliveryAvailable) {
+
+        this.deliveryAvailable = deliveryAvailable;
     }
 
     public LocalDateTime getCreatedAt() {
