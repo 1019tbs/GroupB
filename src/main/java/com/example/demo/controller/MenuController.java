@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,10 @@ public class MenuController {
         model.addAttribute(
                 "productList",
                 inventoryService.findAllActive());
+
+        model.addAttribute(
+                "minPickupDate",
+                LocalDate.now());
 
         return "menu";
     }

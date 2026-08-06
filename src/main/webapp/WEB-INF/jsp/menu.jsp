@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,6 +118,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </form>
+
+                        <c:if test="${product.stock > 0
+                                and product.pickupAvailable}">
+                            <button type="button"
+                                class="reserveButton"
+                                data-reserve-product="${product.productId}">
+                                店頭受取を予約
+                            </button>
+                        </c:if>
                     </div>
                 </c:if>
             </c:forEach>
@@ -212,6 +222,15 @@
                                     </c:otherwise>
                                 </c:choose>
                             </form>
+
+                            <c:if test="${product.stock > 0
+                                    and product.pickupAvailable}">
+                                <button type="button"
+                                    class="reserveButton"
+                                    data-reserve-product="${product.productId}">
+                                    店頭受取を予約
+                                </button>
+                            </c:if>
                         </div>
                     </div>
                 </c:if>
@@ -285,6 +304,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </form>
+
+                        <c:if test="${product.stock > 0
+                                and product.pickupAvailable}">
+                            <button type="button"
+                                class="reserveButton"
+                                data-reserve-product="${product.productId}">
+                                店頭受取を予約
+                            </button>
+                        </c:if>
                     </div>
                 </c:if>
             </c:forEach>
@@ -296,30 +324,56 @@
 
     <!-- 店頭受取予約は、共通カート・チェックアウトへ接続します。 -->
     <form action="${pageContext.request.contextPath}/pickup/start"
-        method="post">
+        method="post"
+        class="reservationForm">
+
+        <input type="hidden"
+            name="fulfillmentMethod"
+            value="PICKUP">
+
+        <input type="hidden"
+            name="paymentMethod"
+            value="pay_at_store">
 
         <section id="reservation" class="orderArea">
             <img class="lineImg" alt="ライン"
                 src="${pageContext.request.contextPath}/images/line1.png">
 
-            <h2 class="reservationTitle">ご予約情報入力</h2>
+            <div class="reservationHeading">
+                <span class="reservationEyebrow">STORE PICKUP</span>
+                <h2 class="reservationTitle">店頭受取のご予約</h2>
 
-            <p class="reservationMessage">
-                気になるメニューが決まりましたら、こちらから受け取り日時をご予約ください。
-            </p>
+                <p class="reservationMessage">
+                    商品と受取日時を選び、連絡先をご入力ください。<br>
+                    次の画面で内容をご確認いただけます。
+                </p>
+            </div>
+
+            <div class="reservationSelection"
+                aria-live="polite">
+                <div>
+                    <span class="reservationSelectionLabel">
+                        選択中の商品
+                    </span>
+                    <strong id="reservationSelectionName">
+                        商品を選択してください
+                    </strong>
+                </div>
+
+                <span id="reservationSelectionMeta"
+                    class="reservationSelectionMeta">
+                    商品カードの「店頭受取を予約」からも選べます
+                </span>
+            </div>
 
             <div class="reservationFormGrid">
-                <div class="reservationFormGroup">
-                    <label for="customerName">お名前</label>
-                    <input id="customerName"
-                        type="text"
-                        name="customerName"
-                        value="${param.customerName}"
-                        required
-                        placeholder="例）山田 太郎">
-
+                <div class="reservationField reservationFieldWide">
                     <!-- 店頭受取可能な商品のみ選択できます。 -->
-                    <label for="menuId">予約商品</label>
+                    <label for="menuId">
+                        予約商品
+                        <span class="requiredBadge">必須</span>
+                    </label>
+
                     <select id="menuId" name="productId" required>
                         <option value="">商品を選択してください</option>
 
@@ -329,74 +383,135 @@
                             <c:if test="${product.stock > 0
                                     and product.pickupAvailable}">
                                 <option value="${product.productId}"
+                                    data-product-name="${fn:escapeXml(product.productName)}"
+                                    data-price="${product.price}"
+                                    data-stock="${product.stock}"
                                     <c:if test="${param.productId == product.productId}">
                                         selected
                                     </c:if>>
                                     <c:out value="${product.productName}" />
+                                    （￥<fmt:formatNumber
+                                        value="${product.price}"
+                                        pattern="#,##0" />・在庫${product.stock}）
                                 </option>
                             </c:if>
                         </c:forEach>
                     </select>
 
-                    <input type="hidden"
+                    <small>店頭受取に対応し、在庫がある商品のみ表示しています。</small>
+                </div>
+
+                <div class="reservationField">
+                    <label for="reservationQuantity">
+                        数量
+                        <span class="requiredBadge">必須</span>
+                    </label>
+
+                    <input id="reservationQuantity"
+                        type="number"
                         name="quantity"
-                        value="1">
+                        min="1"
+                        value="${empty param.quantity ? 1 : param.quantity}"
+                        required>
                 </div>
 
-                <div class="reservationFormGroup">
-                    <label for="reservationDate">
+                <div class="reservationField">
+                    <label for="pickupDate">
                         受取希望日
+                        <span class="requiredBadge">必須</span>
                     </label>
 
-                    <input id="reservationDate"
+                    <input id="pickupDate"
                         type="date"
-                        name="reservationDate"
-                        value="${param.reservationDate}"
-                        required>
-
-                    <label for="reservationTime">
-                        受取希望時間
-                    </label>
-
-                    <input id="reservationTime"
-                        type="time"
-                        name="reservationTime"
-                        value="${param.reservationTime}"
+                        name="pickupDate"
+                        min="${minPickupDate}"
+                        value="${param.pickupDate}"
                         required>
                 </div>
 
-                <div class="reservationFormGroup">
+                <div class="reservationField">
+                    <label for="pickupTime">
+                        受取希望時間
+                        <span class="requiredBadge">必須</span>
+                    </label>
+
+                    <input id="pickupTime"
+                        type="time"
+                        name="pickupTime"
+                        step="1800"
+                        value="${param.pickupTime}"
+                        required>
+
+                    <small>30分単位でご指定ください。</small>
+                </div>
+
+                <div class="reservationField">
+                    <label for="customerName">
+                        お名前
+                        <span class="requiredBadge">必須</span>
+                    </label>
+
+                    <input id="customerName"
+                        type="text"
+                        name="customerName"
+                        maxlength="100"
+                        value="${fn:escapeXml(param.customerName)}"
+                        required
+                        autocomplete="name"
+                        placeholder="例）山田 太郎">
+                </div>
+
+                <div class="reservationField">
+                    <label for="phone">
+                        電話番号
+                        <span class="requiredBadge">必須</span>
+                    </label>
+
+                    <input id="phone"
+                        type="tel"
+                        name="phone"
+                        maxlength="20"
+                        value="${fn:escapeXml(param.phone)}"
+                        required
+                        autocomplete="tel"
+                        placeholder="例）090-1234-5678">
+                </div>
+
+                <div class="reservationField reservationFieldWide">
                     <label for="email">
                         メールアドレス
+                        <span class="requiredBadge">必須</span>
                     </label>
 
                     <input id="email"
                         type="email"
                         name="email"
-                        value="${param.email}"
+                        maxlength="255"
+                        value="${fn:escapeXml(param.email)}"
                         required
+                        autocomplete="email"
                         placeholder="例）example@example.com">
-                </div>
-
-                <div class="reservationFormGroup">
-                    <label for="phone">
-                        電話番号
-                    </label>
-
-                    <input id="phone"
-                        type="text"
-                        name="phone"
-                        value="${param.phone}"
-                        required
-                        placeholder="例）090-1234-5678">
                 </div>
             </div>
 
-            <p class="errorMsg">
-                <c:out value="${errorMsg}" />
-            </p>
+            <c:if test="${not empty errorMsg}">
+                <p class="errorMsg reservationError"
+                    role="alert">
+                    <c:out value="${errorMsg}" />
+                </p>
+            </c:if>
 
-            <button type="submit">予約内容を確認する</button>
+            <div class="reservationGuide">
+                <span>1. 情報入力</span>
+                <span>2. 内容確認</span>
+                <span>3. 予約完了</span>
+            </div>
+
+            <button type="submit"
+                class="reservationSubmit">
+                予約内容を確認する
+                <span aria-hidden="true">→</span>
+            </button>
         </section>
     </form>
 	<!-- フローティングカート -->
@@ -410,6 +525,7 @@
             src="${pageContext.request.contextPath}/images/menu_footer.png">
     </footer>
 	<script src="${pageContext.request.contextPath}/JS/Cart.js"></script>
+	<script src="${pageContext.request.contextPath}/JS/Reservation.js"></script>
     <jsp:include page="common/footer.jsp"/>
 </body>
 </html>
