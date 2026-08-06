@@ -36,15 +36,6 @@
 
 		<input type="hidden" name="memberId" value="${member.memberId}">
 
-		<!--
-    <p>
-        パスワード：
-        <input type="password"
-               name="password"
-               value="${member.password}">
-    </p>
--->
-
 		<p>
 			氏名： <input type="text" name="memberName" value="${member.memberName}">
 		</p>
