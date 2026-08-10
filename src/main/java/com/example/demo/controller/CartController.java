@@ -89,7 +89,19 @@ public class CartController {
         model.addAttribute(
                 "cartList",
                 cartList);
+        
+        int totalQuantity = cartList.stream()
+        .mapToInt(CartItem::getQuantity)
+        .sum();
+        
+        model.addAttribute("totalQuantity", totalQuantity);
+        
 
+        model.addAttribute(
+        "fulfillmentMethod",
+        cartService.getFulfillmentMethod(
+                loginMember.getMemberId()));
+        
         model.addAttribute(
                 "fulfillmentMethod",
                 cartService.getFulfillmentMethod(
