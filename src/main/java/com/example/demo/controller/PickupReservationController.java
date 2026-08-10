@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
-import java.time.LocalDate;
-
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.model.CheckoutForm;
 import com.example.demo.model.Member;
 import com.example.demo.service.CartService;
 import com.example.demo.service.CheckoutService;
@@ -31,7 +29,8 @@ public class PickupReservationController {
     private final CheckoutService checkoutService;
     private final InventoryService inventoryService;
 
-//    @PostMapping("/pickup/start")
+
+   @PostMapping("/pickup/start")
     public String startPickupReservation(
             @RequestParam(
                     value = "productId",
