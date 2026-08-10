@@ -111,13 +111,15 @@ public class OrderDAO {
               + "o.email, "
               + "o.phone, "
               + "o.product_id, "
-              + "p.name AS product_name, "
+//              + "p.name AS product_name, " 修正
+              + "p.product_name AS product_name, " //修正後
               + "o.reservation_date, "
               + "o.reservation_time, "
               + "o.created_at "
               + "FROM orders o "
               + "JOIN products p "
-              + "ON o.product_id = p.id "
+//              + "ON o.product_id = p.id "　修正
+              + "ON o.product_id = p.product_id "//修正後
               + "ORDER BY o.order_id DESC";
 
         try (
