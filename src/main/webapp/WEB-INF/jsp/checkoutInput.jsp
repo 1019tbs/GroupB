@@ -36,7 +36,6 @@
 	
 	<main>
 		<div class="checkoutContainer">
-			
 		    <c:if test="${not empty errorMessage}">
 		        <p class="errorMsg">
 		            <c:out value="${errorMessage}" />
@@ -123,7 +122,6 @@
 		                maxlength="100"
 		                required>
 		        </div>
-		
 		        <c:if test="${checkoutForm.fulfillmentMethod == 'DELIVERY'}">
 		            <div class="formGroup">
 		                <label for="postalCode">郵便番号</label>
@@ -307,6 +305,7 @@
 				        alt="購入イメージ">
 				</div>
 	</main>
+	
 	<div class= "cartFooterArea">
 		<img
 		src="${pageContext.request.contextPath}/images/menu_footer2.png"
