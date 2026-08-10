@@ -97,8 +97,8 @@
     				</div>
 	    			<div class="formGroup">
 	    				<dl>
-				            <dt>受取方法</dt>
-	            			<dd><c:out value="${fulfillmentMethodLabel}" /></dd>
+<!--				            <dt>受取方法</dt>-->
+<!--	            			<dd><c:out value="${fulfillmentMethodLabel}" /></dd>-->
 	            			<dt>氏名</dt>
 	            			<dd>
 	            				<c:out
@@ -122,7 +122,6 @@
 				                <dt>受取希望時間</dt>
 				                <dd><c:out value="${checkoutForm.pickupTime}" /></dd>
 				            </c:if>
-				
 				            <dt>電話番号</dt>
 				            <dd>
 				                <c:out
@@ -190,6 +189,9 @@
 				            <input type="hidden"
 				                name="pickupTime"
 				                value="${fn:escapeXml(checkoutForm.pickupTime)}">
+				                <button type= "submit">
+				                確定する!!
+				                </button>
 				        </form>
 			        </div>
 			    	
