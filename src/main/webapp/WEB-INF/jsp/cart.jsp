@@ -164,8 +164,14 @@
 			            		</div>
 		            		</div>
 	            		</c:forEach>
-	            	</div>
-	            
+	            		<div class="checkoutBackButtons">
+				    		<a href="${pageContext.request.contextPath}/menu"
+				    		class="backButton">
+				        	メニューへ戻る
+				    	</a>
+	            		</div>
+	            		
+	            	</div>	            
 	            <!-- ご注文内容 -->
 	                <div class= "cartSummary">
 	                <img

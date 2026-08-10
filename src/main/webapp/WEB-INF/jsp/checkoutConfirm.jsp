@@ -10,22 +10,31 @@
 <head>
 <meta charset="UTF-8">
 <title>購入内容確認</title>
+<!-- CSS -->
 <link rel="stylesheet"
-    href="${pageContext.request.contextPath}/css/style.css">
+    href="${pageContext.request.contextPath}/css/cart.css">
 </head>
 
 <body class="checkoutPage">
+	<div class= "confirmHeader">
+		<img
+		src="${pageContext.request.contextPath}/images/cart_logo.png"
+		class="cartLogo"
+		alt="ロゴ">
+	    <h1>
+	    	<c:choose>
+	    		<c:when test="${checkoutForm.fulfillmentMethod == 'PICKUP'}">
+	    		店頭受取予約情報入力
+	            </c:when>
+	            <c:otherwise>購入情報入力</c:otherwise>
+	        </c:choose>
+	    </h1>
+	    <p>
+	    「注文確定」を押すと、注文登録・在庫減算・カートクリアを実行します。
+	    </p>
+	</div>
 
 <main class="checkoutContainer">
-
-    <h1>
-        <c:choose>
-            <c:when test="${checkoutForm.fulfillmentMethod == 'PICKUP'}">
-                店頭受取予約内容確認
-            </c:when>
-            <c:otherwise>購入内容確認</c:otherwise>
-        </c:choose>
-    </h1>
 
     <section class="checkoutCartSummary">
 
@@ -147,7 +156,6 @@
         <a href="${pageContext.request.contextPath}/checkout/input">
             入力内容を修正する
         </a>
-
         <a href="${pageContext.request.contextPath}/cart">
             カートに戻る
         </a>
