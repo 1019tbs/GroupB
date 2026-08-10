@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*****カート、注文確認画面*****/
 html, body{
 	height: 100%;
 	margin: 0;
@@ -19,24 +20,11 @@ p{
     color:#783f04;
     margin-bottom:5px;
 }
-.copyright{
-	text-align: center;
-	display: block;
-	margin: 0;
-	color: #ffffff;
-}
-.footer{
-    background: #582f05;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
 /*==========
 ヘッダー
 ==========*/
-.cartHeader{
+.cartHeader,
+.checkoutHeader{
     text-align:center;
     margin-top:40px;
 	position:relative;
@@ -68,8 +56,9 @@ p{
 /*==========
 商品カート
 ==========*/
-.cartContainer{
-    width: 1200px;
+.cartContainer,
+.checkoutContainer{
+    max-width: 1200px;
     margin: 40px auto;
 }
 .cartMain{
@@ -81,7 +70,13 @@ p{
 .cartList{
     flex:1;
 }
-
+.checkoutCartSummary{
+	margin: 100px;
+	padding: 20px;
+	width:40% ;
+	border: 1px solid;
+	border-radius: 8px;
+}
 .cartItem{
     display:flex;
     gap:20px;
@@ -106,6 +101,107 @@ p{
     margin: 10px;
 	padding-bottom:10px;
 	border-bottom:1px dashed #c8a96a;
+}
+.checkoutArea{
+    width:800px;
+}
+.checkoutProductList{
+    padding:20px;
+    margin-bottom:30px;
+    background:#fff8e3;
+	border: 1px solid;
+	border-radius: 8px;
+}
+/* 商品一覧table */
+.cartTable{
+    width:100%;
+    border-collapse:collapse;
+	background: #ffffff;
+}
+.cartTable th{
+    background:#dcba87ff;
+    padding:10px;
+    border:none;
+}
+
+.cartTable td{
+    padding:15px;
+    border:none;
+    border-bottom:1px dashed #c8a96a;
+}
+
+.productCell{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+.checkoutProductImg{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:4px;
+    flex-shrink:0;
+}
+.checkoutTotal{
+    text-align:right;
+    font-size:18px;
+	padding: 15px;
+	background: #ffffff;
+}
+.checkoutForm{
+    padding:20px;
+    background:#fff8e3;
+    border:1px solid #7a4a00;
+    border-radius:8px;
+}
+.checkoutStep{
+    margin-bottom:20px;
+}
+.formGroup{
+	display: grid;
+	grid-template-columns: 140px 1fr;
+	align-items: center;
+    margin-bottom:15px;
+	gap: 15px;
+}
+.formGroup label{
+	display: 120px;
+    margin-bottom:5px;
+}
+.formGroup input,
+.formGroup textarea,
+.formGroup select{
+    width:300px;
+    padding:8px;
+    box-sizing:border-box;
+}
+.formGroup input{
+    width:220px;
+}
+.formGroup textarea{
+    width:420px;
+}
+.formGroup select{
+    width:220px;
+}
+.postalArea{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.postalArea input{
+    width:140px;
+}
+.postalSearch{
+    padding:7px 16px;
+    border:1px solid #a9854e;
+    background:#fff;
+    color:#783f04;
+    border-radius:4px;
+    cursor:pointer;
+}
+.postalSearch:hover{
+    background:#f8edd8;
 }
 /*==========
 購入可能、不可
@@ -179,6 +275,10 @@ p{
 	border: 1px solid;
 	border-radius: 10px;
 }
+.summaryImg{
+    display: block;
+    margin: 20px auto;
+}
 .summaryBox{
 	text-align: center;
 }
@@ -195,6 +295,45 @@ p{
 	padding-top:15px;
 	border-top:1px dashed #c8a96a;
 }
+.purchaseButton,
+.purchaseButtonDisabled{
+    width:60%;
+	margin:35px auto 0;
+    padding:15px 0;
+    color:#fff;
+    text-align:center;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:18px;
+}
+.purchaseButton{
+    display:block;
+    background:#7a4a00;
+    color:#fff;
+    text-align:center;
+    text-decoration:none;
+    transition:.2s;
+}
+.purchaseButton:hover{
+    background:#a9854eff;
+}
+.purchaseButtonDisabled{
+    border:none;
+    background:#ccc;
+    color:#666;
+    cursor:not-allowed;
+}
+.cartBack{
+    margin:35px 0;
+}
+.cartBack a{
+    color:#7a4a00;
+    text-decoration:none;
+    font-size:16px;
+}
+.cartBack a:hover{
+    text-decoration:underline;
+}
 /*==========
 カート下装飾
 ==========*/
@@ -203,10 +342,22 @@ p{
     margin-top:80px;
     text-align:center;
 }
-
 .cartFooterImg{
     width:100%;
-    max-width:1200px;
     display:block;
     margin:0 auto;
+}
+.copyright{
+	text-align: center;
+	display: block;
+	margin: 0;
+	color: #ffffff;
+}
+.footer{
+    background: #582f05;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
 }

@@ -173,12 +173,12 @@
 			        class="summaryImg"
 			        alt="購入イメージ">
 			        <div class= "summaryBox">
-			        <h2 class= "summaryTitle">ご注文内容</h2>
+			        	<h2 class= "summaryTitle">ご注文内容</h2>
 			        	<div class= "summaryInfo">
 			        		<p>カート内商品　
                 				<strong>${cartList.size()}</strong>種類
                 			</p>
-                			<p>購入数量
+                			<p class= "summaryInfoNumber">購入数量
                 				<strong>${totalQuantity}</strong>点
                 			</p>
                 		</div>
@@ -190,19 +190,45 @@
 			            		<fmt:formatNumber value="${total}" pattern="#,##0" />
 			                	円
 			            	</strong>
-			            	<div class="purchaseButton">
-			            	</div>
                 		</div>
-			        		
+                		<!-- 購入ボタン -->
+                		<div class="purchaseArea">
+						    <c:choose>
+						        <c:when test="${canPurchase}">
+						            <a class="purchaseButton"
+						               href="${pageContext.request.contextPath}/checkout/input">
+						                <c:choose>
+						                    <c:when test="${fulfillmentMethod == 'PICKUP'}">
+						                        店頭受取を予約する
+						                    </c:when>
+						                    <c:otherwise>
+						                        購入する
+						                    </c:otherwise>
+						                </c:choose>
+						            </a>
+						        </c:when>
+						
+						        <c:otherwise>
+						            <button class="purchaseButtonDisabled" disabled>
+						                購入する
+						            </button>
+						        </c:otherwise>
+						    </c:choose>
+						</div>
 			        </div>
-		
-		            	<c:if test="${not canPurchase}">
+			        
+			        <div class="cartBack">
+			        	<a href="${pageContext.request.contextPath}/menu">
+			        	← 商品一覧に戻る
+			        	</a>
+			        </div>
+		            <c:if test="${not canPurchase}">
 		                <p class="errorMsg">
 		                    取扱停止・在庫切れ・在庫不足の商品があります。
 		                    数量を修正するか、商品を取り消してください。
 		                </p>
-		            	</c:if>
-		            	
+		            </c:if>
+		            	<%-- 
 			            <div class="cartActions">
 			                <a href="${pageContext.request.contextPath}/menu">
 			                    商品一覧に戻る
@@ -227,6 +253,7 @@
 			                    </c:otherwise>
 			                </c:choose>
 		            	</div>
+		            	--%>
                     <img
 			        src="${pageContext.request.contextPath}/images/cart_check2.png"
 			        class="summaryImg"
