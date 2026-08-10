@@ -435,15 +435,16 @@
                         <span class="requiredBadge">必須</span>
                     </label>
 
-                    <input id="pickupTime"
-                        type="time"
-                        name="pickupTime"
-                        step="1800"
-                        value="${param.pickupTime}"
-                        required>
-
-                    <small>30分単位でご指定ください。</small>
-                </div>
+                    <select id="pickupTime"
+				            name="pickupTime"
+				            required>
+				        <option value="">
+				            時間を選択してください
+				        </option>
+				    </select>
+				
+				    <small>8:00〜22:00の間で、30分単位でご指定ください。</small>
+				</div>
 
                 <div class="reservationField">
                     <label for="customerName">
@@ -527,5 +528,6 @@
 	<script src="${pageContext.request.contextPath}/JS/Cart.js"></script>
 	<script src="${pageContext.request.contextPath}/JS/Reservation.js"></script>
     <jsp:include page="common/footer.jsp"/>
+    <script src="${pageContext.request.contextPath}/js/menu.js"></script>
 </body>
 </html>

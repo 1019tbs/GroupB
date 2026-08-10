@@ -471,7 +471,9 @@ public class CheckoutService {
                                 cartItems);
 
             } catch (Exception e) {
-
+                logger.error(
+                        "【注文確定エラー】placeOrder()で例外が発生しました。",
+                        e);
                 rollback(conn, e);
 
                 if (e instanceof
