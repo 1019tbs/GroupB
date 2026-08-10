@@ -66,7 +66,7 @@ body {
     position: relative;
 
     width: 100%;
-    height: 85px;
+    height: 120px;
 
     text-align: center;
 
@@ -75,7 +75,7 @@ body {
 
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: 100% 85px;
+    background-size: 100% 120px;
 
     box-sizing: border-box;
 }
@@ -85,7 +85,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    padding-top: 8px;
+    padding-top: 13px;
 }
 
 .brand-name {
@@ -96,14 +96,14 @@ body {
         "Times New Roman",
         serif;
 
-    font-size: 29px;
+    font-size: clamp(32px, 3.2vw, 44px);
     font-weight: bold;
     letter-spacing: 1px;
 }
 
 .brand-icon {
-    width: 43px;
-    height: 43px;
+    width: 54px;
+    height: 54px;
 
     margin-left: 4px;
 
@@ -111,7 +111,7 @@ body {
 }
 
 .header-subtitle {
-    margin: -2px 0 0;
+    margin: -5px 0 0;
 
     color: #a9854e;
 
@@ -120,7 +120,7 @@ body {
         "Times New Roman",
         serif;
 
-    font-size: 14px;
+    font-size: 16px;
 }
 
 
@@ -131,7 +131,7 @@ body {
     flex: 1;
 
     width: 100%;
-    padding: 8px 0 0;
+    padding: 34px 24px 48px;
 
     box-sizing: border-box;
 }
@@ -142,17 +142,18 @@ body {
     color: #783f04;
 
     text-align: center;
-    font-size: 17px;
+    font-size: clamp(26px, 2.5vw, 34px);
+    line-height: 1.4;
 }
 
 .title-line {
     display: block;
 
-    width: 280px;
+    width: 420px;
     max-width: 80%;
-    height: 7px;
+    height: 12px;
 
-    margin: 0 auto 4px;
+    margin: 4px auto 24px;
 
     object-fit: contain;
 }
@@ -162,33 +163,30 @@ body {
    画像と会員情報
 ========================= */
 .completion-content {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+    align-items: stretch;
 
-    gap: 0;
+    gap: 24px;
 
-    width: 580px;
-    max-width: calc(100% - 20px);
+    width: min(100%, 1000px);
 
     margin: 0 auto;
 }
 
 .completion-image-area {
-    flex: 0 0 320px;
-
-    width: 320px;
+    width: 100%;
     min-width: 0;
 }
 
 .completion-image {
     display: block;
 
-    width: 320px;
-    max-width: 100%;
-    height: 176px;
+    width: 100%;
+    height: 100%;
+    min-height: 310px;
 
-    border-radius: 2px;
+    border-radius: 16px;
 
     object-fit: cover;
 }
@@ -198,43 +196,43 @@ body {
    会員情報の枠
 ========================= */
 .member-information {
-    width: 260px;
-    min-height: 176px;
+    width: 100%;
+    min-height: 310px;
 
-    padding: 8px 14px;
+    padding: 22px 26px;
 
     background-color: #fff0e3;
 
     border:
-        2px solid
+        3px solid
         rgba(253, 142, 188, 0.70);
 
-    border-radius: 0 0 15px 15px;
+    border-radius: 18px;
 
     box-sizing: border-box;
 }
 
 .information-title {
-    margin: 0 0 5px;
+    margin: 0 0 14px;
 
     color: #783f04;
 
     text-align: center;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.2;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.4;
 }
 
 .information-row {
     display: grid;
 
-    grid-template-columns: 96px 1fr;
-    column-gap: 7px;
+    grid-template-columns: 120px 1fr;
+    column-gap: 12px;
 
-    margin-bottom: 0;
+    margin-bottom: 5px;
 
-    font-size: 12px;
-    line-height: 1.15;
+    font-size: 15px;
+    line-height: 1.35;
 }
 
 .information-label {
@@ -255,23 +253,23 @@ body {
    完了メッセージ
 ========================= */
 .completion-message {
-    margin: 6px 0 0;
+    margin: 24px 0 0;
 
     color: #7a4a00;
 
     text-align: center;
-    font-size: 12px;
-    line-height: 1.2;
+    font-size: 17px;
+    line-height: 1.5;
 }
 
 .continue-message {
-    margin: 3px 0 5px;
+    margin: 4px 0 18px;
 
     color: #a9854e;
 
     text-align: center;
-    font-size: 12px;
-    line-height: 1.2;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
 
@@ -279,7 +277,7 @@ body {
    ボタン
 ========================= */
 .button-area {
-    margin-bottom: 6px;
+    margin-bottom: 0;
 
     text-align: center;
 }
@@ -289,23 +287,32 @@ body {
 }
 
 .menu-button {
-    min-width: 140px;
+    min-width: 220px;
 
-    padding: 5px 20px;
+    padding: 14px 28px;
 
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
 
     background-color: #783f04;
     color: #ffffff;
 
     cursor: pointer;
 
-    font-size: 12px;
+    font-size: 16px;
+    font-weight: bold;
+
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .menu-button:hover {
     background-color: #5d2f02;
+    transform: translateY(-1px);
+}
+
+.menu-button:focus-visible {
+    outline: 3px solid rgba(253, 142, 188, 0.75);
+    outline-offset: 3px;
 }
 
 
@@ -340,44 +347,77 @@ body {
 /* =========================
    スマートフォン対応
 ========================= */
-@media screen and (max-width: 700px) {
-
-    .completion-header {
-        background-size: auto 85px;
-    }
-
-    .completion-main {
-        padding: 15px 20px 0;
-    }
+@media screen and (max-width: 900px) {
 
     .completion-content {
-        flex-direction: column;
+        grid-template-columns: 1fr;
 
-        width: 100%;
-        max-width: 100%;
-
-        gap: 10px;
-    }
-
-    .completion-image-area {
-        flex-basis: auto;
-
-        width: 100%;
+        width: min(100%, 620px);
     }
 
     .completion-image {
-        width: 100%;
-        height: auto;
-        max-height: 230px;
-    }
-
-    .member-information {
-        width: 100%;
+        height: clamp(230px, 48vw, 340px);
         min-height: 0;
     }
 
+    .member-information {
+        min-height: 0;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    .completion-header {
+        height: 92px;
+        background-size: auto 92px;
+    }
+
+    .brand-area {
+        padding-top: 8px;
+    }
+
+    .brand-name {
+        font-size: 30px;
+    }
+
+    .brand-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+    .header-subtitle {
+        font-size: 13px;
+    }
+
+    .completion-main {
+        padding: 26px 16px 36px;
+    }
+
+    .completion-content {
+        width: 100%;
+        max-width: 100%;
+        gap: 16px;
+    }
+
+    .completion-image {
+        height: 52vw;
+        min-height: 210px;
+        max-height: 300px;
+    }
+
+    .member-information {
+        padding: 20px;
+    }
+
     .information-row {
-        grid-template-columns: 110px 1fr;
+        grid-template-columns: 105px 1fr;
+
+        font-size: 14px;
+    }
+
+    .menu-button {
+        width: 100%;
+        max-width: 320px;
     }
 }
 
