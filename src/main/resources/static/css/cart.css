@@ -1,0 +1,212 @@
+@charset "UTF-8";
+html, body{
+	height: 100%;
+	margin: 0;
+}
+body{
+	font-family: Georgia;
+	color: #783f04;
+	background-color: #fdf5e8ff;
+}
+.icon{
+	width: 40px;
+	height: auto;	
+}
+h1,
+h2,
+p{
+    font-family:Georgia;
+    color:#783f04;
+    margin-bottom:5px;
+}
+.copyright{
+	text-align: center;
+	display: block;
+	margin: 0;
+	color: #ffffff;
+}
+.footer{
+    background: #582f05;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+/*==========
+ヘッダー
+==========*/
+.cartHeader{
+    text-align:center;
+    margin-top:40px;
+	position:relative;
+}
+.cartLogo{
+    position:absolute;
+    top:-20px;
+    left:30px;
+    width:250px;
+}
+.cartTitle{
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin:0;
+}
+.subTitle{
+    text-align:center;
+    margin:15px 0 0;
+	font-size: 16px;
+	font-weight: 500;
+	opacity:0.6; /*透過*/
+}
+.cartLine{
+    width:300px;
+	display: block;
+	margin: -5px auto 0;
+}
+/*==========
+商品カート
+==========*/
+.cartContainer{
+    width: 1200px;
+    margin: 40px auto;
+}
+.cartMain{
+    display:flex;
+	justify-content:space-between;
+    gap:40px;
+    align-items:flex-start;
+}
+.cartList{
+    flex:1;
+}
+
+.cartItem{
+    display:flex;
+    gap:20px;
+    padding:20px;
+    margin-bottom:20px;
+    border:1px solid #7a4a00;
+    background:#fff8e3ff;
+	box-sizing: border-box;
+}
+.cartImg{
+    width:180px;
+    flex-shrink: 0;
+}
+.cartImg img{
+    width: 100%;
+    border-radius: 10px;
+}
+.itemInfo{
+    flex:1;
+}
+.productName{
+    margin: 10px;
+	padding-bottom:10px;
+	border-bottom:1px dashed #c8a96a;
+}
+/*==========
+購入可能、不可
+==========*/
+.stockStatus{
+    margin:10px 0 15px;
+	text-align:right;
+}
+.statusOk,
+.statusNg{
+    color:#7a4a00;
+	padding: 2px 10px;
+}
+.statusOk{
+	background-color: #ffe599;
+}
+.statusNg{
+	background-color: #b7b7b7;
+}
+.productStock{
+	display:flex;
+	align-items:center;
+	gap:20px;
+}
+.quantityArea{
+	padding-bottom:10px;
+	margin-bottom:10px;
+	border-bottom:1px dashed #c8a96a;
+}
+.stockCount{
+	margin-left: auto;
+	font-size:15px;
+}
+.stockForm{
+	display:flex;
+	align-items:center;
+	gap:8px;
+}
+.changeButton,
+.removeButton{
+	border:none;
+	border-radius:8px;
+	cursor:pointer;
+	transition:.2s;
+}
+.changeButton{
+	color:#fff;
+	background-color: #a9854eff;
+	font-size:12px;
+	padding:4px 14px;
+}
+.removeButton{
+	color: #7a4a00;
+	background-color: #f9ecc6ff;
+	font-size:14px;
+	padding:8px 18px;
+	border: 1px solid ;
+}
+.itemBottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+.cartSummary{
+    width:320px;
+    position:sticky;
+    top:20px;
+	padding: 20px;
+	background-color: #fff8e3ff;
+	border: 1px solid;
+	border-radius: 10px;
+}
+.summaryBox{
+	text-align: center;
+}
+.summaryTitle{
+    padding-bottom:10px;
+    margin-bottom:10px;
+    border-bottom:1px dashed #c8a96a;
+}
+.summaryInfo p{
+    padding-bottom:10px;
+    margin-bottom:10px;
+}
+.summaryTotal{
+	padding-top:15px;
+	border-top:1px dashed #c8a96a;
+}
+/*==========
+カート下装飾
+==========*/
+.cartFooterArea{
+    width:100%;
+    margin-top:80px;
+    text-align:center;
+}
+
+.cartFooterImg{
+    width:100%;
+    max-width:1200px;
+    display:block;
+    margin:0 auto;
+}

@@ -274,7 +274,7 @@ button{
     height: 45px;
 }
 footer{
-	margin: 0;
+	margin: auto 0 0 0;  
 }
 .footer{
     background: #582f05;
@@ -530,7 +530,7 @@ textarea{
     transition: .3s;
 }
 .backButton:hover{
-    opacity: .85;
+    opacity: 0.7;
 }
 
 /*MENUへ戻るボタン*/
@@ -551,10 +551,6 @@ textarea{
     cursor: pointer;
 }
 
-.backButton:hover{
-    opacity: 0.7;
-}
-
 /*=======
 MENU
 =========*/
@@ -566,7 +562,9 @@ body.menu{
     position: relative;
 }
 .menuTopImg{
-	width:100%;
+	width: 90%;
+	 display: block;
+	 margin: 0 auto;
 }
 .menuNav{
 	position: absolute;
@@ -586,11 +584,11 @@ body.menu{
 .menuNextImg,
 .categoryImg{
 	display: block;
-	width: 100%;
-	max-width: 800px;
+	width: 90%;
+	max-width: 1100px;
 	height: auto;
 	margin: 100px auto;
-}
+	}
 .categoryCakesImg{
 	margin: 200px auto 100px;
 }
@@ -758,6 +756,24 @@ body.menu{
         transform: scaleX(1);
     }
 }
+
+/* 小さめのPC */
+@media screen and (max-width: 1400px){
+
+    .menuNav{
+        position: static;      /* 画像の上への絶対配置を解除 */
+        width: 90%;
+        margin: 15px auto 0;
+        text-align: center;
+        font-size: 22px;
+        line-height: 1.8;
+    }
+
+    .menuNav a{
+        margin: 0 6px;
+    }
+}
+
 /*==================
   フローティングカート
 ==================*/
@@ -869,13 +885,13 @@ body.menu{
     margin-top:10px;
 }
 
-.menuFooterImg{
-    display:block;
-    width:100%;
-    max-height:280px;
-    object-fit:cover;
-	margin-bottom: 0;
+.menuFooterImg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
 }
+
 /*===============
 注文完了フォーム
 ===============*/
@@ -996,7 +1012,4 @@ body.thankyouPage .headerIcon{
     width:30px;
     height:30px;
     object-fit:contain;
-}
-footer{
-	margin-top: auto;
 }

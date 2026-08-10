@@ -5,6 +5,5 @@ pageEncoding="UTF-8"%>
 	<div class="footer">
 		<small class="copyright">©Honey Bloom / since1880</small>
 	</div>
-
 </footer>
 
