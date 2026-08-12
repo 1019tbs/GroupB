@@ -1,0 +1,726 @@
+@charset "UTF-8";
+
+
+/*================================*
+ * 注文完了ページ
+ *================================*/
+
+
+/*========================*
+ * ページ全体
+ *========================*/
+
+body.thankyouPage {
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    overflow-x: hidden;
+
+    color: #582f05;
+
+    font-family:
+        Meiryo,
+        "Yu Gothic",
+        sans-serif;
+
+    background-image:
+        url("../images/thankyou_background_wood.png");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/*========================*
+ * 上部オーニング
+ *========================*/
+
+body.thankyouPage .thankyouTopAwning {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: clamp(78px, 5vw, 92px);
+
+    object-fit: cover;
+    object-position: bottom center;
+
+    display: block;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/*========================*
+ * Honey Bloom ロゴ
+ *========================*/
+
+body.thankyouPage .shopTitle {
+    position: absolute;
+
+    top: 100px;
+    left: 5%;
+
+    z-index: 20;
+
+    text-align: left;
+}
+
+
+body.thankyouPage .shopTitle h1 {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin: 0;
+
+    color: #783f04;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(27px, 2.2vw, 34px);
+
+    font-weight: bold;
+
+    line-height: 1;
+}
+
+
+/* 蜂アイコン */
+
+body.thankyouPage .shopTitle .icon {
+    width: 32px;
+    height: 32px;
+
+    object-fit: contain;
+
+    transform:
+        translateY(-4px);
+}
+
+
+/* サブコピー */
+
+body.thankyouPage .shopTitle p {
+    margin:
+        8px 0 0 2px;
+
+    color: #6f3a04;
+
+    font-family:
+        "Yu Mincho",
+        "Hiragino Mincho ProN",
+        serif;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    text-align: left;
+}
+
+
+/*========================*
+ * 右上メニュー
+ *========================*/
+
+body.thankyouPage .shopHeaderMenu {
+    position: absolute;
+
+    top: 102px;
+    right: 4%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    z-index: 20;
+}
+
+
+body.thankyouPage .shopHeaderMenu form {
+    margin: 0;
+}
+
+
+body.thankyouPage .shopHeaderMenu span {
+    color: #783f04;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 16px;
+
+    font-weight: 500;
+}
+
+
+body.thankyouPage .headerButton {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #783f04;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+
+body.thankyouPage .headerButton:hover {
+    opacity: 0.7;
+}
+
+
+body.thankyouPage .headerIcon {
+    width: 26px;
+    height: 26px;
+
+    object-fit: contain;
+}
+
+
+/*========================*
+ * メイン
+ *========================*/
+
+body.thankyouPage .thankyouMain {
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+
+    padding:
+        165px 20px 18px;
+
+    box-sizing: border-box;
+}
+
+
+/*========================*
+ * 本全体
+ *========================*/
+
+body.thankyouPage .thankyouBookArea {
+    position: relative;
+
+    width:
+        min(78vw, 1150px);
+
+    margin:
+        0 auto;
+
+    flex-shrink: 0;
+}
+
+
+body.thankyouPage .thankyouBook {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+
+    user-select: none;
+
+    pointer-events: none;
+}
+
+
+/*========================*
+ * 本の右ページ
+ *========================*/
+
+body.thankyouPage .thankContent {
+    position: absolute;
+
+    /*
+     * Thank youの位置は元の高さに戻す
+     */
+    top: 6.5%;
+
+    left: 70%;
+    right: auto;
+
+    width: 38%;
+
+    transform:
+        translateX(-50%);
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+/*========================*
+ * Thank you
+ *========================*/
+
+body.thankyouPage .thankContent h2 {
+    margin: 0;
+
+    color: #783f04;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(30px, 2.45vw, 40px);
+
+    font-weight: bold;
+
+    line-height: 1.25;
+
+    text-align: center;
+}
+
+
+/*========================*
+ * 飾りライン
+ *========================*/
+
+body.thankyouPage .line2 {
+    display: block;
+
+    width: 60%;
+
+    max-width: 240px;
+
+    height: auto;
+
+    margin:
+        7px auto 10px;
+}
+
+
+/*========================*
+ * 注文完了文章
+ *========================*/
+
+body.thankyouPage .thankText {
+    margin:
+        0 auto 4px;
+
+    color: #582f05;
+
+    font-family:
+        "Yu Mincho",
+        "Hiragino Mincho ProN",
+        serif;
+
+    font-size:
+        clamp(14px, 1.1vw, 17px);
+
+    font-weight: 500;
+
+    line-height: 1.7;
+
+    text-align: center;
+}
+
+
+/*========================*
+ * 梱包画像
+ *========================*/
+
+body.thankyouPage .thankImg {
+    display: block;
+
+    width: 280px !important;
+    max-width: none !important;
+
+    height: auto;
+
+    /*
+     * 画像は大きいまま
+     * 上下余白だけ詰める
+     */
+    margin:
+        2px auto 2px;
+}
+
+
+/*========================*
+ * お待ちください枠
+ *========================*/
+
+body.thankyouPage .thankWaitMessage {
+    width: 82%;
+
+    max-width: 330px;
+
+    margin:
+        2px auto 0;
+
+    padding:
+        10px 15px;
+
+    border:
+        1px solid #f5a623;
+
+    border-radius:
+        8px;
+
+    background-color:
+        rgba(255, 255, 255, 0.18);
+
+    color: #582f05;
+
+    font-family:
+        "Yu Mincho",
+        "Hiragino Mincho ProN",
+        serif;
+
+    font-size:
+        clamp(13px, 1vw, 16px);
+
+    font-weight: 500;
+
+    line-height: 1.6;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+/*========================*
+ * TOPへ戻る
+ *========================*/
+
+body.thankyouPage .backButton {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 165px;
+    height: 44px;
+
+    /*
+     * 本からはみ出さないよう
+     * 上だけ少し余白
+     */
+    margin:
+        8px auto 0;
+
+    border-radius:
+        7px;
+
+    background-color:
+        #8a5300;
+
+    color: #ffffff;
+
+    font-family:
+        Meiryo,
+        sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    text-align: center;
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    transition:
+        opacity 0.2s;
+}
+
+
+body.thankyouPage .backButton:hover {
+    opacity: 0.75;
+}
+
+
+/*========================*
+ * フッター
+ *========================*/
+
+body.thankyouPage footer {
+    position: relative;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    z-index: 20;
+}
+
+
+/*========================*
+ * 中くらいの画面
+ *========================*/
+
+@media (max-width: 1100px) {
+
+    body.thankyouPage .thankyouTopAwning {
+        height: 82px;
+    }
+
+
+    body.thankyouPage .shopTitle {
+        top: 90px;
+        left: 3%;
+    }
+
+
+    body.thankyouPage .shopTitle h1 {
+        font-size:
+            clamp(24px, 3vw, 30px);
+    }
+
+
+    body.thankyouPage .shopTitle p {
+        font-size: 11px;
+    }
+
+
+    body.thankyouPage .shopHeaderMenu {
+        top: 92px;
+        right: 2%;
+
+        gap: 7px;
+    }
+
+
+    body.thankyouPage .thankyouMain {
+        padding:
+            150px 15px 18px;
+    }
+
+
+    body.thankyouPage .thankyouBookArea {
+        width:
+            min(90vw, 980px);
+    }
+
+
+    body.thankyouPage .thankContent {
+        top: 6.5%;
+
+        left: 70%;
+
+        width: 39%;
+
+        transform:
+            translateX(-50%);
+    }
+
+
+    body.thankyouPage .headerButton {
+        font-size: 14px;
+    }
+
+
+    body.thankyouPage .headerIcon {
+        width: 23px;
+        height: 23px;
+    }
+
+
+    body.thankyouPage .shopHeaderMenu span {
+        font-size: 14px;
+    }
+
+
+    body.thankyouPage .thankContent h2 {
+        font-size:
+            clamp(26px, 3vw, 35px);
+    }
+
+
+    body.thankyouPage .thankText {
+        font-size:
+            clamp(12px, 1.3vw, 15px);
+    }
+
+
+    body.thankyouPage .thankImg {
+        width: 230px !important;
+    }
+
+
+    body.thankyouPage .thankWaitMessage {
+        font-size:
+            clamp(12px, 1.2vw, 15px);
+    }
+
+
+    body.thankyouPage .backButton {
+        width: 150px;
+        height: 40px;
+
+        font-size: 13px;
+    }
+}
+
+
+/*========================*
+ * 小さいPC・タブレット
+ *========================*/
+
+@media (max-width: 800px) {
+
+    body.thankyouPage .thankyouTopAwning {
+        height: 74px;
+    }
+
+
+    body.thankyouPage .shopTitle {
+        top: 80px;
+        left: 3%;
+    }
+
+
+    body.thankyouPage .shopTitle h1 {
+        font-size: 23px;
+    }
+
+
+    body.thankyouPage .shopTitle .icon {
+        width: 25px;
+        height: 25px;
+    }
+
+
+    body.thankyouPage .shopTitle p {
+        font-size: 10px;
+    }
+
+
+    body.thankyouPage .shopHeaderMenu {
+        top: 120px;
+        right: 3%;
+
+        gap: 6px;
+    }
+
+
+    body.thankyouPage .headerButton {
+        font-size: 12px;
+    }
+
+
+    body.thankyouPage .headerIcon {
+        width: 20px;
+        height: 20px;
+    }
+
+
+    body.thankyouPage .shopHeaderMenu span {
+        font-size: 12px;
+    }
+
+
+    body.thankyouPage .thankyouMain {
+        padding:
+            165px 10px 15px;
+    }
+
+
+    body.thankyouPage .thankyouBookArea {
+        width: 94vw;
+    }
+
+
+    body.thankyouPage .thankContent {
+        top: 6%;
+
+        left: 70%;
+
+        width: 42%;
+
+        transform:
+            translateX(-50%);
+    }
+
+
+    body.thankyouPage .thankContent h2 {
+        font-size:
+            clamp(20px, 3vw, 27px);
+    }
+
+
+    body.thankyouPage .thankText {
+        font-size:
+            clamp(10px, 1.4vw, 13px);
+
+        line-height: 1.6;
+    }
+
+
+    body.thankyouPage .thankImg {
+        width: 170px !important;
+
+        margin:
+            2px auto;
+    }
+
+
+    body.thankyouPage .thankWaitMessage {
+        width: 84%;
+
+        margin-top: 2px;
+
+        padding:
+            7px 9px;
+
+        font-size:
+            clamp(10px, 1.3vw, 13px);
+
+        line-height: 1.5;
+    }
+
+
+    body.thankyouPage .backButton {
+        width: 130px;
+        height: 35px;
+
+        margin-top: 6px;
+
+        font-size: 11px;
+    }
+}
