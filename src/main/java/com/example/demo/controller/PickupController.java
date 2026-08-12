@@ -26,48 +26,54 @@ public class PickupController {
      * 予約入力画面から受け取り、
      * 予約内容確認画面を表示する
      */
-//    @PostMapping("/pickup/start")
-//    public String startPickup(
-//
-//            @RequestParam String customerName,
-//            @RequestParam Long productId,
-//            @RequestParam Integer quantity,
-//            @RequestParam String reservationDate,
-//            @RequestParam String reservationTime,
-//            @RequestParam String email,
-//            @RequestParam String phone,
-//            Model model) {
-//
-//        model.addAttribute(
-//                "customerName",
-//                customerName);
-//
-//        model.addAttribute(
-//                "productId",
-//                productId);
-//
-//        model.addAttribute(
-//                "quantity",
-//                quantity);
-//
-//        model.addAttribute(
-//                "reservationDate",
-//                reservationDate);
-//
-//        model.addAttribute(
-//                "reservationTime",
-//                reservationTime);
-//
-//        model.addAttribute(
-//                "email",
-//                email);
-//
-//        model.addAttribute(
-//                "phone",
-//                phone);
-//
-//        return "pickupConfirm";
-//    }
+    @PostMapping("/pickup/start")
+    public String startPickup(
+
+            @RequestParam String customerName,
+            @RequestParam Long productId,
+            @RequestParam Integer quantity,
+            @RequestParam String pickupDate,
+            @RequestParam String pickupTime,
+            @RequestParam String email,
+            @RequestParam String phone,
+            Model model) {
+
+        model.addAttribute(
+                "customerName",
+                customerName);
+
+        model.addAttribute(
+                "productId",
+                productId);
+
+        model.addAttribute(
+                "quantity",
+                quantity);
+
+        /*
+         * pickupConfirm.jspでは
+         * reservationDate / reservationTime
+         * という名前で表示しているため、
+         * Model名はそのままにする
+         */
+        model.addAttribute(
+                "reservationDate",
+                pickupDate);
+
+        model.addAttribute(
+                "reservationTime",
+                pickupTime);
+
+        model.addAttribute(
+                "email",
+                email);
+
+        model.addAttribute(
+                "phone",
+                phone);
+
+        return "pickupConfirm";
+    }
 
     /*
      * 予約内容確認画面から受け取り、
