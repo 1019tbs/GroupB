@@ -1,0 +1,518 @@
+@charset "UTF-8";
+
+/*================================
+  注文履歴ページ
+================================*/
+
+/*========================
+  ページ全体
+========================*/
+.orderHistoryPage {
+    margin: 0;
+
+    color: #783f04;
+
+    font-family:
+        Meiryo,
+        sans-serif;
+
+    background-image:
+        linear-gradient(
+            rgba(253, 248, 239, 0.66),
+            rgba(253, 248, 239, 0.66)
+        ),
+        url("../images/orderHistory_bg.png");
+
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/*========================
+  メイン
+========================*/
+.orderHistoryPage .orderHistoryContainer {
+    width: 92%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 20px 70px;
+    box-sizing: border-box;
+}
+
+
+/*========================
+  タイトルバナー
+========================*/
+.orderHistoryPage .orderHistoryHero {
+    position: relative;
+
+    width: 88%;
+    max-width: none;
+    height: clamp(140px, 12vw, 180px);
+
+    margin: 0 auto 28px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+}
+
+.orderHistoryPage .orderHistoryHeroImg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.orderHistoryPage .orderHistoryHeroOverlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 252, 246, 0.22);
+}
+
+.orderHistoryPage .orderHistoryHeroOverlay h1 {
+    margin: 0;
+
+    color: #783f04;
+
+    font-family:
+        Georgia,
+        "Yu Mincho",
+        serif;
+
+    font-size: clamp(32px, 2.5vw, 40px);
+    font-weight: normal;
+
+    line-height: 1.2;
+
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75);
+}
+
+.orderHistoryPage .heroLine {
+    display: block;
+    width: 92px;
+    height: 1px;
+    margin-top: 14px;
+    background-color: rgba(120, 63, 4, 0.55);
+}
+
+
+/*========================
+  注文履歴なし
+========================*/
+.orderHistoryPage .noOrderMessage {
+    margin-top: 10px;
+    text-align: center;
+    color: #783f04;
+    font-size: 15px;
+}
+
+
+/*========================
+  注文カード
+========================*/
+.orderHistoryPage .orderHistoryCard {
+    margin-bottom: 30px;
+    padding: 30px 32px;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    border: 1px solid #dcc7a7;
+    border-radius: 14px;
+
+    box-sizing: border-box;
+}
+
+
+/*========================
+  カード上部
+========================*/
+.orderHistoryPage .orderHistoryCardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+
+/* 注文番号・注文方法 */
+.orderHistoryPage .orderHistoryCardInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+
+/*========================
+  注文番号
+========================*/
+.orderHistoryPage .orderHistoryCardInfo h2 {
+    margin: 0;
+
+    color: #783f04;
+
+    font-family: Meiryo, sans-serif;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1.5;
+
+    text-align: left;
+}
+
+
+/*========================
+  通販・店頭受取
+========================*/
+.orderHistoryPage .orderMethod {
+    margin: 2px 0 0;
+
+    color: #9a6a42;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    text-align: left;
+}
+
+
+/*========================
+  注文状態
+========================*/
+.orderHistoryPage .orderStatus {
+    display: inline-block;
+
+    padding: 7px 15px;
+
+    background-color: #f8edd9;
+
+    border: 1px solid #d9b98c;
+    border-radius: 20px;
+
+    color: #783f04;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/*========================
+  日時
+========================*/
+.orderHistoryPage .orderDate,
+.orderHistoryPage .pickupDate {
+    margin: 8px 0;
+
+    color: #783f04;
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    text-align: left;
+}
+
+.orderHistoryPage .orderDate {
+    margin-top: 14px;
+}
+
+
+/*========================
+  商品エリア
+========================*/
+.orderHistoryPage .orderItemsArea {
+    margin-top: 24px;
+    padding: 20px 0;
+    border-top: 1px solid #e5d6bf;
+    border-bottom: 1px solid #e5d6bf;
+}
+
+
+/* 商品名・数量の見出し */
+.orderHistoryPage .orderItemsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+    padding: 0 14px;
+
+    color: #783f04;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/*========================
+  商品一覧
+========================*/
+.orderHistoryPage .orderItemList {
+    margin: 0;
+    padding: 0 14px;
+    list-style: none;
+}
+
+
+/* 商品1件 */
+.orderHistoryPage .orderItemList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+    padding: 7px 0;
+
+    color: #4f321c;
+
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* 商品名 */
+.orderHistoryPage .orderItemName {
+    flex: 1;
+    text-align: left;
+}
+
+
+/* 数量 */
+.orderHistoryPage .orderItemQuantity {
+    flex-shrink: 0;
+    min-width: 75px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+
+/*========================
+  カード下部
+========================*/
+.orderHistoryPage .orderCardBottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 20px;
+}
+
+
+/*========================
+  合計
+========================*/
+.orderHistoryPage .orderTotal {
+    margin: 0 0 14px;
+
+    color: #783f04;
+
+    font-size: 17px;
+    text-align: right;
+}
+
+
+/* 金額 */
+.orderHistoryPage .orderTotal strong {
+    margin-left: 8px;
+
+    color: #783f04;
+
+    font-family: Meiryo, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+/*========================
+  詳細を見る
+========================*/
+.orderHistoryPage .orderDetailButton {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 210px;
+    padding: 10px 44px;
+
+    border: 1px solid #b7864c;
+    border-radius: 5px;
+
+    background-color: #f3eadb;
+
+    color: #783f04;
+
+    font-size: 14px;
+
+    text-align: center;
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.2s,
+        opacity 0.2s;
+}
+
+
+/* 矢印 */
+.orderHistoryPage .detailArrow {
+    position: absolute;
+    right: 16px;
+
+    margin-left: 0;
+
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    line-height: 1;
+}
+
+
+/* ホバー */
+.orderHistoryPage .orderDetailButton:hover {
+    background-color: #eadbc5;
+}
+
+
+/*========================
+  ページ下部ボタン
+========================*/
+.orderHistoryPage .orderHistoryActions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+
+    margin-top: 40px;
+}
+
+
+/* TOP・メニュー・カート */
+.orderHistoryPage .orderHistoryActions a {
+    display: inline-block;
+
+    min-width: 170px;
+    padding: 12px 20px;
+
+    border: 1px solid #b7864c;
+    border-radius: 5px;
+
+    background-color: rgba(255, 255, 255, 0.82);
+
+    color: #783f04;
+
+    font-size: 15px;
+
+    text-align: center;
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.2s,
+        opacity 0.2s;
+}
+
+.orderHistoryPage .orderHistoryActions a:hover {
+    background-color: #f5ead8;
+}
+
+
+/*========================
+  エラーメッセージ
+========================*/
+.orderHistoryPage .errorMsg {
+    margin-bottom: 25px;
+    color: #b24532;
+    text-align: center;
+}
+
+
+/*========================
+  小さい画面
+========================*/
+@media (max-width: 768px) {
+
+    .orderHistoryPage .orderHistoryContainer {
+        width: 94%;
+        padding: 24px 10px 50px;
+    }
+
+    .orderHistoryPage .orderHistoryHero {
+        height: 180px;
+        margin-bottom: 28px;
+        border-radius: 16px;
+    }
+
+    .orderHistoryPage .orderHistoryHeroOverlay h1 {
+        font-size: 34px;
+    }
+
+    .orderHistoryPage .heroLine {
+        width: 72px;
+        margin-top: 10px;
+    }
+
+    .orderHistoryPage .orderHistoryCard {
+        padding: 22px 20px;
+    }
+
+    .orderHistoryPage .orderHistoryCardTop {
+        gap: 12px;
+    }
+
+    .orderHistoryPage .orderHistoryCardInfo h2 {
+        font-size: 19px;
+    }
+
+    .orderHistoryPage .orderStatus {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .orderHistoryPage .orderDate,
+    .orderHistoryPage .pickupDate {
+        font-size: 14px;
+    }
+
+    .orderHistoryPage .orderItemsHeader {
+        padding: 0 5px;
+    }
+
+    .orderHistoryPage .orderItemList {
+        padding: 0 5px;
+    }
+
+    .orderHistoryPage .orderItemList li {
+        gap: 15px;
+        font-size: 14px;
+    }
+
+    .orderHistoryPage .orderTotal strong {
+        font-size: 24px;
+    }
+
+    .orderHistoryPage .orderDetailButton {
+        width: 190px;
+    }
+
+    .orderHistoryPage .orderHistoryActions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .orderHistoryPage .orderHistoryActions a {
+        width: 100%;
+    }
+}
