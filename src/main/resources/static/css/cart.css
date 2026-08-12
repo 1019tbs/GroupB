@@ -162,9 +162,8 @@ p{
 }
 .formGroup{
 	display: grid;
-	grid-template-columns: 140px 1fr;
-	align-items: center;
-    margin-bottom:15px;
+	grid-template-columns: 150px 1fr;
+    margin-bottom:25px;
 	gap: 15px;
 }
 .formGroup label{
@@ -206,6 +205,28 @@ p{
 .postalSearch:hover{
     background:#f8edd8;
 }
+/*==========================
+  カートが空のとき
+==========================*/
+.cartPage{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+.cartContainer{
+    flex:1;
+}
+.emptyCart{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+.emptyMessage{
+    font-size:16px;
+	margin-bottom: 50px;
+}
+
 /* 左下ボタン */
 .checkoutBackButtons,
 .checkoutActions{
@@ -224,6 +245,11 @@ p{
     border-radius: 8px;
     font-size: 16px;
     transition: 0.2s;
+}
+.modifyButton{
+	background: rgb(128, 128, 128);
+	color: #ffffff;
+	border: 1px solid;
 }
 .backButton:hover,
 .modifyButton:hover{
@@ -319,6 +345,7 @@ p{
     margin-bottom:10px;
 }
 .summaryTotal{
+	font-size: 22px;
 	padding-top:15px;
 	border-top:1px dashed #c8a96a;
 }

@@ -152,6 +152,7 @@
 				        </a>
 				
 				        <form
+					        id="completeForm"
 				            action="${pageContext.request.contextPath}/checkout/complete"
 				            method="post"
 				            onsubmit="this.querySelector('button').disabled = true;">
@@ -189,9 +190,6 @@
 				            <input type="hidden"
 				                name="pickupTime"
 				                value="${fn:escapeXml(checkoutForm.pickupTime)}">
-				                <button type= "submit">
-				                確定する!!
-				                </button>
 				        </form>
 			        </div>
 			    	
@@ -226,7 +224,7 @@
 				        	<button 
 				        	type="submit" 
 				        	class="orderButton"
-				        	form="checkoutForm">
+				        	form="completeForm">
 				        	注文確定
 				        	</button>
 				        </div>
