@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <meta charset="UTF-8">
 <title>管理者画面</title>
 <!-- cssファイル読み込み -->

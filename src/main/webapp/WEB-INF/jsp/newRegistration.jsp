@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<head>
+<head><link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <meta charset="UTF-8">
 
 <meta
