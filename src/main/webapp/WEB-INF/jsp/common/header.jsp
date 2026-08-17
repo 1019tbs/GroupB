@@ -5,8 +5,6 @@
 	<!-- 上部フリル -->
 	<img class="headerImg" alt="ヘッダー"
 		src="${pageContext.request.contextPath}/images/frill.png"> 
-<!--		<img class="mainImg" alt="メイン"-->
-<!--		src="${pageContext.request.contextPath}/images/main.png">-->
 
 	<!-- 右上メニュー -->
 	<div class="headerMenu">
