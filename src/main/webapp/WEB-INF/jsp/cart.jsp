@@ -234,32 +234,6 @@
 		                    数量を修正するか、商品を取り消してください。
 		                </p>
 		            </c:if>
-		            	<%-- 
-			            <div class="cartActions">
-			                <a href="${pageContext.request.contextPath}/menu">
-			                    商品一覧に戻る
-			                </a>
-			
-			                <c:choose>
-			                    <c:when test="${canPurchase}">
-			                        <a href="${pageContext.request.contextPath}/checkout/input">
-			                            <c:choose>
-			                                <c:when test="${fulfillmentMethod == 'PICKUP'}">
-			                                    店頭受取を予約する
-			                                </c:when>
-			                                <c:otherwise>購入する</c:otherwise>
-			                            </c:choose>
-			                        </a>
-			                    </c:when>
-			
-			                    <c:otherwise>
-			                        <button type="button" disabled>
-			                            注文手続きへ
-			                        </button>
-			                    </c:otherwise>
-			                </c:choose>
-		            	</div>
-		            	--%>
                     <img
 			        src="${pageContext.request.contextPath}/images/cart_check2.png"
 			        class="summaryImg"
