@@ -9,17 +9,15 @@
 <meta charset="UTF-8">
 <title>会員情報変更</title>
 <!-- cssファイル読み込み -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
+<!--<link rel="stylesheet"-->
+<!--	href="${pageContext.request.contextPath}/css/style.css">-->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/memberEdit.css">
 </head>
 
 <body class="memberEditPage">
 	<jsp:include page="common/header.jsp" />
-
 	<h1>会員情報変更</h1>
-
 	<c:if test="${not empty errorMsg}">
 		<p style="color: red;">
 			<c:out value="${errorMsg}" />
@@ -37,53 +35,63 @@
 		<input type="hidden" name="memberId" value="${member.memberId}">
 
 		<p>
-			氏名： <input type="text" name="memberName" value="${member.memberName}">
+			<span class= "label">氏名：</span> 
+			<input type="text" name="memberName" value="${member.memberName}">
 		</p>
 
 		<p>
-			郵便番号： <input type="text" id="postalCode" name="postalCode"
+			<span class= "label">郵便番号：</span>
+			<input type="text" id="postalCode" name="postalCode"
 				value="${member.postalCode}">
 			<button type="button" class="address-button" id="addressSearchButton"
 				onclick="searchAddress()">住所検索</button>
 		</p>
 
 		<p>
-			住所： <input type="text" id="address" name="address"
+			<span class= "label">住所：</span> 
+			<input type="text" id="address" name="address"
 				value="${member.address}">
 		</p>
 
 		<p>
-			電話番号： <input type="text" name="phoneNumber"
+			<span class= "label">電話番号：</span>
+			<input type="text" name="phoneNumber"
 				value="${member.phoneNumber}">
 		</p>
 
 		<p>
-			生年月日： <input type="date" name="birthDate" value="${member.birthDate}">
+			<span class= "label">生年月日：</span>
+			<input type="date" name="birthDate" value="${member.birthDate}">
 		</p>
 
 		<p>
-			メールアドレス： <input type="email" name="email" value="${member.email}">
+			<span class= "label">メールアドレス：</span>
+			<input type="email" name="email" value="${member.email}">
 		</p>
 
 		<p>
-			支払方法： <select name="paymentMethod">
+			<span class= "label">支払方法：</span>
+			<select name="paymentMethod">
 				<option value="CREDIT"
 					<c:if test="${member.paymentMethod == 'CREDIT'}">
                     selected
-                </c:if>>
-					クレジットカード</option>
+                	</c:if>>
+					クレジットカード
+				</option>
 
 				<option value="COD"
 					<c:if test="${member.paymentMethod == 'COD'}">
                     selected
-                </c:if>>
-					代金引換</option>
+                	</c:if>>
+					代金引換
+				</option>
 
 				<option value="BANK"
 					<c:if test="${member.paymentMethod == 'BANK'}">
                     selected
-                </c:if>>
-					銀行振込</option>
+                	</c:if>>
+					銀行振込
+				</option>
 			</select>
 		</p>
 
