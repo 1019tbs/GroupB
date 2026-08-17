@@ -7,7 +7,7 @@
 
 <!DOCTYPE html>
 <html>
-<head>
+<head><link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <meta charset="UTF-8">
 <title>注文者情報入力</title>
 <!-- CSS -->

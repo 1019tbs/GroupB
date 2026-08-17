@@ -3,9 +3,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head><link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>お問い合わせ</title>
 <!-- cssファイル読み込み -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
@@ -19,13 +19,19 @@
 	</div>
 
 	<div class= "contactRight">
-		<h1>Honey Bloom
-		<img alt="アイコン" src="${pageContext.request.contextPath}/images/icon.png" class= "icon" >
-		</h1>
-		<p>はちみつ香る、しあわせなお菓子時間</p>
-		
-		<h2 class= "formTitle">お問い合わせ</h2>
-		<p>商品やご注文について、お気軽にお問い合わせください。</p>
+	<!-- お問い合わせ用ロゴ -->
+<img
+    alt="Honey Bloom"
+    src="${pageContext.request.contextPath}/images/thankyou_mail.png"
+    class="contactLogoImg">
+
+<h2 class="formTitle">お問い合わせ</h2>
+
+<p class="formMessage">
+    商品やご注文について、お気軽にお問い合わせください。
+</p>
+
+
 		<form action="${pageContext.request.contextPath}/form/submit" method= "post">
 		    <!-- お問い合わせを表す隠し項目 -->
 		    <input type="hidden"

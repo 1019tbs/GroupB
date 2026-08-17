@@ -4,14 +4,15 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head><link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <meta charset="UTF-8">
 <title>HOME</title>
+<link rel="icon" type="image/x-icon"
+	href="${pageContext.request.contextPath}/favicon.ico">
+	
 <!-- cssファイル読み込み -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
-<link rel="icon" type="image/png"
-	href="${pageContext.request.contextPath}/images/faviconShibahoney1.png?v=1">
 </head>
 
 <body class="mainPage">

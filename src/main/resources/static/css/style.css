@@ -428,93 +428,150 @@ body.newRegistration label{
 /*=======
 お問い合わせフォーム
 =========*/
+
+/* お問い合わせ全体 */
 .contactContainer{
-	flex: 1;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-	width: 95%;
+
+    width: 95%;
     max-width: 1000px;
-    margin: 40px auto 20px ;
-    padding: 20px;
+    margin: 20px auto 15px;
+    padding: 10px 15px;
+
     background-color: #fef9e9;
     border-radius: 5px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
+/* 左側画像エリア */
 .contactLeft{
     flex: 4;
-    text-align:center;
+    text-align: center;
 }
+
+/* 左側のフォーム画像 */
+.formImg{
+    width: 90%;
+    max-width: 360px;
+    height: auto;
+}
+
+/* 右側フォームエリア */
 .contactRight{
     flex: 6;
 }
+
+/* お問い合わせフォーム上部ロゴ */
+.contactLogoImg{
+    display: block;
+    width: 92%;
+    max-width: 500px;
+    height: auto;
+
+    margin: -55px auto -70px;
+
+    /* ロゴ位置を右へ調整 */
+    position: relative;
+    left: 100px;
+}
+
+/* お問い合わせタイトル */
+.formTitle{
+    margin: 5px 0 8px;
+    text-align: center;
+}
+
+/* お問い合わせ説明文 */
+.formMessage{
+    margin: 0 0 14px;
+    text-align: center;
+}
+
+/* フォーム全体を一回り小さく */
+.contactRight form{
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* 入力欄 */
 .contactRight input[type="text"],
 .contactRight input[type="email"],
 .contactRight textarea{
     width: 100%;
-    padding: 12px;
+    padding: 8px;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
+/* ラベル */
 .contactRight label{
     display: block;
     width: 100%;
-    margin: 0 0 8px 0;
+    margin: 0 0 6px;
     text-align: left;
 }
+
+/* お問い合わせページ背景 */
 body.contact{
     background-image: url("../images/bgFormImg.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+
     min-height: 100vh;
-	margin: 0;
-	display: flex;
-	flex-direction: column;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
 }
-.formImg{
-    width:90%;
-    max-width:400px;
-    height:auto;
-}
-.formTitle{
-	text-align: center;
-	
-}
+
+/* 横並びの入力項目 */
 .formRow{
     display: flex;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
+/* 各入力項目 */
 .formItem{
     flex: 1;
-	border-radius: 5px;
 }
+
 .formItem label{
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
+
 .formItem input{
     width: 100%;
     box-sizing: border-box;
 }
-textarea{
-    width: 100%;
-    height: 120px;
+
+/* お問い合わせ内容 */
+.contactRight textarea{
+    height: 100px;
     resize: vertical;
-    box-sizing: border-box;
 }
+
+/* メールアドレス欄を広めに */
 .mailItem{
-	flex: 6;
+    flex: 6;
 }
+
+/* 電話番号欄を少し狭めに */
 .phoneItem{
-	flex: 4;
+    flex: 4;
 }
+
+/* 送信ボタン */
 .buttonArea{
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 14px;
 }
 
 /*=======
@@ -1154,3 +1211,51 @@ body.menu{
 
 }
 
+/*========================
+お問い合わせフォーム
+小さい画面用
+========================*/
+@media screen and (max-width: 850px){
+
+    .contactContainer{
+        width: calc(100% - 20px);
+        max-width: 700px;
+        padding: 15px;
+        box-sizing: border-box;
+
+        /* 横並びをやめる */
+        flex-direction: column;
+    }
+
+    /* 左側画像 */
+    .contactLeft{
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .formImg{
+        width: 70%;
+        max-width: 300px;
+    }
+
+    /* 右側フォーム */
+    .contactRight{
+        width: 100%;
+    }
+
+    /* ロゴ画像 */
+	.contactLogoImg{
+	    width: 100%;
+	    max-width: 440px;
+
+	    /* 小さい画面では少し右寄せ */
+	    left: 85px;
+
+	    margin: -45px auto -55px;
+	}
+
+    /* 入力欄 */
+    .formRow{
+        gap: 12px;
+    }
+}

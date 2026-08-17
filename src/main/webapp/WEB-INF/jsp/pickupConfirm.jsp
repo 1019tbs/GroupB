@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <html>
-<head>
+<head><link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <meta charset="UTF-8">
 <title>予約内容確認</title>
 </head>
