@@ -24,7 +24,8 @@
 		</p>
 	</c:if>
 
-	<form action="${pageContext.request.contextPath}/member/edit"
+	<form class= "memberEditForm"
+		action="${pageContext.request.contextPath}/member/edit"
 		method="post">
 
 		<p>

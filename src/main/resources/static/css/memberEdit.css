@@ -16,6 +16,7 @@ h2{
     font-family:Georgia;
     color:#783f04;
     margin-bottom:5px;
+	text-align:center;
 }
 
 header{
@@ -79,13 +80,10 @@ header{
 /*==============
 会員情報変更画面
 ==============*/
-body.memberEditPage{
-    position: relative;
-	height: 40px;
-}
-.memberEditPage form {
+.memberEditForm{
     width: 600px;
-    margin: 30px auto;
+    margin: 30px auto 50px;
+	
 }
 .memberEditPage form p {
     display: flex;
@@ -182,13 +180,14 @@ body.memberEditPage{
 }
 /*footerを下へ押し下げる*/
 body.memberEditPage{
-    position: relative;
     min-height:100vh;
     display:flex;
     flex-direction:column;
     background:#fffaf2;
 }
-
+body.memberEditPage > footer{
+    margin-top:auto;
+}
 /*==============
 パスワード変更画面
 ==============*/
