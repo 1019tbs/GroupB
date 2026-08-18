@@ -57,14 +57,15 @@
 	        	<input type="password"
 	        	name="confirmPassword">
 	    	</p>
+	    	<button
+    			type="submit"
+    			class="backButton"
+    			onclick="location.href='${pageContext.request.contextPath}/member/edit'">
+    		パスワードを変更する
+			</button>		
 		</form>
 		<p>
-		<button
-    		type="button"
-    		class="backButton"
-    		onclick="location.href='${pageContext.request.contextPath}/member/edit'">
-    		パスワードを変更する
-		</button>		
+
 	</div>
 	<div class="backMenuArea">
 	   	<a class="backMenu" href="${pageContext.request.contextPath}/main">

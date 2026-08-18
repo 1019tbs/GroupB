@@ -191,11 +191,10 @@ body.memberEditPage > footer{
 /*==============
 パスワード変更画面
 ==============*/
-.passwordChange{
-	width: 100%;
+.passwordChange,
+.passwordChangeComplete{
 	min-height: 100vh;
 	margin: 0;
-
 	background-color: #fdf8ebc4;
 	box-sizing: border-box;
 
@@ -290,4 +289,49 @@ body.memberEditPage > footer{
 .backMenu:hover{
     color: #4a2500;
     text-decoration: underline;
+}
+/*========================
+ パスワード変更完了画面
+========================*/
+.completeContainer{
+    width: 900px;
+    margin: 120px auto 60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:60px;
+	flex: 1;
+}
+.completeLeft{
+    flex:0 0 280px;
+    text-align:center;
+}
+.editPassCompImg{
+    width:280px;
+    max-width:100%;
+    height:auto;
+}
+.completeRight{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+}
+.completeIcon{
+    width:70px;
+    margin-bottom:15px;
+}
+.completeRight h2{
+    margin-bottom:20px;
+}
+.completeRight p{
+    line-height:2;
+    margin-bottom:40px;
+}
+.lineImg{
+    width:180px;
+    height:auto;
+    margin:10px 0 20px;
 }
