@@ -1,0 +1,12 @@
+ALTER TABLE postal_code_search 
+DROP COLUMN jis_code,
+DROP COLUMN old_postal_code,
+DROP COLUMN prefecture_kana,
+DROP COLUMN city_kana,
+DROP COLUMN town_kana,
+DROP COLUMN is_multiple_postal_code,
+DROP COLUMN has_koaza,
+DROP COLUMN has_chome,
+DROP COLUMN is_multiple_town,
+DROP COLUMN update_status,
+DROP COLUMN update_reason;

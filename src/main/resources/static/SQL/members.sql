@@ -1,0 +1,16 @@
+CREATE DATABASE GroupB_Project;
+
+CREATE TABLE members (
+    member_id VARCHAR(20) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    member_name VARCHAR(50) NOT NULL,
+    postal_code VARCHAR(8) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    birth_date DATE NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    payment_method VARCHAR(20) NOT NULL,
+    role VARCHAR(10) NOT NULL DEFAULT 'USER',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
