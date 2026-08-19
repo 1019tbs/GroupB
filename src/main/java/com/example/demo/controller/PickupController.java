@@ -32,8 +32,8 @@ public class PickupController {
             @RequestParam String customerName,
             @RequestParam Long productId,
             @RequestParam Integer quantity,
-            @RequestParam String reservationDate,
-            @RequestParam String reservationTime,
+            @RequestParam String pickupDate,
+            @RequestParam String pickupTime,
             @RequestParam String email,
             @RequestParam String phone,
             Model model) {
@@ -50,13 +50,19 @@ public class PickupController {
                 "quantity",
                 quantity);
 
+        /*
+         * pickupConfirm.jspでは
+         * reservationDate / reservationTime
+         * という名前で表示しているため、
+         * Model名はそのままにする
+         */
         model.addAttribute(
                 "reservationDate",
-                reservationDate);
+                pickupDate);
 
         model.addAttribute(
                 "reservationTime",
-                reservationTime);
+                pickupTime);
 
         model.addAttribute(
                 "email",

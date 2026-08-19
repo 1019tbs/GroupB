@@ -24,106 +24,173 @@ p,
 /*=====
 ログイン画面
 =====*/
-body.loginPage{
-	background-image: url("../images/bgImage.png");
-	background-position:20% left;
-	background-size:35%;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
-.loginContents{
-    flex: 1;
-}
-.login-box{
-    width:420px;
-	margin:60px auto;
-    border:1px solid #d8b98b;
-}
-
-h1,p {
-	text-align: center;
-}
-
-.icon{
-	width: 40px;
-	height: auto;
-}
-
-.sub-title{
-    text-align:center;
-    color:#783f04;
-    margin-bottom:35px;
-}
-
-label{
-    display:block;
-	text-align: left;
-	width: 50%;
-    color:#595959;
-    margin:15px auto 8px auto;
-}
-
-.loginPage input[type=text],
-.loginPage input[type=password]{
-    width: 50%;
-    display: block;
-    margin: auto;
-}
-
-.loginPage input[type=submit],
-.loginPage button{
-    width: 50%;
-    display: block;
-    margin: auto;
-}
-
-input[type=text],
-input[type=password]{
-    padding:12px;
-    border:1px solid #ccc;
-    box-sizing:border-box;
-}
-
-input[type=submit]{
-    margin-top:25px;
-    padding:14px;
-    background:#783f04;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    cursor:pointer;
-}
-
-button{
-    padding:14px;
-    background:white;
-    border:1px solid #783f04;
-    color:#783f04;
-    border-radius:8px;
-}
-.or{
+body.loginPage {
+    margin: 0;
+    background-image: url("../images/bgImage.png");
+    background-position: 0 100px;
+    background-repeat: no-repeat;
+    background-size: 35%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 上部のテント画像 */
+.loginPage .loginTopImg {
+    width: 100%;
+    height: 100px;
+    background-image: url("../images/edit_top_repeat.png");
+    background-repeat: repeat-x;
+    background-position: left top;
+    background-size: auto 100px;
+    flex-shrink: 0;
+}
+
+/* ケーキの右側へログインカードを配置 */
+.loginPage .loginContents {
+    flex: 1;
+    display: flex;
     justify-content: center;
-    width: 50%;          
-    margin: 20px auto;  
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ログインカード */
+.loginPage .loginCard {
+    width: min(520px, 100%);
+    padding: 22px 45px 35px;
+    box-sizing: border-box;
+
+    background-color: rgba(255, 251, 240, 0.93);
+    border: 1px solid #d8b98b;
+    border-radius: 12px;
+
+    box-shadow:
+        0 6px 18px rgba(120, 63, 4, 0.14),
+        inset 0 0 0 5px rgba(255, 255, 255, 0.55);
+
+    /* 全画面表示時にカードが下へ寄らないように調整 */
+    transform: translateY(-55px);
+}
+
+/* カード上部のWELCOME */
+.loginPage .loginCard::before {
+    content: "WELCOME";
+    display: block;
+    margin-bottom: 4px;
+    text-align: center;
+
+    color: #b88a45;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+}
+
+/* 店名 */
+.loginPage h1 {
+    margin: 5px 0 3px;
+    text-align: center;
     color: #783f04;
 }
 
-.or::before,
-.or::after{
+/* キャッチコピー */
+.loginPage p {
+    margin: 0 0 24px;
+    text-align: center;
+    color: #783f04;
+}
+
+/*
+トップページでも使用している共通アイコン。
+元の指定から変更しない。
+*/
+.icon {
+    width: 40px;
+    height: auto;
+}
+
+/* フォーム全体 */
+.loginPage form {
+    width: 100%;
+    margin: 0;
+}
+
+/* 入力項目名 */
+.loginPage label {
+    display: block;
+    width: 100%;
+    margin: 15px 0 8px;
+    text-align: left;
+    color: #595959;
+}
+
+/* 会員ID・パスワード入力欄 */
+.loginPage input[type="text"],
+.loginPage input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* ログインボタン */
+.loginPage input[type="submit"] {
+    display: block;
+    width: 100%;
+    margin: 25px 0 0;
+    padding: 14px;
+
+    background: #783f04;
+    color: white;
+    border: none;
+    border-radius: 8px;
+
+    box-sizing: border-box;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 新規会員登録ボタン */
+.loginPage button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+
+    background: white;
+    color: #783f04;
+    border: 1px solid #783f04;
+    border-radius: 8px;
+
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* 「または」の区切り線 */
+.loginPage .or {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+    color: #783f04;
+}
+
+.loginPage .or::before,
+.loginPage .or::after {
     content: "";
     flex: 1;
     border-top: 1px solid #783f04;
 }
 
-.or::before{
+.loginPage .or::before {
     margin-right: 10px;
 }
 
-.or::after{
+.loginPage .or::after {
     margin-left: 10px;
 }
 
@@ -1085,131 +1152,5 @@ body.menu{
     object-fit:cover;
 	margin-bottom: 0;
 
-}
-
-/*===============
-注文完了フォーム
-===============*/
-body.thankyouPage{
-    text-align:center;
-	position: relative;
-	min-height: 100vh;
-    display:flex;
-    flex-direction:column;
-}
-body.thankyouPage h1,
-body.thankyouPage p,
-body.thankyouPage h2,
-body.thankyouPage h3{
-    display:block;
-    text-align:center;
-}
-.thankyouBgImg{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100vh;
-    object-fit:cover;
-    z-index:-1;
-}
-.shopHeaderMenu{
-    position:absolute;
-    top:5%;
-    right:5%;
-    display:flex;
-	align-items: center;
-    gap:10px;
-    font-size:16px;
-	z-index: 10;
-}
-.shopHeaderMenu form{
-    margin: 0;
-}
-.thankyouContainer{
-    position:relative;
-    width:100%;
-    flex:1;
-    min-height:0;
-    box-sizing:border-box;
-}
-.shopTitle{
-    position:absolute;
-    top:5%;
-    left:4%;
-}
-.shopTitle h1{
-    margin-top:-20px;
-	font-size: 30px;
-}
-.shopTitle p{
-	margin: 0;
-	font-size: 14px;
-}
-.thankContent{
-    position:absolute;
-    top:18%;
-    right:18%;
-}
-.thankContent h2{
-	font-size: 30px;
-	line-height: 1.5;
-}
-.line2{
-    width:300px;
-    margin:15px auto;
-    display:block;
-}
-.thankText{
-	line-height: 1.8;
-	margin-bottom: 20px;
-}
-.thankImg{
-    width:200px;
-    display:block;
-    margin:20px auto;
-}
-.thankWaitMessage{
-    width: 300px;
-    margin: 20px;
-	padding: 20px;
-    text-align: center;
-    line-height: 1.8;
-    color:#7a4a00;
-    font-size:16px;
-	border: 1px solid #f5a623;
-	border-radius: 10px;
-}
-.backButton{
-	margin: 10px;
-}
-body.thankyouPage .shopHeaderMenu{
-    position:absolute;
-    top:5%;
-    right:5%;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    z-index:10;
-}
-body.thankyouPage .headerButton{
-    border:none;
-    background:none;
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    gap:5px;
-    color:#7a4a00;
-    font-size:16px;
-    cursor:pointer;
-}
-body.thankyouPage .headerIcon{
-    width:30px;
-    height:30px;
-    object-fit:contain;
-
-}
-footer{
-	margin-top: auto;
 }
 

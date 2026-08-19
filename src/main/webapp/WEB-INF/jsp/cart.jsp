@@ -56,13 +56,13 @@
 	    </c:if>
 	    <c:choose>
 	        <c:when test="${empty cartList}">
-	            <p>カートに商品がありません。</p>
-	            <%--
-	            <a href="${pageContext.request.contextPath}/menu">
-	                商品一覧に戻る
-	            </a>
-	             --%>
-
+	        	<div class= "emptyCart">
+	        			<p class= "emptyMessage">カートに商品がありません。</p>
+	        				<a href="${pageContext.request.contextPath}/menu" 
+	            			class= "backButton">
+	                		メニューへ戻る
+	            			</a>
+	            </div>			
 	        </c:when>
 	        <c:otherwise>
 	        <c:set var="total" value="0" />
@@ -164,8 +164,14 @@
 			            		</div>
 		            		</div>
 	            		</c:forEach>
-	            	</div>
-	            
+	            		<div class="checkoutBackButtons">
+				    		<a href="${pageContext.request.contextPath}/menu"
+				    		class="backButton">
+				        	メニューへ戻る
+				    	</a>
+	            		</div>
+	            		
+	            	</div>	            
 	            <!-- ご注文内容 -->
 	                <div class= "cartSummary">
 	                <img
