@@ -1,0 +1,4 @@
+-- SELECT * FROM form_contact
+
+ALTER TABLE form_contact
+ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
